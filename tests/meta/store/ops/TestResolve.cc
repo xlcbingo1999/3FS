@@ -1,4 +1,4 @@
-#include <bits/types/FILE.h>
+#include <stdio.h>
 #include <fcntl.h>
 #include <fmt/core.h>
 #include <folly/experimental/coro/BlockingWait.h>

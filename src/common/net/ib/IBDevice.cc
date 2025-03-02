@@ -2,8 +2,7 @@
 
 #include <algorithm>
 #include <asm-generic/errno.h>
-#include <bits/types/struct_itimerspec.h>
-#include <bits/types/struct_timespec.h>
+#include <time.h>
 #include <cerrno>
 #include <chrono>
 #include <cstdint>

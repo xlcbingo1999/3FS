@@ -1,6 +1,6 @@
 #include <algorithm>
 #include <atomic>
-#include <bits/types/struct_iovec.h>
+#include <bits/uio.h>
 #include <boost/thread/barrier.hpp>
 #include <chrono>
 #include <cstdint>

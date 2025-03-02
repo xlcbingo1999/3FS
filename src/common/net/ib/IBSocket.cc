@@ -4,7 +4,7 @@
 #include <array>
 #include <asm-generic/errno.h>
 #include <atomic>
-#include <bits/types/struct_timespec.h>
+#include <time.h>
 #include <cassert>
 #include <cerrno>
 #include <chrono>

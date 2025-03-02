@@ -36,7 +36,7 @@
 	url = https://github.com/facebook/zstd.git
 [submodule "third_party/liburing"]
 	path = third_party/liburing
-	url = https://github.com/axboe/liburing.git
+	url = https://github.com/xlcbingo1999/liburing.git
 [submodule "third_party/gtest-parallel"]
 	path = third_party/gtest-parallel
 	url = https://github.com/google/gtest-parallel.git

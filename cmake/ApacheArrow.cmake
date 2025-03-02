@@ -15,7 +15,7 @@ include(ExternalProject)
 ExternalProject_Add(
     apache-arrow-cpp
     PREFIX ${PREFIX}
-    GIT_REPOSITORY https://github.com/apache/arrow.git
+    GIT_REPOSITORY https://gitee.com/romandion/arrow.git
     GIT_TAG b7d2f7ffca66c868bd2fce5b3749c6caa002a7f0
     GIT_SHALLOW ON
     GIT_PROGRESS ON

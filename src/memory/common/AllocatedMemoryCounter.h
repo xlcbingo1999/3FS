@@ -3,6 +3,11 @@
 #include <climits>
 #include <cstddef>
 
+#ifndef SIZE_WIDTH
+#include <bits/wordsize.h>
+#define SIZE_WIDTH __WORDSIZE
+#endif
+
 #include "common/monitor/Recorder.h"
 
 namespace hf3fs::memory {

@@ -4,7 +4,11 @@
 #include <array>
 #include <asm-generic/errno.h>
 #include <atomic>
+#if __has_include(<bits/types/struct_timespec.h>)
+#include <bits/types/struct_timespec.h>
+#else
 #include <time.h>
+#endif
 #include <cassert>
 #include <cerrno>
 #include <chrono>

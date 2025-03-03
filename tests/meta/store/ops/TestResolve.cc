@@ -1,4 +1,8 @@
+#if __has_include(<bits/types/FILE.h>)
+#include <bits/types/FILE.h>
+#else
 #include <stdio.h>
+#endif
 #include <fcntl.h>
 #include <fmt/core.h>
 #include <folly/experimental/coro/BlockingWait.h>

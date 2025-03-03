@@ -3,7 +3,11 @@
 #include <algorithm>
 #include <array>
 #include <atomic>
+#if __has_include(<bits/types/struct_iovec.h>)
+#include <bits/types/struct_iovec.h>
+#else
 #include <bits/uio.h>
+#endif
 #include <cassert>
 #include <chrono>
 #include <cstddef>

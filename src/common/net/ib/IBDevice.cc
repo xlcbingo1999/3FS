@@ -2,7 +2,12 @@
 
 #include <algorithm>
 #include <asm-generic/errno.h>
+#if __has_include(<bits/types/struct_itimerspec.h>) && __has_include(<bits/types/struct_timespec.h>)
+#include <bits/types/struct_itimerspec.h>
+#include <bits/types/struct_timespec.h>
+#else
 #include <time.h>
+#endif
 #include <cerrno>
 #include <chrono>
 #include <cstdint>

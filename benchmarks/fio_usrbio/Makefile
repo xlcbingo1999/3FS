@@ -11,6 +11,7 @@ TEST_XLC_NAME = test_xlc_usrbio
 TEST_XLC_EXE = ${TEST_XLC_NAME}
 TEST_XLC_SRC = ${TEST_XLC_EXE}.cpp
 TEST_XLC_OBJ = ${TEST_XLC_EXE}.o
+TEST_XLC_CXXFLAGS = -I${HF3FS_INCLUDE_DIR} -I${FIO_SRC_DIR} -include config-host.h
 
 CXX = g++
 CXXFLAGS = -fPIC -fpermissive -O3 -D_GNU_SOURCE -shared -rdynamic -I${HF3FS_INCLUDE_DIR} -I${FIO_SRC_DIR} -include config-host.h

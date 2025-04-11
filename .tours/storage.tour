@@ -281,6 +281,306 @@
       "file": "src/common/net/IfAddrs.h",
       "description": "getifaddrs 函数用于获取系统中所有网络接口的信息。它返回一个链表，链表中的每个节点包含一个 struct ifaddrs 结构，该结构定义在 ifaddrs.h 头文件中。",
       "line": 44
+    },
+    {
+      "file": "src/common/net/IfAddrs.h",
+      "description": "获取对应的ipv4地址和相应的mask",
+      "line": 68
+    },
+    {
+      "file": "src/common/net/ib/IBDevice.cc",
+      "description": "使用ib的接口获取device_list的信息",
+      "line": 226,
+      "selection": {
+        "start": {
+          "line": 227,
+          "character": 31
+        },
+        "end": {
+          "line": 228,
+          "character": 35
+        }
+      }
+    },
+    {
+      "file": "src/common/net/ib/IBDevice.cc",
+      "description": "folly增强的一个SCOPE_EXIT方法，可以在作用区后自动free_device_list",
+      "line": 231
+    },
+    {
+      "file": "src/common/net/ib/IBDevice.cc",
+      "description": "遍历打开IBDevice",
+      "line": 243
+    },
+    {
+      "file": "src/common/net/ib/IBDevice.cc",
+      "description": "申请对应的pd",
+      "line": 284
+    },
+    {
+      "file": "src/common/net/ib/IBDevice.cc",
+      "description": "fcntl 是一个用于操作文件描述符的系统调用函数。它可以执行多种操作，如复制文件描述符、获取和设置文件描述符标志、文件状态标志以及记录锁等。\n\n- F_GETFD: 获取文件描述符标志。\n- F_SETFD: 设置文件描述符标志。",
+      "line": 309
+    },
+    {
+      "file": "src/common/net/ib/IBDevice.cc",
+      "description": "遍历配置port的信息",
+      "line": 346
+    },
+    {
+      "file": "src/common/net/ib/IBDevice.cc",
+      "description": "返回打开的设备",
+      "line": 371
+    },
+    {
+      "file": "src/common/net/ib/IBDevice.cc",
+      "description": "目前设备只支持 kMaxDeviceCnt ",
+      "line": 260
+    },
+    {
+      "file": "src/common/net/IfAddrs.h",
+      "description": "对网卡的要求是前缀满足 en、eth、ib、bond",
+      "line": 97
+    },
+    {
+      "file": "src/common/net/ib/IBDevice.cc",
+      "description": "IBManager应该是一个事件循环",
+      "line": 700
+    },
+    {
+      "file": "src/common/net/EventLoop.h",
+      "description": "这里是一个单thread的模型",
+      "line": 59
+    },
+    {
+      "file": "src/common/net/EventLoop.h",
+      "description": "create函数是放置在父类中的，是一个通用的实现",
+      "line": 16
+    },
+    {
+      "file": "src/common/utils/TypeTraits.h",
+      "description": "create函数是有一个可折叠参数列表的",
+      "line": 131
+    },
+    {
+      "file": "src/common/utils/TypeTraits.h",
+      "description": "这个函数的核心就是把 Impl 的指针申请出来并返回",
+      "line": 137
+    },
+    {
+      "file": "src/common/utils/TypeTraits.h",
+      "description": "当用户类（T）继承 std::enable_shared_from_this<T> 时，可以安全地通过 shared_from_this() 方法获取指向自己的 shared_ptr。",
+      "line": 129
+    },
+    {
+      "file": "src/common/utils/TypeTraits.h",
+      "description": "这是静态工厂方法 create",
+      "line": 131
+    },
+    {
+      "file": "src/common/net/ib/IBDevice.cc",
+      "description": "开始eventLoop",
+      "line": 701
+    },
+    {
+      "file": "src/common/net/EventLoop.cc",
+      "description": "开启eventLoop函数",
+      "line": 13
+    },
+    {
+      "file": "src/common/net/EventLoop.cc",
+      "description": "IO多路复用-epoll的逻辑",
+      "line": 15
+    },
+    {
+      "file": "src/common/net/EventLoop.cc",
+      "description": "创建jthread",
+      "line": 38
+    },
+    {
+      "file": "src/common/net/EventLoop.cc",
+      "description": "IBManager主要用于执行该事件循环",
+      "line": 115
+    },
+    {
+      "file": "src/common/net/EventLoop.cc",
+      "description": "阻塞等待epoll返回IO事件的数量",
+      "line": 122
+    },
+    {
+      "file": "src/common/net/EventLoop.cc",
+      "description": "遍历到达的事件，并进行相应的read",
+      "line": 137
+    },
+    {
+      "file": "src/common/net/EventLoop.cc",
+      "description": "将epoll获得的event的数据指针转化为HandlerWrapper*",
+      "line": 142
+    },
+    {
+      "file": "src/common/net/EventLoop.h",
+      "description": "HandlerWrapper主要是对EventHandler的封装",
+      "line": 50
+    },
+    {
+      "file": "src/common/net/EventLoop.h",
+      "description": "TODO(xlc): 这只是一个父类，需要确定其具体的派生类才知道处理啥 ",
+      "line": 30
+    },
+    {
+      "file": "src/common/net/EventLoop.cc",
+      "description": "这个lock()函数没有找到，不确定这里是如何调用的",
+      "line": 143
+    },
+    {
+      "file": "src/common/net/EventLoop.cc",
+      "description": "用于处理对应的事件",
+      "line": 144
+    },
+    {
+      "file": "src/common/net/EventLoop.cc",
+      "description": " 这是一个无尽while",
+      "line": 118
+    },
+    {
+      "file": "src/common/net/ib/IBDevice.cc",
+      "description": "这里是不会阻塞的，新建一个 jthread 用于 eventLoop 后就返回result",
+      "line": 702
+    },
+    {
+      "file": "src/common/net/ib/IBDevice.cc",
+      "description": "创建一个 IBSocketManager ",
+      "line": 704
+    },
+    {
+      "file": "src/common/net/ib/IBSocket.cc",
+      "description": "最关键的就是创建 IBSocketManager 的实例并返回其指针",
+      "line": 1174
+    },
+    {
+      "file": "src/common/net/ib/IBSocket.h",
+      "description": "主要是将fd传进来",
+      "line": 561
+    },
+    {
+      "file": "src/common/net/ib/IBDevice.cc",
+      "description": "将新的socketManager增加到eventLoop中",
+      "line": 708
+    },
+    {
+      "file": "src/common/net/EventLoop.cc",
+      "description": "实际的执行函数是这个，参数是一个EventHandler实例，然后将关注的events也传进来，主要关注：EPOLLIN | EPOLLOUT | EPOLLET",
+      "line": 62
+    },
+    {
+      "file": "src/common/net/EventLoop.cc",
+      "description": "将handler新增到wrapperList_的头部",
+      "line": 66
+    },
+    {
+      "file": "src/common/net/EventLoop.cc",
+      "description": "handler自身会将其迭代器的值设置为 wrapperList_ 的对应位置，应该是为了一对一找到 handler",
+      "line": 67
+    },
+    {
+      "file": "src/common/net/EventLoop.cc",
+      "description": "handler也将eventLoop_设置为这个eventLoop实例自己",
+      "line": 68
+    },
+    {
+      "file": "src/common/net/EventLoop.cc",
+      "description": "这里创建了一个event，然后丢到epfd_中，应该会让 thread 进行消费",
+      "line": 72
+    },
+    {
+      "file": "src/common/net/EventLoop.cc",
+      "description": "当事件收到之后就会返回，如果ret==0，就直接返回一个正常的结果即可",
+      "line": 75
+    },
+    {
+      "file": "src/common/net/EventLoop.cc",
+      "description": "似乎是从epoll_ctl的结果返回后就要将handler从 wrapperList_ 返回",
+      "line": 83
+    },
+    {
+      "file": "src/common/net/EventLoop.cc",
+      "description": "清空handler的迭代器",
+      "line": 85
+    },
+    {
+      "file": "src/common/net/EventLoop.cc",
+      "description": "reset本eventLoop: 释放托管对象的所有权",
+      "line": 86
+    },
+    {
+      "file": "src/common/net/EventLoop.cc",
+      "description": "如果epoll_ctl返回了非0值，就需要直接返回一个 Error 出来",
+      "line": 89
+    },
+    {
+      "file": "src/common/net/ib/IBDevice.cc",
+      "description": "创建一个后台的执行器",
+      "line": 710
+    },
+    {
+      "file": "src/common/net/ib/IBDevice.cc",
+      "description": "核心也是去创建 BackgroundRunner",
+      "line": 564
+    },
+    {
+      "file": "src/common/net/ib/IBDevice.cc",
+      "description": "核心就是设置timer_变量",
+      "line": 567
+    },
+    {
+      "file": "src/common/net/ib/IBDevice.cc",
+      "description": "针对每个设备，都创建AsyncEventHandler并注册到eventLoop中",
+      "line": 717
+    },
+    {
+      "file": "src/common/net/ib/IBDevice.cc",
+      "description": "核心是将设备传进来",
+      "line": 593
+    },
+    {
+      "file": "src/common/net/ib/IBDevice.cc",
+      "description": "单独有一个设备的事件处理器",
+      "line": 719
+    },
+    {
+      "file": "src/common/net/ib/IBDevice.cc",
+      "description": "存在一个zone到port的映射信息",
+      "line": 724
+    },
+    {
+      "file": "src/common/net/ib/IBDevice.cc",
+      "description": "将信息写入到monitor的deviceCnt中",
+      "line": 727
+    },
+    {
+      "file": "src/common/net/ib/IBDevice.cc",
+      "description": "让startImpl只能执行一次",
+      "line": 731
+    },
+    {
+      "file": "src/core/app/ServerLauncher.h",
+      "description": "完成 IBManager 的启动",
+      "line": 42
+    },
+    {
+      "file": "src/core/app/ServerLauncher.h",
+      "description": "创建 RemoteConfigFetcher 的实例",
+      "line": 45
+    },
+    {
+      "file": "src/storage/service/StorageServer.h",
+      "description": "RemoteConfigFetcher在这里",
+      "line": 31
+    },
+    {
+      "file": "src/common/app/TwoPhaseApplication.h",
+      "description": "主要是去获取AppInfo的相关内容",
+      "line": 45
     }
   ],
   "ref": "study"

@@ -1,0 +1,287 @@
+{
+  "$schema": "https://aka.ms/codetour-schema",
+  "title": "storage",
+  "steps": [
+    {
+      "file": "src/storage/storage.cpp",
+      "description": "拆解：\n\n1. 首先是进行TwoPhaseApplication的构造",
+      "line": 7
+    },
+    {
+      "file": "src/common/app/TwoPhaseApplication.h",
+      "description": "标准的构造函数是初始化launcher_参数，主要是从传递进来的Server（这里是`storage::StorageServer`）中构造Launcher指针",
+      "line": 20
+    },
+    {
+      "file": "src/storage/service/StorageServer.h",
+      "description": "Launcher的类型出现在这里",
+      "line": 32
+    },
+    {
+      "file": "src/core/app/ServerLauncher.h",
+      "description": "其实就是走到这个函数，构造出这个实例。然后再根据Server的类型（这里是`hf3fs::storage::StorageServer`）去初始化对应的private成员。",
+      "line": 32
+    },
+    {
+      "file": "src/core/app/ServerLauncher.h",
+      "description": "AppConfig的类型是来源于`hf3fs::storage::StorageServer::AppConfig`",
+      "line": 74
+    },
+    {
+      "file": "src/storage/service/StorageServer.h",
+      "description": "这里又走到了`hf3fs::core::ServerAppConfig`",
+      "line": 27
+    },
+    {
+      "file": "src/core/app/ServerLauncher.h",
+      "description": "初始化LauncherConfig，这个类型是来自于：`hf3fs::stroage::Server::LauncherConfig`",
+      "line": 75
+    },
+    {
+      "file": "src/storage/service/StorageServer.h",
+      "description": "这里是对ServerLauncherConfig做了集成，写了一个函数",
+      "line": 28
+    },
+    {
+      "file": "src/storage/service/StorageServer.h",
+      "description": "构造函数是从 MgmtdClientForServer 中拿对应的参数",
+      "line": 29
+    },
+    {
+      "file": "src/core/app/ServerLauncher.h",
+      "description": "初始化参数，类型是`hf3fs::stroage::Server::RemoteConfigFetcher`",
+      "line": 77
+    },
+    {
+      "file": "src/storage/service/StorageServer.h",
+      "description": "RemoteConfigFetcher的类型也是来自于 ServerMgmtdClientFetcher",
+      "line": 31
+    },
+    {
+      "file": "src/storage/storage.cpp",
+      "description": "初始化完launcher之后，就是执行run()函数",
+      "line": 7
+    },
+    {
+      "file": "src/common/app/ApplicationBase.cc",
+      "description": "直接走到基类的run函数",
+      "line": 49
+    },
+    {
+      "file": "src/common/app/ApplicationBase.cc",
+      "description": "在主线程中block对应的中断信号",
+      "line": 50
+    },
+    {
+      "file": "src/common/app/ApplicationBase.cc",
+      "description": "解析参数",
+      "line": 53
+    },
+    {
+      "file": "src/common/app/TwoPhaseApplication.h",
+      "description": "这里走到 TwoPhaseApplication 重写的函数中",
+      "line": 29
+    },
+    {
+      "file": "src/common/app/TwoPhaseApplication.h",
+      "description": "走到launcher_中解析参数",
+      "line": 30
+    },
+    {
+      "file": "src/core/app/ServerLauncher.cc",
+      "description": "本质上就是走到这个函数进行parseFlags",
+      "line": 4
+    },
+    {
+      "file": "src/common/app/TwoPhaseApplication.h",
+      "description": "std::string_view是C++引入的针对只读字符串的实现，用于提高效率",
+      "line": 32
+    },
+    {
+      "file": "src/common/app/TwoPhaseApplication.h",
+      "description": "走到ApplicationBase去解析flags",
+      "line": 33
+    },
+    {
+      "file": "src/common/app/ApplicationBase.cc",
+      "description": "又压栈调用parseFlags",
+      "line": 93
+    },
+    {
+      "file": "src/common/utils/ConfigBase.cc",
+      "description": "这个函数本质上就是解析传进来的argc和argv，返回解析好的 std::vector<KeyValue>,  KeyValue是一个pair",
+      "line": 20
+    },
+    {
+      "file": "src/common/app/ApplicationBase.cc",
+      "description": "解析完结果后，赋值给flags引用",
+      "line": 99
+    },
+    {
+      "file": "src/common/app/TwoPhaseApplication.h",
+      "description": "最终的解析flags的结果会被放到TwoPhaseApplication的成员变量中",
+      "line": 105
+    },
+    {
+      "file": "src/common/app/ApplicationBase.cc",
+      "description": "这种log是在folly里面实现的条件log",
+      "line": 54
+    },
+    {
+      "file": "src/common/app/ApplicationBase.cc",
+      "description": "初始化folly",
+      "line": 57
+    },
+    {
+      "file": "src/common/app/ApplicationBase.cc",
+      "description": "初始化 application",
+      "line": 65
+    },
+    {
+      "file": "src/common/app/TwoPhaseApplication.h",
+      "description": "走到 TwoPhaseApplication 的具体实现",
+      "line": 36
+    },
+    {
+      "file": "src/common/app/TwoPhaseApplication.h",
+      "description": "如果只是为了dump_default_cfg，就打印出来，然后结束",
+      "line": 37
+    },
+    {
+      "file": "src/common/app/TwoPhaseApplication.h",
+      "description": "相当于 extern bool FLAGS_dump_default_cfg;",
+      "line": 10
+    },
+    {
+      "file": "src/common/app/TwoPhaseApplication.h",
+      "description": "初始化launcher",
+      "line": 42
+    },
+    {
+      "file": "src/core/app/ServerLauncher.h",
+      "description": "Storage服务中就是执行这个操作",
+      "line": 34
+    },
+    {
+      "file": "src/core/app/ServerLauncher.h",
+      "description": "初始化appconfig",
+      "line": 35
+    },
+    {
+      "file": "src/core/app/ServerAppConfig.cc",
+      "description": "本质上会走到这个函数",
+      "line": 6
+    },
+    {
+      "file": "src/core/app/ServerLauncher.h",
+      "description": "launcherConfig也要进行初始化",
+      "line": 36
+    },
+    {
+      "file": "src/core/app/ServerLauncherConfig.cc",
+      "description": "本质上会走到这个函数",
+      "line": 7
+    },
+    {
+      "file": "src/core/app/ServerLauncher.h",
+      "description": "启动IBManager，需要从launcherConfig中获取ib_devices()",
+      "line": 41
+    },
+    {
+      "file": "src/core/app/ServerLauncherConfig.h",
+      "description": "获取ib_devices的地方",
+      "line": 11
+    },
+    {
+      "file": "src/common/utils/ConfigBase.h",
+      "description": "实际获取ib_devices的函数",
+      "line": 46
+    },
+    {
+      "file": "src/core/app/ServerLauncherConfig.h",
+      "description": "获取ib_devices最后返回的是 `net::IBDevice::Config` 类型的实例",
+      "line": 11
+    },
+    {
+      "file": "src/common/net/ib/IBDevice.h",
+      "description": "IBConfig里面包含一大堆成员变量",
+      "line": 47
+    },
+    {
+      "file": "src/common/net/ib/IBDevice.h",
+      "description": "启动 IBManager 的逻辑",
+      "line": 212
+    },
+    {
+      "file": "src/common/net/ib/IBDevice.h",
+      "description": "全局只有一个IBManager单例",
+      "line": 208
+    },
+    {
+      "file": "src/common/net/ib/IBDevice.cc",
+      "description": "核心逻辑：IBManager启动服务的流程",
+      "line": 669
+    },
+    {
+      "file": "src/common/net/ib/IBDevice.cc",
+      "description": "IBManager只能被启动start一次，启动过了atomic会设置为true，不宜重复进行",
+      "line": 670
+    },
+    {
+      "file": "src/common/net/ib/IBDevice.cc",
+      "description": "forkInit 也只能进行一次，且IBManager的config里面要求 fork_safe 为true",
+      "line": 675
+    },
+    {
+      "file": "src/common/net/ib/IBDevice.cc",
+      "description": "ibv_fork_init() 应该是ib为了适配进程的fork实现的一种初始化方式，参考文献：http://jiangzhuti.me/posts/ibv_fork_init%E5%8E%9F%E7%90%86,%E5%B1%80%E9%99%90%E6%80%A7%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5",
+      "line": 676
+    },
+    {
+      "file": "src/common/net/ib/IBDevice.cc",
+      "description": "这里是打开IB设备",
+      "line": 686
+    },
+    {
+      "file": "src/common/net/ib/IBDevice.cc",
+      "description": "需要先在shell执行ibdev2netdev逻辑",
+      "line": 213
+    },
+    {
+      "file": "src/common/net/ib/IBDevice.cc",
+      "description": "folly里面实现的shellify()函数：\n\nshellify() 的主要目的是对命令字符串进行转义和格式化 ，以确保它可以在 Shell 环境中安全、正确地执行。具体来说：\n\n- 转义特殊字符 ：例如，空格、引号、反斜杠等特殊字符会被适当地转义，避免 Shell 解析时出现语法错误。\n- 封装命令 ：将命令字符串包装成可以直接传递给 Shell 执行的形式。",
+      "line": 147
+    },
+    {
+      "file": "src/common/net/ib/IBDevice.cc",
+      "description": "trimWhitespace 通常用于删除字符串开头和结尾的空白字符（如空格、制表符 \\t、换行符 \\n 等）。这在数据清理或用户输入处理时非常常见",
+      "line": 161
+    },
+    {
+      "file": "src/common/net/ib/IBDevice.cc",
+      "description": "读取ib设备的各种信息",
+      "line": 176
+    },
+    {
+      "file": "src/common/net/ib/IBDevice.cc",
+      "description": "返回ib设备的信息",
+      "line": 189
+    },
+    {
+      "file": "src/common/net/ib/IBDevice.cc",
+      "description": "load函数是一个静态函数，也是只会执行一次",
+      "line": 219
+    },
+    {
+      "file": "src/common/net/IfAddrs.h",
+      "description": "执行一次 loadOnce() 函数",
+      "line": 36
+    },
+    {
+      "file": "src/common/net/IfAddrs.h",
+      "description": "getifaddrs 函数用于获取系统中所有网络接口的信息。它返回一个链表，链表中的每个节点包含一个 struct ifaddrs 结构，该结构定义在 ifaddrs.h 头文件中。",
+      "line": 44
+    }
+  ],
+  "ref": "study"
+}

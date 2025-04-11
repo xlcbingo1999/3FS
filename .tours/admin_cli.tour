@@ -1,0 +1,72 @@
+{
+  "$schema": "https://aka.ms/codetour-schema",
+  "title": "admin_cli",
+  "steps": [
+    {
+      "file": "src/client/bin/admin_cli.cc",
+      "description": "admin_cli的main函数入口",
+      "line": 82
+    },
+    {
+      "file": "src/common/utils/ConfigBase.h",
+      "description": "生成name()和const name()方法，提供对配置对象的直接访问",
+      "line": 47
+    },
+    {
+      "file": "src/common/utils/ConfigBase.h",
+      "description": "这个操作会将宏传进来的参数 `name` 转化为字符串字面量+下划线。\n```\n// 宏展开示例\nCONFIG_OBJ(network, NetworkConfig) \n↓ 展开为 ↓\nprivate:\n    NetworkConfig network_;  // name##_ 生成的成员变量\n```",
+      "line": 50
+    },
+    {
+      "file": "src/common/utils/ConfigBase.h",
+      "description": "CRTP模式（Curiously Recurring Template Pattern）：确保在模板基类中正确获取派生类的实际类型。\n\n1. decltype\n\n- 作用：推导表达式的实际类型（保留引用和const限定）\n- 特点：\n    - 返回表达式在编译期的静态类型\n    - 保留引用和const/volatile限定符\n    - 支持任何表达式，包括变量、函数调用、运算符等\n- 示例：\n\n```\nint a = 10;\nint& b = a;\ndecltype(a) c;    // int\ndecltype(b) d = a;// int&\ndecltype((a)) e = a; // int& (注意括号的特殊作用)\n```\n\n\n2. std::decay_t\n\n- 作用：模拟值传递时的类型退化\n- 转化规则：\n    - 数组类型 -> 指针类型 // int[5] → int*\n    - 函数类型 -> 函数指针类型 // void(int) -> void(*)(int)\n    - 去除 const / volatile 限定符\n    - 去除引用\n    - 其他类型 -> 元类型\n\n```\ntemplate<typename T>\nvoid foo(T&& param) {\n    using DecayedT = std::decay_t<T>;  // 退化后的实际存储类型\n}\n```\n\n\n3. 本逻辑的含义：\n\n\n```\nusing Self = std::decay_t<decltype(*this)>;\n```\n\n- decltype(*this) → 推导出当前类类型的引用（如MyClass&）\n- std::decay_t → 退化去除引用，得到实际类型MyClass\n\n",
+      "line": 52,
+      "selection": {
+        "start": {
+          "line": 1,
+          "character": 1
+        },
+        "end": {
+          "line": 1,
+          "character": 46
+        }
+      }
+    },
+    {
+      "file": "src/common/utils/ConfigBase.h",
+      "description": "reinterpret_cast： 非常激进的指针类型转换，在编译期完成，可以转换任何类型的指针，所以极不安全。\n\n核心代码：\n- #name → 字符串化的配置项名称（如 \"network\"）\n- &Self::name##_ → 获取当前类中成员变量的指针（如 &AppConfig::network_）\n- reinterpret_cast<...> → 类型转换桥梁\n- ConfigBase<Self>::sections_ → 基类中的注册表（存储所有配置项）\n\n例子：\n\n```\n// 展开后实际代码\nConfigBase<AppConfig>::sections_[\"network\"] = \n    reinterpret_cast<IConfig AppConfig::*>(&AppConfig::network_);\n```",
+      "line": 53,
+      "selection": {
+        "start": {
+          "line": 53,
+          "character": 1
+        },
+        "end": {
+          "line": 54,
+          "character": 1
+        }
+      }
+    },
+    {
+      "file": "src/common/utils/ConfigBase.h",
+      "description": "当宏调用包含第三个参数时（如 CONFIG_OBJ(db, DBConfig, initDB)），这段代码将执行：\n\n```\ninitDB(db_); // 对成员变量执行额外初始化\n```",
+      "line": 54
+    },
+    {
+      "file": "src/client/bin/admin_cli.cc",
+      "description": "初始化logging模块，主要也是用folly这个库",
+      "line": 92
+    },
+    {
+      "file": "src/client/bin/admin_cli.cc",
+      "description": "应该是设置了处理的文件操作符的数量限制",
+      "line": 93
+    },
+    {
+      "file": "src/client/bin/admin_cli.cc",
+      "description": "初始化n个客户端的指针",
+      "line": 95
+    }
+  ],
+  "ref": "study"
+}

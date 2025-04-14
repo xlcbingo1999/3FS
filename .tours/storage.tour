@@ -581,6 +581,326 @@
       "file": "src/common/app/TwoPhaseApplication.h",
       "description": "主要是去获取AppInfo的相关内容",
       "line": 45
+    },
+    {
+      "file": "src/common/app/Utils.cc",
+      "description": "连续执行20次得到结果",
+      "line": 243
+    },
+    {
+      "file": "src/common/app/TwoPhaseApplication.h",
+      "description": "主要是执行 launcher_->loadAppInfo() ",
+      "line": 45
+    },
+    {
+      "file": "src/core/app/ServerLauncher.h",
+      "description": "主要去获取相关的app info",
+      "line": 56
+    },
+    {
+      "file": "src/core/app/ServerLauncher.h",
+      "description": "执行 completeAppInfo ",
+      "line": 57
+    },
+    {
+      "file": "src/core/app/ServerMgmtdClientFetcher.cc",
+      "description": "实际执行的就是这个函数",
+      "line": 6
+    },
+    {
+      "file": "src/core/app/ServerMgmtdClientFetcher.cc",
+      "description": "确保client是被初始化的",
+      "line": 7
+    },
+    {
+      "file": "src/core/app/MgmtdClientFetcher.cc",
+      "description": "这里是创建了一个相关的客户端",
+      "line": 44
+    },
+    {
+      "file": "src/common/net/Client.h",
+      "description": "把client创建出来",
+      "line": 33
+    },
+    {
+      "file": "src/common/net/Client.h",
+      "description": "配置config",
+      "line": 34
+    },
+    {
+      "file": "src/common/net/Client.h",
+      "description": "配置threadpool group的信息",
+      "line": 35
+    },
+    {
+      "file": "src/common/net/Client.h",
+      "description": "ThreadPoolGroup",
+      "line": 83
+    },
+    {
+      "file": "src/common/net/ThreadPoolGroup.h",
+      "description": "创建 ThreadPoolGroup",
+      "line": 32
+    },
+    {
+      "file": "src/common/net/ThreadPoolGroup.h",
+      "description": "创建了用于cpu计算任务的 threadpool",
+      "line": 34
+    },
+    {
+      "file": "src/common/net/ThreadPoolGroup.h",
+      "description": "threadpoll的类型是 CPUExecutorGroup",
+      "line": 73
+    },
+    {
+      "file": "src/common/utils/CPUExecutorGroup.cc",
+      "description": "根据对应的策略来新建CPUExecutorGroup",
+      "line": 57
+    },
+    {
+      "file": "src/common/utils/CPUExecutorGroup.cc",
+      "description": "工厂模式",
+      "line": 59
+    },
+    {
+      "file": "third_party/folly/folly/executors/thread_factory/NamedThreadFactory.h",
+      "description": "工厂提供了统一的thread新建模式",
+      "line": 35
+    },
+    {
+      "file": "third_party/folly/folly/executors/thread_factory/NamedThreadFactory.h",
+      "description": "thread干的事情就是去执行创建时传进来的function",
+      "line": 40
+    },
+    {
+      "file": "third_party/folly/folly/executors/thread_factory/NamedThreadFactory.h",
+      "description": "工厂的原子变量",
+      "line": 50
+    },
+    {
+      "file": "src/common/utils/CPUExecutorGroup.cc",
+      "description": "当前默认的配置传进来的是SHARED_QUEUE",
+      "line": 62
+    },
+    {
+      "file": "src/common/utils/CPUExecutorGroup.cc",
+      "description": "默认的SHARED_QUEUE会创建folly的CPUThreadPoolExecutor，添加进去",
+      "line": 64
+    },
+    {
+      "file": "src/common/net/ThreadPoolGroup.h",
+      "description": "ioThread也要创建出来",
+      "line": 35
+    },
+    {
+      "file": "src/common/net/ThreadPoolGroup.h",
+      "description": "不知道为什么，IO thread和BG thread也使用的是CPUExecutorGroup",
+      "line": 74
+    },
+    {
+      "file": "src/common/net/ThreadPoolGroup.h",
+      "description": "conn Threadpool 的使用有一个min、max threads数量的处理",
+      "line": 37
+    },
+    {
+      "file": "src/common/net/ThreadPoolGroup.h",
+      "description": "connThreadPool_使用的就是folly提供的IOThreadPoolExecutor",
+      "line": 76
+    },
+    {
+      "file": "src/common/net/ThreadPoolGroup.h",
+      "description": "创建几个threadpool的reporter，用于上交一些信息",
+      "line": 40
+    },
+    {
+      "file": "src/common/utils/ExecutorStatsReporter.h",
+      "description": "这个是由3fs自己写的一个轮子",
+      "line": 8
+    },
+    {
+      "file": "src/common/utils/ExecutorStatsReporter.h",
+      "description": "核心就是去创建monitor用的相关的Recorder和Tag",
+      "line": 16
+    },
+    {
+      "file": "src/common/net/ThreadPoolGroup.h",
+      "description": "如果设置了指标收集，则会创建这个coroutine进行处理",
+      "line": 46
+    },
+    {
+      "file": "src/common/net/ThreadPoolGroup.cc",
+      "description": "coroutine的核心内容",
+      "line": 12
+    },
+    {
+      "file": "src/common/net/ThreadPoolGroup.cc",
+      "description": "每次挂起的时候就是sleep 2s，然后就会重新执行？",
+      "line": 16
+    },
+    {
+      "file": "src/common/net/Client.h",
+      "description": "创建processor_",
+      "line": 36
+    },
+    {
+      "file": "src/common/net/Processor.h",
+      "description": "`Processor(serde::Services &serdeServices, CPUExecutorGroup &executor, const Config &config)` 初始化相关的Processor",
+      "line": 45
+    },
+    {
+      "file": "src/common/net/Client.h",
+      "description": "配置 ioWorker ",
+      "line": 37
+    },
+    {
+      "file": "src/common/net/IOWorker.h",
+      "description": "很复杂的一个IOWorker的创建",
+      "line": 38
+    },
+    {
+      "file": "src/common/net/Client.h",
+      "description": "创建clientConfigGuard_",
+      "line": 38
+    },
+    {
+      "file": "src/common/net/Client.h",
+      "description": "初始化的时候会更新配置",
+      "line": 39
+    },
+    {
+      "file": "src/core/app/MgmtdClientFetcher.cc",
+      "description": "把客户端启动",
+      "line": 45
+    },
+    {
+      "file": "src/common/net/Client.h",
+      "description": "启动processor",
+      "line": 44
+    },
+    {
+      "file": "src/common/net/Processor.h",
+      "description": "启动的流程啥也没干。。。",
+      "line": 63
+    },
+    {
+      "file": "src/common/net/Client.h",
+      "description": "给serdeServices_增加RDMAControlImpl的service",
+      "line": 45
+    },
+    {
+      "file": "src/common/net/Client.h",
+      "description": "ioWorker启动服务",
+      "line": 46
+    },
+    {
+      "file": "src/common/net/IOWorker.cc",
+      "description": "核心就是启动 eventLoopPool",
+      "line": 13
+    },
+    {
+      "file": "src/common/net/EventLoop.cc",
+      "description": "遍历所有的eventLoop，分别进行启动",
+      "line": 171
+    },
+    {
+      "file": "src/common/net/EventLoop.cc",
+      "description": "最后收束到此处，本质上就是epoll和folly thread的处理",
+      "line": 13
+    },
+    {
+      "file": "src/core/app/MgmtdClientFetcher.cc",
+      "description": "用于创建context的creator",
+      "line": 50
+    },
+    {
+      "file": "src/core/app/MgmtdClientFetcher.cc",
+      "description": "创建一个stub的工厂\n\n系统S有某个依赖D，但我用另外的模块X来代替D。模块X就被称为一个stub。在测试系统的过程中，X可以是用来模拟D的模块，因为D可能调用起来比较昂贵。\n\n",
+      "line": 53
+    },
+    {
+      "file": "src/core/app/MgmtdClientFetcher.cc",
+      "description": "创建一个 mgmtdClient\n",
+      "line": 55
+    },
+    {
+      "file": "src/client/mgmtd/MgmtdClient.cc",
+      "description": "核心就是创建 Impl",
+      "line": 798
+    },
+    {
+      "file": "src/client/mgmtd/MgmtdClient.cc",
+      "description": "就是进行简单的赋值",
+      "line": 191
+    },
+    {
+      "file": "src/core/app/MgmtdClientFetcher.cc",
+      "description": "启动mgmtdClient",
+      "line": 58
+    },
+    {
+      "file": "src/client/mgmtd/MgmtdClient.cc",
+      "description": "本质上就是去co_await内部impl的start流程",
+      "line": 804
+    },
+    {
+      "file": "src/client/mgmtd/MgmtdClient.cc",
+      "description": "核心的启动coroutine",
+      "line": 216
+    },
+    {
+      "file": "src/client/mgmtd/MgmtdClient.cc",
+      "description": "如果background没有在running，则需要创建一个backgroundExecutor\n\n特殊的占位符对象，可在Task<T>或AsyncGenerator<T>内部通过'co_await'获取与当前协程关联的folly::Executor对象 [[2]]\n\n注意：\n1. 对于folly::Task，其executor在协程整个生命周期内保持不变 [[2]]\n2. 对于folly::AsyncGenerator<T>，当从co_yield挂起点恢复时，当前executor可能发生改变（由协程恢复时的调度策略决定） [[7]]\n\n示例：\n```\n//   folly::coro::Task<void> example() {\n//     // 通过co_await获取当前协程的执行器 [[5]]\n//     Executor* e = co_await folly::coro::co_current_executor;\n//     // 使用执行器调度任务 [[6]]\n//     e->add([] { do_something(); });\n//   }\n```",
+      "line": 219
+    },
+    {
+      "file": "src/client/mgmtd/MgmtdClient.cc",
+      "description": "backgroundExecutor上面执行的是actor()",
+      "line": 221
+    },
+    {
+      "file": "src/client/mgmtd/MgmtdClient.cc",
+      "description": "无尽循环 ",
+      "line": 413
+    },
+    {
+      "file": "src/client/mgmtd/MgmtdClient.cc",
+      "description": "每次都从有界队列中取出一个item",
+      "line": 414
+    },
+    {
+      "file": "src/client/mgmtd/MgmtdClient.cc",
+      "description": "std::visit 是 C++ 标准库中的一个函数，它的作用是将一个包含多种不同类型的可访问对象（如 std::variant 或 std::any 等）的容器中的对象传递给多个可调用对象中的一个，具体调用哪个可调用对象由该对象所包含的对象的实际类型决定。\n\nitem->variant的类型可以包括：\n- ExitWorkItem \n- RefreshWorkItem\n- HeartbeatWorkItem\n- CallableWorkItem",
+      "line": 415
+    },
+    {
+      "file": "src/client/mgmtd/MgmtdClient.cc",
+      "description": "应该是退出mgmtdClient的逻辑",
+      "line": 380
+    },
+    {
+      "file": "src/client/mgmtd/MgmtdClient.cc",
+      "description": "应该是用于更新item的逻辑，核心也是去设置item的promise，进而触发future的变化",
+      "line": 387
+    },
+    {
+      "file": "src/client/mgmtd/MgmtdClient.cc",
+      "description": "client的心跳逻辑",
+      "line": 396
+    },
+    {
+      "file": "src/client/mgmtd/MgmtdClient.cc",
+      "description": "应该是client的内容执行逻辑",
+      "line": 405
+    },
+    {
+      "file": "src/client/mgmtd/MgmtdClient.cc",
+      "description": "核心就是这个callable",
+      "line": 61
+    },
+    {
+      "file": "src/client/mgmtd/MgmtdClient.cc",
+      "description": "封装了一个cotask",
+      "line": 30
     }
   ],
   "ref": "study"

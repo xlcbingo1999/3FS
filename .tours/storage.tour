@@ -901,6 +901,3201 @@
       "file": "src/client/mgmtd/MgmtdClient.cc",
       "description": "封装了一个cotask",
       "line": 30
+    },
+    {
+      "file": "src/client/mgmtd/MgmtdClient.cc",
+      "description": "开启一些后台task，注意上面的代码中 backgroundExecutor = co_await folly::coro::co_current_executor 只是一个占位符，真正的配置在这个函数调用里面",
+      "line": 226
+    },
+    {
+      "file": "src/client/mgmtd/MgmtdClient.cc",
+      "description": "真正的配置backgroundRunner_",
+      "line": 242
+    },
+    {
+      "file": "src/common/utils/BackgroundRunner.h",
+      "description": "初始化BackgroundRunner",
+      "line": 14
+    },
+    {
+      "file": "src/client/mgmtd/MgmtdClient.cc",
+      "description": "在每一个以 _launch 为结尾的配置文件中， [mgmtd_client]里面都有这个参数 enable_auto_refresh",
+      "line": 243
+    },
+    {
+      "file": "src/client/mgmtd/MgmtdClient.cc",
+      "description": "启动 AutoRefresh 的后台任务",
+      "line": 244
+    },
+    {
+      "file": "src/common/utils/BackgroundRunner.cc",
+      "description": "核心就是启动这个支持取消的coroutine",
+      "line": 39
+    },
+    {
+      "file": "src/common/utils/BackgroundRunner.cc",
+      "description": "这个就是核心的coroutine",
+      "line": 73
+    },
+    {
+      "file": "src/common/utils/BackgroundRunner.cc",
+      "description": "会执行无限轮",
+      "line": 84
+    },
+    {
+      "file": "src/common/utils/BackgroundRunner.cc",
+      "description": "会开启coroutine去执行传入的taskGetter()并等待结果的返回",
+      "line": 87
+    },
+    {
+      "file": "src/client/mgmtd/MgmtdClient.cc",
+      "description": "传进来的是这个 autoRefresh() 的函数",
+      "line": 246
+    },
+    {
+      "file": "src/client/mgmtd/MgmtdClient.cc",
+      "description": "这也是一个coroutine",
+      "line": 280
+    },
+    {
+      "file": "src/client/mgmtd/MgmtdClient.cc",
+      "description": "核心函数就是这个refreshRoutingInfo",
+      "line": 285
+    },
+    {
+      "file": "src/client/mgmtd/MgmtdClient.cc",
+      "description": "refreshRoutingInfo的核心内容就是去创建一个RefreshWorkItem，然后入队等待处理",
+      "line": 455
+    },
+    {
+      "file": "src/common/utils/BoundedQueue.h",
+      "description": "入队的核心逻辑",
+      "line": 64
+    },
+    {
+      "file": "src/common/utils/BoundedQueue.h",
+      "description": "将item增加到MPMC队列中，MPMC队列的介绍：https://www.showapi.com/news/article/67004c704ddd79f11a5ad24f\n\n\n# 1.1 MPMCQueue的设计理念与优势\nMPMCQueue的设计初衷是为了应对现代高并发应用的需求，特别是在那些对延迟极度敏感的场景下，如高频交易系统、实时数据分析平台等。传统的同步机制，比如锁，虽然能够保证数据的一致性，但在高并发环境下却成为了性能的瓶颈。MPMCQueue通过采用无锁设计，巧妙地绕过了这一问题。其核心思想在于利用原子操作和内存顺序来替代锁，使得多个生产者和多个消费者可以并行地向队列中添加或移除元素，而无需等待其他线程释放锁。这样不仅减少了线程间的竞争，还极大地提高了系统的吞吐量。例如，在一个典型的金融交易系统中，MPMCQueue能够显著降低延迟，确保交易指令被快速准确地执行，从而为用户带来更好的体验。\n\n# 1.2 无锁编程技术的原理介绍\n无锁编程是一种先进的并发控制技术，它允许程序在不使用任何互斥锁的情况下执行多线程操作。这种技术依赖于现代处理器提供的原子操作，如compare-and-swap (CAS) 指令，来保证数据的一致性和完整性。在MPMCQueue中，每个节点都包含一个指向前一个节点的指针以及一个指向下一个节点的指针。当生产者尝试插入新元素时，它会首先检查当前尾部节点的状态，如果该节点尚未被标记为“已完成”，则更新其指向下一个节点的指针；否则，继续查找下一个未完成的节点。类似地，消费者在移除元素前也需要检查头部节点的状态。通过这种方式，MPMCQueue实现了线程间的高效协作，避免了因频繁加锁解锁带来的开销，进而提升了整体性能。",
+      "line": 69
+    },
+    {
+      "file": "src/common/utils/BoundedQueue.h",
+      "description": "写完数据还是需要信号量signal",
+      "line": 70
+    },
+    {
+      "file": "src/common/app/TwoPhaseApplication.h",
+      "description": "这个内部也很多代码，暂时不看了 ",
+      "line": 46
+    },
+    {
+      "file": "src/common/app/TwoPhaseApplication.h",
+      "description": "初始化一些公共的组件，包括logging、monitor",
+      "line": 49
+    },
+    {
+      "file": "src/common/app/TwoPhaseApplication.h",
+      "description": "根据common log的配置进行相关的设置：\n\n```\n[[common.log.categories]]\ncategories = [ '.' ]\nhandlers = [ 'normal', 'err', 'fatal' ]\ninherit = true\nlevel = 'INFO'\npropagate = 'NONE'\n\n[[common.log.handlers]]\nasync = true\nfile_path = '/var/log/3fs/storage_main.log'\nmax_file_size = '100MB'\nmax_files = 10\nname = 'normal'\nrotate = true\nrotate_on_open = false\nstart_level = 'NONE'\nstream_type = 'STDERR'\nwriter_type = 'FILE'\n\n[[common.log.handlers]]\nasync = false\nfile_path = '/var/log/3fs/storage_main-err.log'\nmax_file_size = '100MB'\nmax_files = 10\nname = 'err'\nrotate = true\nrotate_on_open = false\nstart_level = 'ERR'\nstream_type = 'STDERR'\nwriter_type = 'FILE'\n\n[[common.log.handlers]]\nasync = false\nfile_path = '/var/log/3fs/storage_main-fatal.log'\nmax_file_size = '100MB'\nmax_files = 10\nname = 'fatal'\nrotate = true\nrotate_on_open = false\nstart_level = 'FATAL'\nstream_type = 'STDERR'\nwriter_type = 'STREAM'\n```",
+      "line": 51
+    },
+    {
+      "file": "src/common/app/TwoPhaseApplication.h",
+      "description": "根据[common.memory]来配置相应memory更新回调",
+      "line": 52
+    },
+    {
+      "file": "src/common/app/Utils.cc",
+      "description": "jemalloc是一款内存分配器，与其它内存分配器（glibc）相比，其最大优势在于多线程场景下内存分配性能高以及内存碎片减少。",
+      "line": 210
+    },
+    {
+      "file": "src/common/app/TwoPhaseApplication.h",
+      "description": "初始化服务器",
+      "line": 58
+    },
+    {
+      "file": "src/common/app/TwoPhaseApplication.h",
+      "description": "创建server实例，使用的参数非常多：\n\n```\n[server]\nspeed_up_quit = true\nuse_coroutines_pool_read = true\nuse_coroutines_pool_update = true\n\n[server.aio_read_worker]\nenable_io_uring = true\ninflight_control_offset = 128\nioengine = 'libaio'\nmax_events = 512\nmin_complete = 128\nnum_threads = 32\nqueue_size = 4096\nwait_all_inflight = false\n\n[server.allocate_worker]\nmax_remain_groups = 8\nmax_remain_ultra_groups = 4\nmax_reserved_chunks = '1GB'\nmin_remain_groups = 4\nmin_remain_ultra_groups = 0\n\n[server.base.independent_thread_pool]\nbg_thread_pool_stratetry = 'SHARED_QUEUE'\ncollect_stats = false\nenable_work_stealing = false\nio_thread_pool_stratetry = 'SHARED_QUEUE'\nnum_bg_threads = 2\nnum_connect_threads = 2\nnum_io_threads = 2\nnum_proc_threads = 2\nproc_thread_pool_stratetry = 'SHARED_QUEUE'\n\n[server.base.thread_pool]\nbg_thread_pool_stratetry = 'SHARED_QUEUE'\ncollect_stats = false\nenable_work_stealing = false\nio_thread_pool_stratetry = 'SHARED_QUEUE'\nnum_bg_threads = 2\nnum_connect_threads = 2\nnum_io_threads = 32\nnum_proc_threads = 32\nproc_thread_pool_stratetry = 'SHARED_QUEUE'\n\n[[server.base.groups]]\ncheck_connections_interval = '1min'\nconnection_expiration_time = '1day'\nnetwork_type = 'RDMA'\nservices = [ 'StorageSerde' ]\nuse_independent_thread_pool = false\n\n[server.base.groups.io_worker]\nnum_event_loop = 1\nrdma_connect_timeout = '5s'\nread_write_rdma_in_event_thread = false\nread_write_tcp_in_event_thread = false\ntcp_connect_timeout = '1s'\nwait_to_retry_send = '100ms'\n\n[server.base.groups.io_worker.connect_concurrency_limiter]\nmax_concurrency = 4\n\n[server.base.groups.io_worker.ibsocket]\nbuf_ack_batch = 8\nbuf_signal_batch = 8\nbuf_size = 16384\ndrain_timeout = '5s'\ndrop_connections = 0\nevent_ack_batch = 128\nmax_rd_atomic = 16\nmax_rdma_wr = 128\nmax_rdma_wr_per_post = 32\nmax_sge = 16\nmin_rnr_timer = 1\nrecord_bytes_per_peer = false\nrecord_latency_per_peer = false\nretry_cnt = 7\nrnr_retry = 0\nsend_buf_cnt = 32\nsl = 0\nstart_psn = 0\ntimeout = 14\n\n[server.base.groups.io_worker.transport_pool]\nmax_connections = 1\n\n[server.base.groups.listener]\ndomain_socket_index = 1\nfilter_list = []\nlisten_port = 8000\nlisten_queue_depth = 4096\nrdma_accept_timeout = '15s'\nrdma_listen_ethernet = true\nreuse_port = false\n\n[server.base.groups.processor]\nenable_coroutines_pool = true\nmax_coroutines_num = 256\nmax_processing_requests_num = 4096\nresponse_compression_level = 1\nresponse_compression_threshold = '128KB'\n\n[[server.base.groups]]\ncheck_connections_interval = '1min'\nconnection_expiration_time = '1day'\nnetwork_type = 'TCP'\nservices = [ 'Core' ]\nuse_independent_thread_pool = true\n\n[server.base.groups.io_worker]\nnum_event_loop = 1\nrdma_connect_timeout = '5s'\nread_write_rdma_in_event_thread = false\nread_write_tcp_in_event_thread = false\ntcp_connect_timeout = '1s'\nwait_to_retry_send = '100ms'\n\n[server.base.groups.io_worker.connect_concurrency_limiter]\nmax_concurrency = 4\n\n[server.base.groups.io_worker.ibsocket]\nbuf_ack_batch = 8\nbuf_signal_batch = 8\nbuf_size = 16384\ndrain_timeout = '5s'\ndrop_connections = 0\nevent_ack_batch = 128\nmax_rd_atomic = 16\nmax_rdma_wr = 128\nmax_rdma_wr_per_post = 32\nmax_sge = 16\nmin_rnr_timer = 1\nrecord_bytes_per_peer = false\nrecord_latency_per_peer = false\nretry_cnt = 7\nrnr_retry = 0\nsend_buf_cnt = 32\nsl = 0\nstart_psn = 0\ntimeout = 14\n\n[server.base.groups.io_worker.transport_pool]\nmax_connections = 1\n\n[server.base.groups.listener]\ndomain_socket_index = 1\nfilter_list = []\nlisten_port = 9000\nlisten_queue_depth = 4096\nrdma_accept_timeout = '15s'\nrdma_listen_ethernet = true\nreuse_port = false\n\n[server.base.groups.processor]\nenable_coroutines_pool = true\nmax_coroutines_num = 256\nmax_processing_requests_num = 4096\nresponse_compression_level = 1\nresponse_compression_threshold = '128KB'\n\n[server.buffer_pool]\nbig_rdmabuf_count = 64\nbig_rdmabuf_size = '64MB'\nrdmabuf_count = 1024\nrdmabuf_size = '4MB'\n\n[server.check_worker]\ndisk_low_space_threshold = 0.95999999999999996\ndisk_reject_create_chunk_threshold = 0.97999999999999998\nemergency_recycling_ratio = 0.94999999999999996\nupdate_target_size_interval = '10s'\n\n[server.client]\ndefault_compression_level = 0\ndefault_compression_threshold = '128KB'\ndefault_log_long_running_threshold = '0ns'\ndefault_report_metrics = false\ndefault_send_retry_times = 1\ndefault_timeout = '1s'\nenable_rdma_control = false\nforce_use_tcp = false\n\n[server.client.io_worker]\nnum_event_loop = 1\nrdma_connect_timeout = '5s'\nread_write_rdma_in_event_thread = false\nread_write_tcp_in_event_thread = false\ntcp_connect_timeout = '1s'\nwait_to_retry_send = '100ms'\n\n[server.client.io_worker.connect_concurrency_limiter]\nmax_concurrency = 4\n\n[server.client.io_worker.ibsocket]\nbuf_ack_batch = 8\nbuf_signal_batch = 8\nbuf_size = 16384\ndrain_timeout = '5s'\ndrop_connections = 0\nevent_ack_batch = 128\nmax_rd_atomic = 16\nmax_rdma_wr = 128\nmax_rdma_wr_per_post = 32\nmax_sge = 16\nmin_rnr_timer = 1\nrecord_bytes_per_peer = false\nrecord_latency_per_peer = false\nretry_cnt = 7\nrnr_retry = 0\nsend_buf_cnt = 32\nsl = 0\nstart_psn = 0\ntimeout = 14\n\n[server.client.io_worker.transport_pool]\nmax_connections = 1\n\n[server.client.processor]\nenable_coroutines_pool = true\nmax_coroutines_num = 256\nmax_processing_requests_num = 4096\nresponse_compression_level = 1\nresponse_compression_threshold = '128KB'\n\n[server.client.rdma_control]\nmax_concurrent_transmission = 64\n\n[server.client.thread_pool]\nbg_thread_pool_stratetry = 'SHARED_QUEUE'\ncollect_stats = false\nenable_work_stealing = false\nio_thread_pool_stratetry = 'SHARED_QUEUE'\nnum_bg_threads = 2\nnum_connect_threads = 2\nnum_io_threads = 2\nnum_proc_threads = 2\nproc_thread_pool_stratetry = 'SHARED_QUEUE'\n\n[server.coroutines_pool_default]\ncoroutines_num = 64\nqueue_size = 1024\nthreads_num = 8\n\n[server.coroutines_pool_read]\ncoroutines_num = 64\nqueue_size = 1024\nthreads_num = 8\n\n[server.coroutines_pool_sync]\ncoroutines_num = 64\nqueue_size = 1024\nthreads_num = 8\n\n[server.coroutines_pool_update]\ncoroutines_num = 64\nqueue_size = 1024\nthreads_num = 8\n\n[server.dump_worker]\ndump_interval = '1day'\ndump_root_path = ''\nhigh_cpu_usage_threshold = 100\n\n[server.forward_client]\ndefault_compression_level = 0\ndefault_compression_threshold = '128KB'\ndefault_log_long_running_threshold = '0ns'\ndefault_report_metrics = false\ndefault_send_retry_times = 1\ndefault_timeout = '1s'\nenable_rdma_control = false\nforce_use_tcp = false\n\n[server.forward_client.io_worker]\nnum_event_loop = 1\nrdma_connect_timeout = '5s'\nread_write_rdma_in_event_thread = false\nread_write_tcp_in_event_thread = false\ntcp_connect_timeout = '1s'\nwait_to_retry_send = '100ms'\n\n[server.forward_client.io_worker.connect_concurrency_limiter]\nmax_concurrency = 4\n\n[server.forward_client.io_worker.ibsocket]\nbuf_ack_batch = 8\nbuf_signal_batch = 8\nbuf_size = 16384\ndrain_timeout = '5s'\ndrop_connections = 0\nevent_ack_batch = 128\nmax_rd_atomic = 16\nmax_rdma_wr = 128\nmax_rdma_wr_per_post = 32\nmax_sge = 16\nmin_rnr_timer = 1\nrecord_bytes_per_peer = false\nrecord_latency_per_peer = false\nretry_cnt = 7\nrnr_retry = 0\nsend_buf_cnt = 32\nsl = 0\nstart_psn = 0\ntimeout = 14\n\n[server.forward_client.io_worker.transport_pool]\nmax_connections = 1\n\n[server.forward_client.processor]\nenable_coroutines_pool = true\nmax_coroutines_num = 256\nmax_processing_requests_num = 4096\nresponse_compression_level = 1\nresponse_compression_threshold = '128KB'\n\n[server.forward_client.rdma_control]\nmax_concurrent_transmission = 64\n\n[server.forward_client.thread_pool]\nbg_thread_pool_stratetry = 'SHARED_QUEUE'\ncollect_stats = false\nenable_work_stealing = false\nio_thread_pool_stratetry = 'SHARED_QUEUE'\nnum_bg_threads = 2\nnum_connect_threads = 2\nnum_io_threads = 2\nnum_proc_threads = 2\nproc_thread_pool_stratetry = 'SHARED_QUEUE'\n\n[server.mgmtd]\naccept_incomplete_routing_info_during_mgmtd_bootstrapping = true\nauto_extend_client_session_interval = '10s'\nauto_heartbeat_interval = '10s'\nauto_refresh_interval = '10s'\nenable_auto_extend_client_session = false\nenable_auto_heartbeat = true\nenable_auto_refresh = true\nmgmtd_server_addresses = []\nwork_queue_size = 100\n\n[server.reliable_forwarding]\nmax_inline_forward_bytes = '0'\nretry_first_wait = '100ms'\nretry_max_wait = '1s'\nretry_total_time = '1min'\n\n[server.reliable_update]\nclean_up_expired_clients = false\nexpired_clients_timeout = '1h'\n\n[server.storage]\napply_transmission_before_getting_semaphore = true\nbatch_read_ignore_chain_version = false\nbatch_read_job_split_size = 1024\nmax_concurrent_rdma_reads = 256\nmax_concurrent_rdma_writes = 256\nmax_num_results_per_query = 100\npost_buffer_per_bytes = '64KB'\nrdma_transmission_req_timeout = '0ns'\nread_only = false\n\n[server.storage.event_trace_log]\ndump_interval = '30s'\nenabled = true\nmax_num_writers = 1\nmax_row_group_length = 100000\ntrace_file_dir = '.'\n\n[server.storage.write_worker]\nbg_num_threads = 8\nnum_threads = 32\nqueue_size = 4096\n\n[server.sync_meta_kv_worker]\nsync_meta_kv_interval = '1min'\n\n[server.sync_worker]\nbatch_size = 16\nfull_sync_chains = []\nfull_sync_level = 'NONE'\nnum_channels = 1024\nnum_threads = 16\nsync_start_timeout = '10s'\n\n[server.sync_worker.batch_concurrency_limiter]\nmax_concurrency = 64\n\n[server.sync_worker.pool]\ncoroutines_num = 64\nenable_work_stealing = false\nqueue_size = 1024\n\n[server.targets]\nallow_disk_without_uuid = false\ncollect_all_fds = true\ncreate_engine_path = true\nspace_info_cache_timeout = '5s'\ntarget_num_per_path = 0\ntarget_paths = []\n\n[server.targets.storage_target]\nforce_persist = true\nkv_path = ''\nmigrate_kv_store = false\nmutex_num = 257\npoint_query_strategy = 'NONE'\n\n[server.targets.storage_target.file_store]\npreopen_chunk_size_list = []\n\n[server.targets.storage_target.kv_store]\ncreate_if_missing = false\nintegrate_leveldb_log = false\nleveldb_block_cache_size = '8GB'\nleveldb_iterator_fill_cache = true\nleveldb_shared_block_cache = true\nleveldb_sst_file_size = '16MB'\nleveldb_write_buffer_size = '16MB'\nrocksdb_avoid_flush_during_recovery = false\nrocksdb_avoid_flush_during_shutdown = false\nrocksdb_avoid_unnecessary_blocking_io = false\nrocksdb_block_cache_size = '8GB'\nrocksdb_block_size = '4KB'\nrocksdb_bloom_filter_bits_per_key = 10\nrocksdb_compression = 'kNoCompression'\nrocksdb_enable_bloom_filter = true\nrocksdb_enable_pipelined_write = false\nrocksdb_enable_prefix_transform = true\nrocksdb_keep_log_file_num = 10\nrocksdb_level0_file_num_compaction_trigger = 4\nrocksdb_lowest_used_cache_tier = 'kNonVolatileBlockTier'\nrocksdb_max_manifest_file_size = '64MB'\nrocksdb_num_levels = 7\nrocksdb_prepopulate_block_cache = 'kDisable'\nrocksdb_readahead_size = '2MB'\nrocksdb_shared_block_cache = true\nrocksdb_stats_dump_period = '2min'\nrocksdb_target_file_size_base = '64MB'\nrocksdb_target_file_size_multiplier = 1\nrocksdb_threads_num = 8\nrocksdb_unordered_write = false\nrocksdb_wal_recovery_mode = 'kTolerateCorruptedTailRecords'\nrocksdb_write_buffer_size = '16MB'\nsync_when_write = true\ntype = 'LevelDB'\n\n[server.targets.storage_target.meta_store]\nallocate_size = '256MB'\npunch_hole_batch_size = 16\nrecycle_batch_size = 256\nremoved_chunk_expiration_time = '3day'\nremoved_chunk_force_recycled_time = '1h'\n\n```",
+      "line": 92
+    },
+    {
+      "file": "src/storage/service/StorageServer.cc",
+      "description": "初始化StorageServer的内容",
+      "line": 17
+    },
+    {
+      "file": "src/storage/service/StorageServer.cc",
+      "description": "创建net::Server",
+      "line": 18
+    },
+    {
+      "file": "src/common/net/Server.cc",
+      "description": "创建thread pool group\n\n```\n[server.base.thread_pool]\nbg_thread_pool_stratetry = 'SHARED_QUEUE'\ncollect_stats = false\nenable_work_stealing = false\nio_thread_pool_stratetry = 'SHARED_QUEUE'\nnum_bg_threads = 2\nnum_connect_threads = 2\nnum_io_threads = 32\nnum_proc_threads = 32\nproc_thread_pool_stratetry = 'SHARED_QUEUE'\n```",
+      "line": 13
+    },
+    {
+      "file": "src/common/net/Server.cc",
+      "description": "又创建了独立的 thread pool group\n\n```\n[server.base.independent_thread_pool]\nbg_thread_pool_stratetry = 'SHARED_QUEUE'\ncollect_stats = false\nenable_work_stealing = false\nio_thread_pool_stratetry = 'SHARED_QUEUE'\nnum_bg_threads = 2\nnum_connect_threads = 2\nnum_io_threads = 2\nnum_proc_threads = 2\nproc_thread_pool_stratetry = 'SHARED_QUEUE'\n\n```",
+      "line": 14
+    },
+    {
+      "file": "src/common/net/Server.cc",
+      "description": "看起来service应该有2个 StoargeSerde 和 Core\n```\n[[server.base.groups]]\ncheck_connections_interval = '1min'\nconnection_expiration_time = '1day'\nnetwork_type = 'TCP'\nservices = [ 'Core' ]\nuse_independent_thread_pool = true\n\n\n[[server.base.groups]]\ncheck_connections_interval = '1min'\nconnection_expiration_time = '1day'\nnetwork_type = 'RDMA'\nservices = [ 'StorageSerde' ]\nuse_independent_thread_pool = false\n```",
+      "line": 15
+    },
+    {
+      "file": "src/common/net/Server.cc",
+      "description": "这里use_independent_thread_pool = false, 所以就使用tpg",
+      "line": 18
+    },
+    {
+      "file": "src/common/net/Server.cc",
+      "description": "这里最关键的就是创建好相关的thread pool",
+      "line": 19
+    },
+    {
+      "file": "src/storage/service/StorageServer.cc",
+      "description": "创建相关的组件",
+      "line": 19
+    },
+    {
+      "file": "src/storage/service/Components.cc",
+      "description": "配置 rdma的 buf pool情况\n\n```\n[server.buffer_pool]\nbig_rdmabuf_count = 64\nbig_rdmabuf_size = '64MB'\nrdmabuf_count = 1024\nrdmabuf_size = '4MB'\n```",
+      "line": 21
+    },
+    {
+      "file": "src/storage/service/Components.h",
+      "description": "这里维护了BufferPool的成员变量",
+      "line": 103
+    },
+    {
+      "file": "src/storage/service/BufferPool.h",
+      "description": "透传进来初始化",
+      "line": 29
+    },
+    {
+      "file": "src/storage/service/Components.cc",
+      "description": "配置 storageTargets，这是用户感知比较强的部分\n\n```\n[server.targets]\nallow_disk_without_uuid = false\ncollect_all_fds = true\ncreate_engine_path = true\nspace_info_cache_timeout = '5s'\ntarget_num_per_path = 0\ntarget_paths = []\n```",
+      "line": 22
+    },
+    {
+      "file": "src/storage/service/Components.h",
+      "description": "需要关注这两个成员变量",
+      "line": 104
+    },
+    {
+      "file": "src/storage/store/StorageTargets.h",
+      "description": "这里将外部来的AtomicallyTargetMap透传了进来",
+      "line": 44
+    },
+    {
+      "file": "src/storage/service/Components.cc",
+      "description": "异步IO reader的worker组件\n\n```\n[server.aio_read_worker]\nenable_io_uring = true\ninflight_control_offset = 128\nioengine = 'libaio'\nmax_events = 512\nmin_complete = 128\nnum_threads = 32\nqueue_size = 4096\nwait_all_inflight = false\n```",
+      "line": 23
+    },
+    {
+      "file": "src/storage/service/Components.h",
+      "description": "AIO的成员变量",
+      "line": 106
+    },
+    {
+      "file": "src/storage/aio/AioReadWorker.h",
+      "description": "创建了一个有界的MPMQ队列，默认大小是queue_size = 4096",
+      "line": 54
+    },
+    {
+      "file": "src/storage/aio/AioReadWorker.h",
+      "description": "队列的元素是AioReadJobIterator，应该一个迭代器标识一个read的job",
+      "line": 71
+    },
+    {
+      "file": "src/storage/aio/AioReadWorker.h",
+      "description": "创建对应的aio read执行器，包含的thread数量默认是num_threads = 32",
+      "line": 55
+    },
+    {
+      "file": "src/storage/aio/AioReadWorker.h",
+      "description": "主要创建的thread都有名字叫 AioRead",
+      "line": 56
+    },
+    {
+      "file": "src/storage/service/Components.cc",
+      "description": "这个没看懂\n\n```\n[server.forward_client]\ndefault_compression_level = 0\ndefault_compression_threshold = '128KB'\ndefault_log_long_running_threshold = '0ns'\ndefault_report_metrics = false\ndefault_send_retry_times = 1\ndefault_timeout = '1s'\nenable_rdma_control = false\nforce_use_tcp = false\n\n[server.forward_client.io_worker]\nnum_event_loop = 1\nrdma_connect_timeout = '5s'\nread_write_rdma_in_event_thread = false\nread_write_tcp_in_event_thread = false\ntcp_connect_timeout = '1s'\nwait_to_retry_send = '100ms'\n\n[server.forward_client.io_worker.connect_concurrency_limiter]\nmax_concurrency = 4\n\n[server.forward_client.io_worker.ibsocket]\nbuf_ack_batch = 8\nbuf_signal_batch = 8\nbuf_size = 16384\ndrain_timeout = '5s'\ndrop_connections = 0\nevent_ack_batch = 128\nmax_rd_atomic = 16\nmax_rdma_wr = 128\nmax_rdma_wr_per_post = 32\nmax_sge = 16\nmin_rnr_timer = 1\nrecord_bytes_per_peer = false\nrecord_latency_per_peer = false\nretry_cnt = 7\nrnr_retry = 0\nsend_buf_cnt = 32\nsl = 0\nstart_psn = 0\ntimeout = 14\n\n[server.forward_client.io_worker.transport_pool]\nmax_connections = 1\n\n[server.forward_client.processor]\nenable_coroutines_pool = true\nmax_coroutines_num = 256\nmax_processing_requests_num = 4096\nresponse_compression_level = 1\nresponse_compression_threshold = '128KB'\n\n[server.forward_client.rdma_control]\nmax_concurrent_transmission = 64\n\n[server.forward_client.thread_pool]\nbg_thread_pool_stratetry = 'SHARED_QUEUE'\ncollect_stats = false\nenable_work_stealing = false\nio_thread_pool_stratetry = 'SHARED_QUEUE'\nnum_bg_threads = 2\nnum_connect_threads = 2\nnum_io_threads = 2\nnum_proc_threads = 2\nproc_thread_pool_stratetry = 'SHARED_QUEUE'\n```",
+      "line": 24,
+      "selection": {
+        "start": {
+          "line": 24,
+          "character": 24
+        },
+        "end": {
+          "line": 24,
+          "character": 38
+        }
+      }
+    },
+    {
+      "file": "src/storage/service/Components.h",
+      "description": "初始化的是client引申的StorageMessenger",
+      "line": 107
+    },
+    {
+      "file": "src/client/storage/StorageMessenger.cc",
+      "description": "初始化时用的是client的完整参数",
+      "line": 11
+    },
+    {
+      "file": "src/common/net/Client.h",
+      "description": "又跳转到这里，里面包含非常多的client初始化方法",
+      "line": 33
+    },
+    {
+      "file": "src/storage/service/Components.cc",
+      "description": "初始化 syncWorker, 还将整个Components整个传进来了\n\n```\n[server.sync_worker]\nbatch_size = 16\nfull_sync_chains = []\nfull_sync_level = 'NONE'\nnum_channels = 1024\nnum_threads = 16\nsync_start_timeout = '10s'\n\n[server.sync_worker.batch_concurrency_limiter]\nmax_concurrency = 64\n\n[server.sync_worker.pool]\ncoroutines_num = 64\nenable_work_stealing = false\nqueue_size = 1024\n```",
+      "line": 25
+    },
+    {
+      "file": "src/storage/service/Components.h",
+      "description": "创建ResyncWorker",
+      "line": 108
+    },
+    {
+      "file": "src/storage/sync/ResyncWorker.cc",
+      "description": "这里又初始化了所有的components",
+      "line": 40
+    },
+    {
+      "file": "src/storage/sync/ResyncWorker.cc",
+      "description": "默认是num_threads = 16个线程用于执行",
+      "line": 41
+    },
+    {
+      "file": "src/storage/sync/ResyncWorker.cc",
+      "description": "这里是coroutine pool的初始化和配置",
+      "line": 43
+    },
+    {
+      "file": "src/storage/sync/ResyncWorker.h",
+      "description": "CoroutinesPool是3fs写的一个逻辑，传入的模板是VersionedChainId，内部包含的是ChainId和ChainVer",
+      "line": 65
+    },
+    {
+      "file": "src/common/utils/CoroutinesPool.h",
+      "description": "这里是模仿golang的设计？进行work_stealing。默认是没有打开的",
+      "line": 37
+    },
+    {
+      "file": "src/common/utils/CoroutinesPool.h",
+      "description": "标准情况下就是创建queue_size = 1024个MPMC队列",
+      "line": 44
+    },
+    {
+      "file": "src/storage/sync/ResyncWorker.cc",
+      "description": "update channel？",
+      "line": 44
+    },
+    {
+      "file": "src/storage/sync/ResyncWorker.cc",
+      "description": "update channel？",
+      "line": 44
+    },
+    {
+      "file": "src/storage/sync/ResyncWorker.h",
+      "description": "这个也是从client派生的类",
+      "line": 66
+    },
+    {
+      "file": "src/storage/sync/ResyncWorker.cc",
+      "description": "设置批量并行的限制，默认最大的并行度是max_concurrency = 64\n",
+      "line": 45
+    },
+    {
+      "file": "src/storage/service/Components.cc",
+      "description": "配置check worker，应该是用于在极端环境下禁止某些操作用的\n\n```\n[server.check_worker]\ndisk_low_space_threshold = 0.95999999999999996\ndisk_reject_create_chunk_threshold = 0.97999999999999998\nemergency_recycling_ratio = 0.94999999999999996\nupdate_target_size_interval = '10s'\n```",
+      "line": 26
+    },
+    {
+      "file": "src/storage/service/Components.h",
+      "description": "CheckWorker成员变量",
+      "line": 109
+    },
+    {
+      "file": "src/storage/worker/CheckWorker.cc",
+      "description": "也是有一个后端的thread进行处理",
+      "line": 77
+    },
+    {
+      "file": "src/storage/service/Components.cc",
+      "description": "创建dumpWorker，默认是1day进行一次dump\n\n```\n[server.dump_worker]\ndump_interval = '1day'\ndump_root_path = ''\nhigh_cpu_usage_threshold = 100\n\n```",
+      "line": 27
+    },
+    {
+      "file": "src/storage/service/Components.h",
+      "description": "DumpWorker成员变量",
+      "line": 110
+    },
+    {
+      "file": "src/storage/worker/DumpWorker.cc",
+      "description": "也是一个后台thread在进行处理",
+      "line": 25
+    },
+    {
+      "file": "src/storage/service/Components.cc",
+      "description": "allocate worker，应该也是核心组件。观察到参数是remian_group、reserved_chunks等相关参数\n\n```\n[server.allocate_worker]\nmax_remain_groups = 8\nmax_remain_ultra_groups = 4\nmax_reserved_chunks = '1GB'\nmin_remain_groups = 4\nmin_remain_ultra_groups = 0\n```",
+      "line": 28
+    },
+    {
+      "file": "src/storage/service/Components.h",
+      "description": "AllocateWorker成员变量",
+      "line": 111
+    },
+    {
+      "file": "src/storage/worker/AllocateWorker.cc",
+      "description": "也是一个thread处理",
+      "line": 17
+    },
+    {
+      "file": "src/storage/service/Components.cc",
+      "description": "专用于punchHole的worker，应该就是用于缩容相关的处理逻辑，没有相关的配置参数",
+      "line": 29
+    },
+    {
+      "file": "src/storage/service/Components.h",
+      "description": "PunchHoleWorker成员变量",
+      "line": 112
+    },
+    {
+      "file": "src/storage/worker/PunchHoleWorker.cc",
+      "description": "一个thread进行处理",
+      "line": 16
+    },
+    {
+      "file": "src/storage/service/Components.cc",
+      "description": "专用于同步meta kv的worker，只有一个时间的参数：\n\n```\n[server.sync_meta_kv_worker]\nsync_meta_kv_interval = '1min'\n```",
+      "line": 30
+    },
+    {
+      "file": "src/storage/service/Components.h",
+      "description": "SyncMetaKvWorker成员变量",
+      "line": 113
+    },
+    {
+      "file": "src/storage/worker/SyncMetaKvWorker.cc",
+      "description": "一个thread用于执行",
+      "line": 17
+    },
+    {
+      "file": "src/storage/service/Components.cc",
+      "description": "专用于reliable_forwarding的组件，应该是重试的逻辑？",
+      "line": 31
+    },
+    {
+      "file": "src/storage/service/Components.h",
+      "description": "ReliableForwarding成员变量",
+      "line": 114
+    },
+    {
+      "file": "src/storage/service/ReliableForwarding.h",
+      "description": "初始化比较简单，但大多数函数都是coroutine",
+      "line": 24
+    },
+    {
+      "file": "src/storage/service/Components.cc",
+      "description": "用于read的coroutine pool\n\n```\n[server.coroutines_pool_read]\ncoroutines_num = 64\nqueue_size = 1024\nthreads_num = 8\n```",
+      "line": 32
+    },
+    {
+      "file": "src/common/utils/DynamicCoroutinesPool.cc",
+      "description": "DynamicCoroutinesPool会创建一个MPMC队列，用于存储的是相关的CoTask<void>",
+      "line": 17
+    },
+    {
+      "file": "src/common/utils/DynamicCoroutinesPool.cc",
+      "description": "动态配置的参数？",
+      "line": 18
+    },
+    {
+      "file": "src/common/utils/DynamicCoroutinesPool.cc",
+      "description": "配置了threads_num数量的thread用于处理",
+      "line": 19
+    },
+    {
+      "file": "src/common/utils/DynamicCoroutinesPool.cc",
+      "description": "记录了coroutinesNum的相关monitor组件",
+      "line": 21
+    },
+    {
+      "file": "src/storage/service/Components.cc",
+      "description": "这三个逻辑和coroutines_pool_read是一致的\n```\n[server.coroutines_pool_default]\ncoroutines_num = 64\nqueue_size = 1024\nthreads_num = 8\n\n[server.coroutines_pool_read]\ncoroutines_num = 64\nqueue_size = 1024\nthreads_num = 8\n\n[server.coroutines_pool_sync]\ncoroutines_num = 64\nqueue_size = 1024\nthreads_num = 8\n\n[server.coroutines_pool_update]\ncoroutines_num = 64\nqueue_size = 1024\nthreads_num = 8\n```",
+      "line": 33
+    },
+    {
+      "file": "src/storage/service/Components.cc",
+      "description": "专用于stoarge operator的组件，应该是非常重要的\n\n```\n[server.storage]\napply_transmission_before_getting_semaphore = true\nbatch_read_ignore_chain_version = false\nbatch_read_job_split_size = 1024\nmax_concurrent_rdma_reads = 256\nmax_concurrent_rdma_writes = 256\nmax_num_results_per_query = 100\npost_buffer_per_bytes = '64KB'\nrdma_transmission_req_timeout = '0ns'\nread_only = false\n\n[server.storage.event_trace_log]\ndump_interval = '30s'\nenabled = true\nmax_num_writers = 1\nmax_row_group_length = 100000\ntrace_file_dir = '.'\n\n[server.storage.write_worker]\nbg_num_threads = 8\nnum_threads = 32\nqueue_size = 4096\n\n```",
+      "line": 36
+    },
+    {
+      "file": "src/storage/service/Components.h",
+      "description": "StorageOperator成员变量",
+      "line": 119
+    },
+    {
+      "file": "src/storage/service/StorageOperator.h",
+      "description": "配置来用于write操作的worker",
+      "line": 49
+    },
+    {
+      "file": "src/storage/service/StorageOperator.h",
+      "description": "专门设计了UpdateWorker类",
+      "line": 152
+    },
+    {
+      "file": "src/storage/update/UpdateWorker.h",
+      "description": "包含用于Update的前台thread（默认为写流程设计的是32个），还有用于Recycle的后台thread（默认为写流程设计的是8个）",
+      "line": 20
+    },
+    {
+      "file": "src/storage/service/StorageOperator.h",
+      "description": "还配置了专门用于记录event trace的模块",
+      "line": 50
+    },
+    {
+      "file": "src/storage/service/StorageOperator.h",
+      "description": "主要是包括StorageEventTrace类型的log\n\n```\nstruct StorageEventTrace {\n  SERDE_STRUCT_FIELD(clusterId, String{});\n  SERDE_STRUCT_FIELD(nodeId, NodeId{});\n  SERDE_STRUCT_FIELD(targetId, TargetId{});\n  SERDE_STRUCT_FIELD(updateReq, UpdateReq{});\n  SERDE_STRUCT_FIELD(updateRes, IOResult{});\n  SERDE_STRUCT_FIELD(forwardRes, IOResult{});\n  SERDE_STRUCT_FIELD(commitIO, CommitIO{});\n  SERDE_STRUCT_FIELD(commitRes, IOResult{});\n};\n```",
+      "line": 153
+    },
+    {
+      "file": "src/storage/service/StorageOperator.h",
+      "description": "初始化StorageOperator时候会为每个ib设备配置相应的信号量，应该是同时只能支持max_concurrent_rdma_writes和max_concurrent_rdma_reads量级的并发。\n\n默认参数是：\n\n```\n[server.storage]\nmax_concurrent_rdma_reads = 256\nmax_concurrent_rdma_writes = 256\n```",
+      "line": 51
+    },
+    {
+      "file": "src/storage/service/StorageOperator.h",
+      "description": "配置热更新的回调",
+      "line": 56
+    },
+    {
+      "file": "src/storage/service/Components.cc",
+      "description": "配置reliable update，应该是配置是否要清理过期的client？\n\n```\n[server.reliable_update]\nclean_up_expired_clients = false\nexpired_clients_timeout = '1h'\n```",
+      "line": 37
+    },
+    {
+      "file": "src/storage/service/Components.h",
+      "description": "ReliableUpdate成员变量",
+      "line": 120
+    },
+    {
+      "file": "src/storage/service/ReliableUpdate.h",
+      "description": "配置流程也是比较简单的",
+      "line": 25
+    },
+    {
+      "file": "src/storage/service/Components.h",
+      "description": "DynamicCoroutinesPool实例",
+      "line": 115
+    },
+    {
+      "file": "src/common/app/TwoPhaseApplication.h",
+      "description": "经过超长的初始化阶段后，接下来是setup阶段, 这个setup()是一个cotask",
+      "line": 93
+    },
+    {
+      "file": "src/common/net/Server.cc",
+      "description": "核心就是去调用这个lambda",
+      "line": 31
+    },
+    {
+      "file": "src/common/net/Server.cc",
+      "description": "这里会遍历两个groups，即Core和StorageSerde",
+      "line": 25
+    },
+    {
+      "file": "src/common/net/Server.cc",
+      "description": "配置相应的group",
+      "line": 27
+    },
+    {
+      "file": "src/common/net/Server.cc",
+      "description": "配置相应的group",
+      "line": 27
+    },
+    {
+      "file": "src/common/net/ServiceGroup.cc",
+      "description": "setup的流程启动在此",
+      "line": 25
+    },
+    {
+      "file": "src/common/net/ServiceGroup.cc",
+      "description": "只有一步，就是listener_进行相应的setup",
+      "line": 26
+    },
+    {
+      "file": "src/common/net/Listener.cc",
+      "description": "应该是进行相关的listen的配置，包括端口、队列长度啥的",
+      "line": 59
+    },
+    {
+      "file": "src/common/net/Listener.cc",
+      "description": "遍历而后加入相关的address 监听列表",
+      "line": 69
+    },
+    {
+      "file": "src/common/net/Listener.cc",
+      "description": "用于创建socket的 coroutine",
+      "line": 94
+    },
+    {
+      "file": "src/common/net/Listener.cc",
+      "description": "阻塞等待socket被创建出来",
+      "line": 100
+    },
+    {
+      "file": "src/common/net/Listener.cc",
+      "description": "将创建出来的socket推入向量serverSockets_中",
+      "line": 108
+    },
+    {
+      "file": "src/common/net/ServiceGroup.cc",
+      "description": "执行完就直接返回void即可",
+      "line": 27
+    },
+    {
+      "file": "src/common/net/Server.cc",
+      "description": "完成执行也是返回Void",
+      "line": 32
+    },
+    {
+      "file": "src/common/app/TwoPhaseApplication.h",
+      "description": "setup完成后就要把server的情况打印出来？",
+      "line": 94
+    },
+    {
+      "file": "src/common/net/Server.cc",
+      "description": "流程就是打印，没什么特别的",
+      "line": 72
+    },
+    {
+      "file": "src/common/app/TwoPhaseApplication.h",
+      "description": "启动server，也是非常重要的逻辑",
+      "line": 63
+    },
+    {
+      "file": "src/common/app/TwoPhaseApplication.h",
+      "description": "让实际的launcher_进行启动",
+      "line": 99
+    },
+    {
+      "file": "src/common/app/TwoPhaseApplication.h",
+      "description": "让实际的launcher_进行启动",
+      "line": 99
+    },
+    {
+      "file": "src/storage/service/StorageServer.h",
+      "description": "实际ServerLauncher",
+      "line": 32
+    },
+    {
+      "file": "src/core/app/ServerLauncher.h",
+      "description": "走到这个函数startServer",
+      "line": 61,
+      "selection": {
+        "start": {
+          "line": 61,
+          "character": 16
+        },
+        "end": {
+          "line": 61,
+          "character": 27
+        }
+      }
+    },
+    {
+      "file": "src/core/app/ServerLauncher.h",
+      "description": "检查表达式 fetcher_->startServer(server, appInfo) 是否合法（即语法和类型是否正确）。若合法，条件为 true，否则为 false（需 C++20 支持）。\n\n因为server的类型是StorageServer，所以这个编译是不会通过的",
+      "line": 62
+    },
+    {
+      "file": "src/storage/service/StorageServer.cc",
+      "description": "如果走到这个逻辑，本质上也是类似的逻辑\n\n初始化两个客户端，并加入到components_中",
+      "line": 55
+    },
+    {
+      "file": "src/common/net/Server.cc",
+      "description": "获取每一个service的信息",
+      "line": 37
+    },
+    {
+      "file": "src/common/net/Server.cc",
+      "description": "执行 beforeStart() 函数",
+      "line": 39
+    },
+    {
+      "file": "src/storage/service/StorageServer.cc",
+      "description": "实际执行的函数在这里",
+      "line": 26
+    },
+    {
+      "file": "src/storage/service/StorageServer.cc",
+      "description": "创建StorageService，使用storageOperator进行创建，下面给出了一些参数\n\n```\n[server.storage]\napply_transmission_before_getting_semaphore = true\nbatch_read_ignore_chain_version = false\nbatch_read_job_split_size = 1024\nmax_concurrent_rdma_reads = 256\nmax_concurrent_rdma_writes = 256\nmax_num_results_per_query = 100\npost_buffer_per_bytes = '64KB'\nrdma_transmission_req_timeout = '0ns'\nread_only = false\n\n[server.storage.event_trace_log]\ndump_interval = '30s'\nenabled = true\nmax_num_writers = 1\nmax_row_group_length = 100000\ntrace_file_dir = '.'\n\n[server.storage.write_worker]\nbg_num_threads = 8\nnum_threads = 32\nqueue_size = 4096\n```",
+      "line": 27
+    },
+    {
+      "file": "src/storage/service/StorageService.h",
+      "description": "拷贝了一份引用。下面就是实际进行读写的函数",
+      "line": 11
+    },
+    {
+      "file": "src/common/net/Server.h",
+      "description": "将新创建的StorageService实例添加到含有相关的kServiceName的serdeService中",
+      "line": 42
+    },
+    {
+      "file": "src/common/net/Server.h",
+      "description": "实际执行的addSerdeService逻辑",
+      "line": 45
+    },
+    {
+      "file": "src/common/net/ServiceGroup.h",
+      "description": "需要判断一次rdma，并将service加入serdeServices_中",
+      "line": 40
+    },
+    {
+      "file": "src/common/serde/Services.h",
+      "description": "如果不是RDMA，则只会拿TCP相关的servicess",
+      "line": 19
+    },
+    {
+      "file": "src/common/serde/Services.h",
+      "description": "0是TCP，1是RDMA",
+      "line": 38
+    },
+    {
+      "file": "src/common/serde/Services.h",
+      "description": "将拿出来的service进行相关的配置",
+      "line": 24
+    },
+    {
+      "file": "src/storage/service/StorageServer.cc",
+      "description": "再增加一个CoreService",
+      "line": 28
+    },
+    {
+      "file": "src/storage/service/StorageServer.cc",
+      "description": "这里是获取第一个ServiceGroup，而后根据packet的类型，获取不同的coroutinePool",
+      "line": 29
+    },
+    {
+      "file": "src/storage/service/Components.h",
+      "description": "专用于batchRead的pool",
+      "line": 82,
+      "selection": {
+        "start": {
+          "line": 1,
+          "character": 1
+        },
+        "end": {
+          "line": 1,
+          "character": 18
+        }
+      }
+    },
+    {
+      "file": "src/storage/service/Components.h",
+      "description": "专用于write和update的pool",
+      "line": 86
+    },
+    {
+      "file": "src/storage/service/Components.h",
+      "description": "专用于sync的pool",
+      "line": 89
+    },
+    {
+      "file": "src/storage/service/StorageServer.cc",
+      "description": "其他情况就返回defaultPool",
+      "line": 34
+    },
+    {
+      "file": "src/storage/service/StorageServer.cc",
+      "description": "启动components_",
+      "line": 37
+    },
+    {
+      "file": "src/storage/service/Components.cc",
+      "description": "这个函数就是非常重要的逻辑了",
+      "line": 39
+    },
+    {
+      "file": "src/storage/service/BufferPool.cc",
+      "description": "BufferPool的初始化函数",
+      "line": 29
+    },
+    {
+      "file": "src/storage/service/Components.cc",
+      "description": "Start rdmabufPool",
+      "line": 42
+    },
+    {
+      "file": "src/storage/service/BufferPool.cc",
+      "description": "buffer的大小设置为UIO_MAXIOV，这个应该就是系统支持的最大的I/O数",
+      "line": 31
+    },
+    {
+      "file": "src/storage/service/BufferPool.cc",
+      "description": "初始化两种类型的buffer，buffer的规格如下：\n\n```\n[server.buffer_pool]\nbig_rdmabuf_count = 64\nbig_rdmabuf_size = '64MB'\nrdmabuf_count = 1024\nrdmabuf_size = '4MB'\n```",
+      "line": 33
+    },
+    {
+      "file": "src/storage/service/BufferPool.cc",
+      "description": "创建了一个RDMA buf pool",
+      "line": 62
+    },
+    {
+      "file": "src/common/net/ib/RDMABuf.h",
+      "description": "RDMABufPool的初始化方式",
+      "line": 322
+    },
+    {
+      "file": "src/common/net/ib/RDMABuf.h",
+      "description": "buffer的核心是这个双端队列，内容物是RDMABuf::Inner *",
+      "line": 348
+    },
+    {
+      "file": "src/common/net/ib/RDMABuf.h",
+      "description": "核心就是这个固定大小的array，他的输入是由外部传入的右值进行std::exchange()后得到的，最多的array大小是4（由kMaxDeviceCnt决定），内容物是RDMABufMR",
+      "line": 289
+    },
+    {
+      "file": "src/common/net/ib/RDMABuf.h",
+      "description": "这个就是RDMA通信时候注册的mr了\n",
+      "line": 38
+    },
+    {
+      "file": "src/storage/service/BufferPool.cc",
+      "description": "每个buffer都有一个处理的coroutine",
+      "line": 64
+    },
+    {
+      "file": "src/storage/service/BufferPool.cc",
+      "description": "这个是coroutine的处理逻辑",
+      "line": 67
+    },
+    {
+      "file": "src/common/net/ib/RDMABuf.cc",
+      "description": "最核心的就是加锁后拿一个空闲的RDMABuf::Inner *",
+      "line": 162
+    },
+    {
+      "file": "src/common/net/ib/RDMABuf.cc",
+      "description": "最后要转成RDMABuf返回出去",
+      "line": 164
+    },
+    {
+      "file": "src/storage/service/BufferPool.cc",
+      "description": "阻塞等待所有buffers都拿到手",
+      "line": 70
+    },
+    {
+      "file": "src/storage/service/BufferPool.cc",
+      "description": "对齐所有的buffer",
+      "line": 81
+    },
+    {
+      "file": "src/storage/service/BufferPool.cc",
+      "description": "将buffer传给外部引用",
+      "line": 83
+    },
+    {
+      "file": "src/storage/service/BufferPool.cc",
+      "description": "前向遍历rdmabuf，push_back到freeIndex中",
+      "line": 87
+    },
+    {
+      "file": "src/storage/service/BufferPool.cc",
+      "description": "freeIndex_.lock() ：通过 folly::Synchronized 的 lock() 方法获取互斥锁（std::mutex），返回一个 RAII 风格的锁对象（如 std::unique_lock）。此锁在作用域结束时自动释放，确保线程安全 。\n\n*freeIndex_.lock() ：对锁对象解引用，得到被保护的 std::vector<BufferIndex>&，即可以直接操作容器内容 。",
+      "line": 36
+    },
+    {
+      "file": "src/storage/service/BufferPool.cc",
+      "description": "struct iovec定义了一个向量元素。通常，这个结构用作一个多元素的数组。对于每一个传输的元素，指针成员iov_base指向一个缓冲区，这个缓冲区是存放的是readv所接收的数据或是writev将要发送的数据。成员iov_len在各种情况下分别确定了接收的最大长度以及实际写入的长度。且iovec结构是用于scatter/gather IO的。\n\n这里是将rdmabuf转化为了iovec了",
+      "line": 45
+    },
+    {
+      "file": "src/storage/service/Components.cc",
+      "description": "初始化并启动 readPool",
+      "line": 44
+    },
+    {
+      "file": "src/common/utils/DynamicCoroutinesPool.cc",
+      "description": "启动的流程很简单，就是调用setCoroutinesNum？",
+      "line": 23
+    },
+    {
+      "file": "src/common/utils/DynamicCoroutinesPool.cc",
+      "description": "全程加锁, 毕竟是全局资源",
+      "line": 39
+    },
+    {
+      "file": "src/common/utils/DynamicCoroutinesPool.cc",
+      "description": "先给executor_配置相关的thread num",
+      "line": 41
+    },
+    {
+      "file": "src/common/utils/DynamicCoroutinesPool.cc",
+      "description": "当需要新增coroutinesNum的时候，就要去启动run coroutine了",
+      "line": 54
+    },
+    {
+      "file": "src/common/utils/DynamicCoroutinesPool.cc",
+      "description": "从队列里面拿一个task",
+      "line": 71
+    },
+    {
+      "file": "src/common/utils/DynamicCoroutinesPool.cc",
+      "description": "执行task，非常优雅的coroutine操作，整个流程不涉及加锁操作",
+      "line": 76
+    },
+    {
+      "file": "src/common/utils/DynamicCoroutinesPool.cc",
+      "description": "当run循环意外退出时，执行这个流程",
+      "line": 68
+    },
+    {
+      "file": "src/common/utils/DynamicCoroutinesPool.cc",
+      "description": "对一些监控变量加锁后进行更改，还设置了baton的post",
+      "line": 85
+    },
+    {
+      "file": "src/common/utils/DynamicCoroutinesPool.cc",
+      "description": "如果要求的coroutine num比当前的多，就入队一些nullptr即可",
+      "line": 61
+    },
+    {
+      "file": "src/storage/service/Components.cc",
+      "description": "这几个pool没有什么区别，同readPool",
+      "line": 45
+    },
+    {
+      "file": "src/storage/service/Components.cc",
+      "description": "messenger的启动",
+      "line": 49
+    },
+    {
+      "file": "src/client/storage/StorageMessenger.h",
+      "description": "本质上就是启动client",
+      "line": 19
+    },
+    {
+      "file": "src/common/net/Client.h",
+      "description": "走到这里进行client的processor、serdeServices和ioWorker的启动",
+      "line": 43
+    },
+    {
+      "file": "src/storage/service/Components.cc",
+      "description": "启动reliableForwarding",
+      "line": 50
+    },
+    {
+      "file": "src/storage/service/ReliableForwarding.cc",
+      "description": "这个启动啥也没干",
+      "line": 29
+    },
+    {
+      "file": "src/storage/service/Components.cc",
+      "description": "启动storageTargets，这里需要用到StorageServer创建时候需要的procThreadPool\n\n```\n[server.targets]\nallow_disk_without_uuid = false\ncollect_all_fds = true\ncreate_engine_path = true\nspace_info_cache_timeout = '5s'\ntarget_num_per_path = 0\ntarget_paths = []\n\n[server.targets.storage_target]\nforce_persist = true\nkv_path = ''\nmigrate_kv_store = false\nmutex_num = 257\npoint_query_strategy = 'NONE'\n\n[server.targets.storage_target.file_store]\npreopen_chunk_size_list = []\n\n[server.targets.storage_target.kv_store]\ncreate_if_missing = false\nintegrate_leveldb_log = false\nleveldb_block_cache_size = '8GB'\nleveldb_iterator_fill_cache = true\nleveldb_shared_block_cache = true\nleveldb_sst_file_size = '16MB'\nleveldb_write_buffer_size = '16MB'\nrocksdb_avoid_flush_during_recovery = false\nrocksdb_avoid_flush_during_shutdown = false\nrocksdb_avoid_unnecessary_blocking_io = false\nrocksdb_block_cache_size = '8GB'\nrocksdb_block_size = '4KB'\nrocksdb_bloom_filter_bits_per_key = 10\nrocksdb_compression = 'kNoCompression'\nrocksdb_enable_bloom_filter = true\nrocksdb_enable_pipelined_write = false\nrocksdb_enable_prefix_transform = true\nrocksdb_keep_log_file_num = 10\nrocksdb_level0_file_num_compaction_trigger = 4\nrocksdb_lowest_used_cache_tier = 'kNonVolatileBlockTier'\nrocksdb_max_manifest_file_size = '64MB'\nrocksdb_num_levels = 7\nrocksdb_prepopulate_block_cache = 'kDisable'\nrocksdb_readahead_size = '2MB'\nrocksdb_shared_block_cache = true\nrocksdb_stats_dump_period = '2min'\nrocksdb_target_file_size_base = '64MB'\nrocksdb_target_file_size_multiplier = 1\nrocksdb_threads_num = 8\nrocksdb_unordered_write = false\nrocksdb_wal_recovery_mode = 'kTolerateCorruptedTailRecords'\nrocksdb_write_buffer_size = '16MB'\nsync_when_write = true\ntype = 'LevelDB'\n\n[server.targets.storage_target.meta_store]\nallocate_size = '256MB'\npunch_hole_batch_size = 16\nrecycle_batch_size = 256\nremoved_chunk_expiration_time = '3day'\nremoved_chunk_force_recycled_time = '1h'\n```",
+      "line": 51
+    },
+    {
+      "file": "src/storage/store/StorageTargets.cc",
+      "description": "核心的load模块",
+      "line": 196
+    },
+    {
+      "file": "src/storage/store/StorageTargets.cc",
+      "description": "初始化一下哎",
+      "line": 197
+    },
+    {
+      "file": "src/storage/store/StorageTargets.cc",
+      "description": "扫描一下当前的磁盘",
+      "line": 28
+    },
+    {
+      "file": "src/common/utils/SysResource.cc",
+      "description": "这里面就是利用pipe让Linux操作系统开一个进程去执行检查的操作",
+      "line": 104
+    },
+    {
+      "file": "src/storage/store/StorageTargets.cc",
+      "description": "这里很关键，我们传进来的target_paths的初始化",
+      "line": 35
+    },
+    {
+      "file": "src/storage/store/StorageTargets.cc",
+      "description": "对每个path，都需要进行一次stat，然后将所在的设备的manufacture拿出来",
+      "line": 44
+    },
+    {
+      "file": "src/storage/store/StorageTargets.cc",
+      "description": "每个path是有一个diskIndex",
+      "line": 49
+    },
+    {
+      "file": "src/storage/store/StorageTargets.cc",
+      "description": "这里就是C++和Rust的交互了！ 本质上这里是维护了一个协程task构成的vector，协程中的内容是rust的？\n\n在 Rust 中，所有值默认都是栈分配的。通过创建 Box<T>，可以把值装箱（boxed）来使它在堆上分配。箱子（box，即 Box<T> 类型的实例）是一个智能指针，指向堆分配的 T 类型的值。当箱子离开作用域时，它的析构函数会被调用，内部的对象会被销毁，堆上分配的内存也会被释放。\n\n",
+      "line": 52
+    },
+    {
+      "file": "src/storage/chunk_engine/src/cxx.rs",
+      "description": "这个就是被C++使用rust类Engine",
+      "line": 88
+    },
+    {
+      "file": "src/storage/store/StorageTargets.cc",
+      "description": "创建 engine_path, 走的是rust的逻辑",
+      "line": 57
+    },
+    {
+      "file": "src/storage/chunk_engine/src/cxx.rs",
+      "description": "创建engine的代码",
+      "line": 10
+    },
+    {
+      "file": "src/storage/chunk_engine/src/cxx.rs",
+      "description": "利用engine打开这个config",
+      "line": 16
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "构造metastore的相关配置，主要是RocksDB的配置",
+      "line": 32
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "打开meta store",
+      "line": 41
+    },
+    {
+      "file": "src/storage/chunk_engine/src/meta/meta_store.rs",
+      "description": "打开的代码",
+      "line": 23
+    },
+    {
+      "file": "src/storage/chunk_engine/src/meta/meta_store.rs",
+      "description": "核心代码，打开RocksDB",
+      "line": 24
+    },
+    {
+      "file": "src/storage/chunk_engine/src/meta/rocksdb.rs",
+      "description": "核心代码，打开的逻辑",
+      "line": 27
+    },
+    {
+      "file": "src/storage/chunk_engine/src/meta/meta_store.rs",
+      "description": "封装成MetaStore后返回",
+      "line": 26
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "这里是将没有committed的chunks都获取出来？",
+      "line": 42
+    },
+    {
+      "file": "src/storage/chunk_engine/src/meta/meta_store.rs",
+      "description": "这里是去查询当前uncommitted_chunks",
+      "line": 365
+    },
+    {
+      "file": "src/storage/chunk_engine/src/meta/meta_store.rs",
+      "description": "首先检查prefix",
+      "line": 432
+    },
+    {
+      "file": "src/storage/chunk_engine/src/meta/meta_store.rs",
+      "description": "rocksDB是单调递增的，因此需要设置一个end_key",
+      "line": 437
+    },
+    {
+      "file": "src/storage/chunk_engine/src/meta/meta_store.rs",
+      "description": "迭代器移动到end_key的位置",
+      "line": 438
+    },
+    {
+      "file": "src/storage/chunk_engine/src/meta/meta_store.rs",
+      "description": "如果拿到的key是WRITING_CHUNK_KEY_PREFIX，就先停止循环",
+      "line": 449
+    },
+    {
+      "file": "src/storage/chunk_engine/src/meta/meta_store.rs",
+      "description": "这里是把chunk_id和chunk_meta拿出来返回",
+      "line": 457
+    },
+    {
+      "file": "src/storage/chunk_engine/src/meta/meta_store.rs",
+      "description": "迭代哈",
+      "line": 462
+    },
+    {
+      "file": "src/storage/chunk_engine/src/meta/meta_store.rs",
+      "description": "返回的结果",
+      "line": 368
+    },
+    {
+      "file": "src/storage/chunk_engine/src/meta/meta_store.rs",
+      "description": "这里创建了一个写rocksDB的batch操作，后续就是往里面填充内容",
+      "line": 369
+    },
+    {
+      "file": "src/storage/chunk_engine/src/meta/meta_store.rs",
+      "description": "对于已提交的meta，这里只是加到uncommitted_chunks中，没有针对rocksDB的处理逻辑",
+      "line": 375
+    },
+    {
+      "file": "src/storage/chunk_engine/src/meta/meta_store.rs",
+      "description": "这里的提交一个chunk_key到chunk_id的kv到rocksDB中",
+      "line": 381
+    },
+    {
+      "file": "src/storage/chunk_engine/src/meta/meta_store.rs",
+      "description": "这里是传了一个回调，应该是做一些合并操作，避免重复内存分配",
+      "line": 385
+    },
+    {
+      "file": "src/storage/chunk_engine/src/meta/meta_store.rs",
+      "description": "成批写rocksDB",
+      "line": 396
+    },
+    {
+      "file": "src/storage/chunk_engine/src/meta/meta_store.rs",
+      "description": "写的操作还是很直观，外部传进来是同步的写操作",
+      "line": 140
+    },
+    {
+      "file": "src/storage/chunk_engine/src/meta/rocksdb.rs",
+      "description": "这里可以设置对rocksdb的sync标志",
+      "line": 85
+    },
+    {
+      "file": "src/storage/chunk_engine/src/meta/meta_store.rs",
+      "description": "返回uncommitted_chunks",
+      "line": 399
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "创建一个相关的allocators",
+      "line": 44
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/allocators.rs",
+      "description": "每次都创建一个allocator，chunk的大小是随着变化的\n\n其中pub const CHUNK_SIZE_NUMBER: usize = 11; // from 64KiB to 64MiB\n",
+      "line": 16
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/allocators.rs",
+      "description": "创建单个allocator的逻辑",
+      "line": 26
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/allocators.rs",
+      "description": "开启一个cluster？",
+      "line": 37
+    },
+    {
+      "file": "src/storage/chunk_engine/src/file/clusters.rs",
+      "description": "Clusters是一个重要的概念，其中的每个Cluster是用于实际存储文件的",
+      "line": 20
+    },
+    {
+      "file": "src/storage/chunk_engine/src/file/clusters.rs",
+      "description": "每个大小的chunk都会建立相关的dir用于存储文件",
+      "line": 24
+    },
+    {
+      "file": "src/storage/chunk_engine/src/file/clusters.rs",
+      "description": "检查创建的目录是否支持DIO",
+      "line": 28
+    },
+    {
+      "file": "src/storage/chunk_engine/src/file/fs_type.rs",
+      "description": "用于返回本地文件系统的类型",
+      "line": 13
+    },
+    {
+      "file": "src/storage/chunk_engine/src/file/fs_type.rs",
+      "description": "必须是ZFS才支持DIO？？？",
+      "line": 31
+    },
+    {
+      "file": "src/storage/chunk_engine/src/file/clusters.rs",
+      "description": "这里是为每个大小的chunk都创建了256个Cluster，理论上Cluster应该就是文件",
+      "line": 29
+    },
+    {
+      "file": "src/storage/chunk_engine/src/file/clusters.rs",
+      "description": "实际创建Cluster",
+      "line": 31
+    },
+    {
+      "file": "src/storage/chunk_engine/src/file/cluster.rs",
+      "description": "这里是去打开path的这个文件，设置了相关的rw创建，根据bool create确定不存在创建的权限，使用的是O_SYNC的标志",
+      "line": 18
+    },
+    {
+      "file": "src/storage/chunk_engine/src/file/cluster.rs",
+      "description": "针对支持DIO的，会打开一个用于dio的fd",
+      "line": 26
+    },
+    {
+      "file": "src/storage/chunk_engine/src/file/cluster.rs",
+      "description": "最后生成的Cluster会有两个fd",
+      "line": 12
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/allocators.rs",
+      "description": "load相关的Allocator",
+      "line": 38
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/allocator.rs",
+      "description": "创建一个AllocatorCount，传入相关的chunk_size",
+      "line": 12
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/allocator.rs",
+      "description": "Allocator里面封装了一个ChunkAllocator",
+      "line": 14
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk_allocator.rs",
+      "description": "这里面就是相关的groups的逻辑了，对应的就是架构图中的每个file下面是一大堆groups。\n\ngroups维护两个变量: \n- full_groups，应该是set类型的\n- active_groups，应该map类型的",
+      "line": 8
+    },
+    {
+      "file": "src/storage/chunk_engine/src/utils/shards_set.rs",
+      "description": "本质上也是一个hashSet",
+      "line": 5
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk_allocator.rs",
+      "description": "active_groups是一个map，k是groupid，v是groupState",
+      "line": 9
+    },
+    {
+      "file": "src/storage/chunk_engine/src/types/group_state.rs",
+      "description": "状态包含一个32位的count，还有一个位图，64*4=256个位",
+      "line": 8
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk_allocator.rs",
+      "description": "每个文件会创建4096个内存空间用于存储full_groups、active_groups、frozen_groups",
+      "line": 36
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk_allocator.rs",
+      "description": "配置第一个groupId，他是由chunk_size, cluster_id(一个文件就是一个cluster), group_id来确定的",
+      "line": 43
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk_allocator.rs",
+      "description": "配置一个metakey？",
+      "line": 48
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk_allocator.rs",
+      "description": "这里是迭代rocksDB的内容，直接迭代含有此prefix的内容， 此时的prefix只包含一个groupId，似乎就是只会迭代第一个group",
+      "line": 49
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk_allocator.rs",
+      "description": "迭代获得的kv会被翻译成 group_id和group_state",
+      "line": 50
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk_allocator.rs",
+      "description": "\n`unallocated_groups`: Groups without allocated space.\n\n我怀疑这里的unallocated_groups是不能用的group？",
+      "line": 58
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk_allocator.rs",
+      "description": "这里是把current这个group_id自增1",
+      "line": 61
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk_allocator.rs",
+      "description": "allocated_count会在每一次迭代中自增64（64位系统）或32（32位系统）",
+      "line": 63
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk_allocator.rs",
+      "description": "当group_state为空（内部的count为0）的时候，才认为这个group是一种allocated_groups，此时应该是group上没有任何的文件才对",
+      "line": 64
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk_allocator.rs",
+      "description": "reserved_count只会对空的group进行增加",
+      "line": 66
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk_allocator.rs",
+      "description": "满的group的逻辑很好理解",
+      "line": 67
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk_allocator.rs",
+      "description": "reserved_count应该就是计算当前剩余的空间到底由多少（在一个cluster内，即一个file）",
+      "line": 70
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk_allocator.rs",
+      "description": "应该是用的越慢，level()返回的值会越大。这里是分桶存储active_groups的情况",
+      "line": 71
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk_allocator.rs",
+      "description": "给每个chunkAllocator配置相关的count",
+      "line": 78
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk_allocator.rs",
+      "description": "组装好最终的ChunkAllocator并返回",
+      "line": 79
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk_allocator.rs",
+      "description": "group_allocator应该是附着在chunkAllocator里面的",
+      "line": 85
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/allocators.rs",
+      "description": "完成单个allocator的创建",
+      "line": 40
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/allocators.rs",
+      "description": "推入allocators即可",
+      "line": 17
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/allocators.rs",
+      "description": "这里就是创建11个allocator",
+      "line": 21
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "这个是元数据的缓存内容\n\n /// * `capacity` - The initial capacity of the hashmap. => (1 << 20)\n \n /// * `shard_amount` - The number of shards to create.  -> (256)\n",
+      "line": 45
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "这里还配置了worker的向量",
+      "line": 51
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "这里是一大堆metrics：\n\n```\n    pub copy_on_write_times: AtomicU64,\n    pub copy_on_write_latency: AtomicU64,\n    pub copy_on_write_read_bytes: AtomicU64,\n    pub copy_on_write_read_times: AtomicU64,\n    pub copy_on_write_read_latency: AtomicU64,\n\n    pub checksum_reuse: AtomicU64,\n    pub checksum_combine: AtomicU64,\n    pub checksum_recalculate: AtomicU64,\n\n    pub safe_write_direct_append: AtomicU64,\n    pub safe_write_indirect_append: AtomicU64,\n    pub safe_write_truncate_shorten: AtomicU64,\n    pub safe_write_truncate_extend: AtomicU64,\n    pub safe_write_read_tail_times: AtomicU64,\n    pub safe_write_read_tail_bytes: AtomicU64,\n\n    pub allocate_times: AtomicU64,\n    pub allocate_latency: AtomicU64,\n    pub pwrite_times: AtomicU64,\n    pub pwrite_latency: AtomicU64,\n```",
+      "line": 53
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "writing_list, 用于保存当前的写的情况？使用的数据结构是DashMap(concurrent associative array/hashmap)",
+      "line": 55
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "当uncommitted_chunks没有搞定的时候，额外需要处理一下",
+      "line": 58
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "最关键的就是把没有处理好的chunk重新丢到writing_list中",
+      "line": 67
+    },
+    {
+      "file": "src/storage/chunk_engine/src/meta/meta_store.rs",
+      "description": "如果是rocksDB中已经有的，就不需要处理了",
+      "line": 409
+    },
+    {
+      "file": "src/storage/chunk_engine/src/meta/meta_store.rs",
+      "description": "这里的处理是把相关的chunk_key从rocksDB中删除，很奇怪",
+      "line": 415
+    },
+    {
+      "file": "src/storage/chunk_engine/src/meta/meta_store.rs",
+      "description": "然后这里也是去修改meta store",
+      "line": 426
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "更新chunk_engine的版本",
+      "line": 72
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "新版本如果比V1_FIX_TIMESTAMP（1）还小的逻辑",
+      "line": 683
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "核心的更新版本的逻辑",
+      "line": 698
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "完成engine的创建",
+      "line": 74
+    },
+    {
+      "file": "src/storage/store/StorageTargets.cc",
+      "description": "阻塞等待所有的chunk_engine都被创建好",
+      "line": 67
+    },
+    {
+      "file": "src/storage/store/StorageTargets.cc",
+      "description": "chunk_engine会被集中收集",
+      "line": 70
+    },
+    {
+      "file": "src/storage/store/StorageTargets.cc",
+      "description": "针对每个target_paths，都去检查是否可写",
+      "line": 200
+    },
+    {
+      "file": "src/storage/worker/CheckWorker.cc",
+      "description": "其实就是内部有一个.hf3fs_check的隐藏文件，如果有内容的话就可以返回true，说明此时可写",
+      "line": 281
+    },
+    {
+      "file": "src/storage/store/StorageTargets.cc",
+      "description": "获取3fs的底层存储里面的物理信息配置文件：target.toml，是放在每个target下面的",
+      "line": 205
+    },
+    {
+      "file": "src/storage/store/StorageTargets.cc",
+      "description": "正常情况下，就是去启动一个cotask，将target load起来",
+      "line": 207
+    },
+    {
+      "file": "src/storage/store/StorageTargets.cc",
+      "description": "创建每个 storageTarget",
+      "line": 233
+    },
+    {
+      "file": "src/storage/store/StorageTarget.h",
+      "description": "会被完美转发到这里",
+      "line": 22
+    },
+    {
+      "file": "src/storage/store/StorageTarget.cc",
+      "description": "把引擎配置进来",
+      "line": 67
+    },
+    {
+      "file": "src/storage/store/StorageTarget.cc",
+      "description": "这些全部都是监控用的",
+      "line": 68
+    },
+    {
+      "file": "src/storage/store/StorageTarget.cc",
+      "description": "新建chunkStore",
+      "line": 77
+    },
+    {
+      "file": "src/storage/store/ChunkStore.h",
+      "description": "创建fileStore，参数是：\n\n```\n[server.targets.storage_target.file_store]\npreopen_chunk_size_list = []\n```",
+      "line": 42
+    },
+    {
+      "file": "src/storage/store/ChunkFileStore.h",
+      "description": "初始化的时候就是把globalFileStore传进来",
+      "line": 27
+    },
+    {
+      "file": "src/storage/store/ChunkStore.h",
+      "description": "metaStore_的创建：\n\n```\n[server.targets.storage_target.meta_store]\nallocate_size = '256MB'\npunch_hole_batch_size = 16\nrecycle_batch_size = 256\nremoved_chunk_expiration_time = '3day'\nremoved_chunk_force_recycled_time = '1h'\n```",
+      "line": 43
+    },
+    {
+      "file": "src/storage/store/ChunkMetaStore.h",
+      "description": "把fileStore和allocateState创建或存进来",
+      "line": 29
+    },
+    {
+      "file": "src/storage/store/StorageTargets.cc",
+      "description": "启动每个target的storageTarget",
+      "line": 237
+    },
+    {
+      "file": "src/storage/store/StorageTarget.cc",
+      "description": "获取设备唯一的uuid",
+      "line": 171
+    },
+    {
+      "file": "src/storage/store/StorageTarget.cc",
+      "description": "如果不止包含chunk engine，则还要启动chunkStore_",
+      "line": 186
+    },
+    {
+      "file": "src/storage/store/ChunkStore.cc",
+      "description": "这个就是启动C++实现的chunkStore的逻辑",
+      "line": 39
+    },
+    {
+      "file": "src/storage/store/ChunkFileStore.cc",
+      "description": "fileStore的启动流程",
+      "line": 28
+    },
+    {
+      "file": "src/storage/store/ChunkFileStore.cc",
+      "description": "如果配置中包含preopen_chunk_size_list，就打开他",
+      "line": 34
+    },
+    {
+      "file": "src/storage/store/ChunkStore.cc",
+      "description": "此外开启metaStore",
+      "line": 41,
+      "selection": {
+        "start": {
+          "line": 40,
+          "character": 38
+        },
+        "end": {
+          "line": 40,
+          "character": 42
+        }
+      }
+    },
+    {
+      "file": "src/storage/store/ChunkMetaStore.cc",
+      "description": "创建元数据的kv存储",
+      "line": 208
+    },
+    {
+      "file": "src/storage/store/ChunkMetaStore.cc",
+      "description": "这个逻辑似乎很像是处理uncommitted的逻辑",
+      "line": 223
+    },
+    {
+      "file": "src/storage/store/ChunkMetaStore.cc",
+      "description": "针对每个chunksize，都去创建AllocateState",
+      "line": 232
+    },
+    {
+      "file": "src/storage/store/ChunkMetaStore.cc",
+      "description": "AllocateState的内容是：\n\n\n```\n    std::mutex createMutex;\n    std::mutex recycleMutex;\n    std::mutex allocateMutex;\n    std::atomic<bool> loaded{};\n    std::atomic<bool> allocating{};\n    std::atomic<bool> recycling{};\n    uint32_t chunkSize{};\n    uint32_t allocateIndex{};               // createMutex.\n    std::atomic<uint64_t> startingPoint{};  // createMutex.\n    std::atomic<uint64_t> createdCount{};   // createMutex.\n    std::atomic<uint64_t> usedCount{};      // createMutex.\n    std::atomic<uint64_t> removedCount{};\n    std::atomic<uint64_t> recycledCount{};                 // recycleMutex\n    std::atomic<uint64_t> reusedCount{};                   // createMutex\n    std::atomic<uint64_t> holeCount{};                     // recycleMutex\n    std::atomic<UtcTime> oldestRemovedTimestamp{};         // recycleMutex\n    std::vector<ChunkPosition> createdChunks;              // createMutex\n    std::vector<ChunkPosition> recycledChunks;             // createMutex\n    robin_hood::unordered_map<uint32_t, size_t> fileSize;  // createMutex\n```",
+      "line": 653
+    },
+    {
+      "file": "src/storage/store/StorageTarget.cc",
+      "description": "迁移kv store的逻辑，不太清楚是啥",
+      "line": 188
+    },
+    {
+      "file": "src/storage/store/StorageTarget.cc",
+      "description": "一些monitor的逻辑",
+      "line": 205
+    },
+    {
+      "file": "src/storage/store/StorageTargets.cc",
+      "description": "将创建出来的target丢到targetMap_中",
+      "line": 245
+    },
+    {
+      "file": "src/storage/service/TargetMap.cc",
+      "description": "这里应该是改造成原子操作了",
+      "line": 374
+    },
+    {
+      "file": "src/storage/service/TargetMap.cc",
+      "description": "核心的逻辑是这个",
+      "line": 375
+    },
+    {
+      "file": "src/storage/service/TargetMap.cc",
+      "description": "lambda中的函数",
+      "line": 385
+    },
+    {
+      "file": "src/storage/service/TargetMap.cc",
+      "description": "这个就是判断用哪个chunk engine",
+      "line": 88
+    },
+    {
+      "file": "src/storage/service/TargetMap.cc",
+      "description": "target的状态控制：\n\n```\nenum class LocalTargetState : uint8_t {\n  INVALID = 0,\n  UPTODATE = 1,\n  ONLINE = 2,\n  OFFLINE = 4,\n  MIN = INVALID,\n  MAX = OFFLINE\n};\n```",
+      "line": 86
+    },
+    {
+      "file": "src/storage/service/TargetMap.cc",
+      "description": "添加target\n\n从 C++11 开始，STL 会提供哈希表 std::unordered_map 的实现，用起来确实很方便，不过性能上就差强人意了。robin_hood::unordered_map 作为 std::unordered_map 的替代品，提供了与标准库中一致的接口，同时带来 2 到 3 倍的性能提升，着实让人心动。\n\n参考文献：https://sf-zhou.github.io/programming/robin_hood_hashing.html",
+      "line": 89
+    },
+    {
+      "file": "src/storage/store/StorageTargets.cc",
+      "description": "阻塞等待所有的target都完成load",
+      "line": 213
+    },
+    {
+      "file": "src/storage/store/StorageTargets.cc",
+      "description": "这里默认会配置此项目为true\n\n```\n[server.targets]\nallow_disk_without_uuid = false\ncollect_all_fds = true\ncreate_engine_path = true\nspace_info_cache_timeout = '5s'\ntarget_num_per_path = 0\ntarget_paths = []\n```",
+      "line": 217
+    },
+    {
+      "file": "src/storage/store/GlobalFileStore.cc",
+      "description": "这个逻辑没太看懂",
+      "line": 51
+    },
+    {
+      "file": "src/storage/service/Components.cc",
+      "description": "aioReadWorker的启动逻辑",
+      "line": 54
+    },
+    {
+      "file": "src/storage/aio/AioReadWorker.cc",
+      "description": "根据num_thread的数量向executor_增加函数。默认是32",
+      "line": 20
+    },
+    {
+      "file": "src/storage/aio/AioReadWorker.cc",
+      "description": "初始化aio的status，默认是传入max_events = 512\n",
+      "line": 26
+    },
+    {
+      "file": "src/storage/aio/AioStatus.cc",
+      "description": "这个就是aio的相关context",
+      "line": 69
+    },
+    {
+      "file": "src/storage/aio/AioStatus.cc",
+      "description": "初始化aio用到的一些东西",
+      "line": 77
+    },
+    {
+      "file": "src/storage/aio/AioReadWorker.cc",
+      "description": "默认为true",
+      "line": 32
+    },
+    {
+      "file": "src/storage/aio/AioReadWorker.cc",
+      "description": "初始化 ioUringStatus",
+      "line": 33
+    },
+    {
+      "file": "src/storage/aio/AioStatus.cc",
+      "description": "初始化一个io_uring_queue",
+      "line": 186
+    },
+    {
+      "file": "src/storage/aio/AioStatus.cc",
+      "description": "将io句柄和io_uring数据结构进行注册和关联",
+      "line": 195
+    },
+    {
+      "file": "src/storage/aio/AioStatus.cc",
+      "description": "将缓冲区列表 iovecs句柄也和io_uring数据结构进行注册和关联",
+      "line": 203
+    },
+    {
+      "file": "src/storage/aio/AioReadWorker.cc",
+      "description": "执行aio！",
+      "line": 41
+    },
+    {
+      "file": "src/storage/aio/AioReadWorker.cc",
+      "description": "永久循环",
+      "line": 64,
+      "selection": {
+        "start": {
+          "line": 62,
+          "character": 8
+        },
+        "end": {
+          "line": 62,
+          "character": 13
+        }
+      }
+    },
+    {
+      "file": "src/storage/aio/AioReadWorker.cc",
+      "description": "出队一个aio任务",
+      "line": 67
+    },
+    {
+      "file": "src/storage/aio/AioReadWorker.cc",
+      "description": "这里是batch化设置start time？",
+      "line": 74
+    },
+    {
+      "file": "src/storage/aio/BatchReadJob.h",
+      "description": "一批次的BatchReadJob的数据结构",
+      "line": 69
+    },
+    {
+      "file": "src/storage/aio/BatchReadJob.h",
+      "description": "核心就是封装了很多的AioReadJob",
+      "line": 110
+    },
+    {
+      "file": "src/storage/aio/BatchReadJob.h",
+      "description": "一批次得设置startTime",
+      "line": 106
+    },
+    {
+      "file": "src/storage/aio/AioReadWorker.cc",
+      "description": "配置io的状态",
+      "line": 76
+    },
+    {
+      "file": "src/storage/aio/AioReadWorker.h",
+      "description": "只有 io_uring 引擎才能使用",
+      "line": 43
+    },
+    {
+      "file": "src/storage/aio/AioReadWorker.cc",
+      "description": "收集一批jobs用于成批读",
+      "line": 81
+    },
+    {
+      "file": "src/storage/aio/AioStatus.cc",
+      "description": "针对io_uring的收集逻辑",
+      "line": 214
+    },
+    {
+      "file": "src/storage/aio/AioStatus.cc",
+      "description": "一次io_uring是存在event数量限制的",
+      "line": 216
+    },
+    {
+      "file": "src/storage/aio/AioStatus.h",
+      "description": "进行中的异步io数量 inflight_ < 预设置的最大event数量 maxEvents_",
+      "line": 20
+    },
+    {
+      "file": "src/storage/aio/AioStatus.cc",
+      "description": "通过迭代器每次获取一个job",
+      "line": 217
+    },
+    {
+      "file": "src/storage/aio/AioStatus.cc",
+      "description": "从状态中获取storageTarget，然后进行相关的预读",
+      "line": 218
+    },
+    {
+      "file": "src/storage/aio/BatchReadJob.h",
+      "description": "单个aio read job的详细的状态",
+      "line": 70
+    },
+    {
+      "file": "src/storage/store/StorageTarget.cc",
+      "description": "预读的逻辑是实现在chunk_engine中的",
+      "line": 293
+    },
+    {
+      "file": "src/storage/store/ChunkEngine.h",
+      "description": "只有在job的状态中的chunkEngineJob没有任何的chunk时进行",
+      "line": 37
+    },
+    {
+      "file": "src/storage/aio/BatchReadJob.h",
+      "description": "这个类的作用应该是将job转化为chunk_engine支持的job",
+      "line": 18
+    },
+    {
+      "file": "src/storage/store/ChunkEngine.h",
+      "description": "从每个aioreadjob中的readIO中获取chunkId和chainId",
+      "line": 38
+    },
+    {
+      "file": "src/storage/aio/BatchReadJob.h",
+      "description": "每个AioReadJob都有一个ReadIO实例",
+      "line": 67
+    },
+    {
+      "file": "src/fbs/storage/Common.h",
+      "description": "这几个字段似乎就是io请求所需要的offset，length，key和rdmabuf",
+      "line": 309
+    },
+    {
+      "file": "src/fbs/storage/Common.h",
+      "description": "GlobalKey需要注意",
+      "line": 312
+    },
+    {
+      "file": "src/fbs/storage/Common.h",
+      "description": "其实就是chainId和chunkId",
+      "line": 260
+    },
+    {
+      "file": "src/storage/store/ChunkEngine.h",
+      "description": "转发到rust中的get_raw_chunk",
+      "line": 47
+    },
+    {
+      "file": "src/storage/chunk_engine/src/cxx.rs",
+      "description": "实际上就是这个函数",
+      "line": 93
+    },
+    {
+      "file": "src/storage/chunk_engine/src/cxx.rs",
+      "description": "",
+      "line": 93
+    },
+    {
+      "file": "src/storage/chunk_engine/src/cxx.rs",
+      "description": "走到self.get",
+      "line": 94
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "从mete_cache中获取entry",
+      "line": 178
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "如果缓存中有，直接返回",
+      "line": 188
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "如果没有就要从rocksDB中读meta了",
+      "line": 190
+    },
+    {
+      "file": "src/storage/chunk_engine/src/meta/meta_store.rs",
+      "description": "这里就是访问rocksdb",
+      "line": 38
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "这里是根据chunk_size选择对应的allocator",
+      "line": 193
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "这里应该是先增加引用计数，再返回chunk",
+      "line": 194
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/allocator.rs",
+      "description": "再转换到ChunkAllocator中，增加引用计数",
+      "line": 42
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk_allocator.rs",
+      "description": "如果这个pos已经有引用了，这个也是核心的逻辑，对pos对应的position_rc进行一次自增",
+      "line": 146
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk_allocator.rs",
+      "description": "如果是首次出现，则插入初始值 1，并增加全局位置计数器 position_count。",
+      "line": 150
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk_allocator.rs",
+      "description": "增加全局位置计数器 position_count。",
+      "line": 155
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk_allocator.rs",
+      "description": "因此如果是首次引用，一定要是rc == 1",
+      "line": 158
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "这个操作只是读一次元信息，似乎不会直接读实际的内容",
+      "line": 194
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "这里是一次回写缓存",
+      "line": 195
+    },
+    {
+      "file": "src/storage/chunk_engine/src/cxx.rs",
+      "description": "如果是正常的，就直接返回了",
+      "line": 101
+    },
+    {
+      "file": "src/storage/store/ChunkEngine.h",
+      "description": "当chunk被同步读出来后，就写入到job的state的chunkEngineJob中",
+      "line": 56
+    },
+    {
+      "file": "src/storage/store/ChunkEngine.h",
+      "description": "这里应该就是把chunk的元信息先读取出来的逻辑",
+      "line": 59
+    },
+    {
+      "file": "src/storage/store/ChunkEngine.h",
+      "description": "这是读取chunk的fd和offset情况",
+      "line": 67
+    },
+    {
+      "file": "src/storage/store/ChunkEngine.h",
+      "description": "完成一次预读，可以看到，预读是一个同步读，如果engine有缓存，则很快可以从内存中读取出来",
+      "line": 72
+    },
+    {
+      "file": "src/storage/aio/AioStatus.cc",
+      "description": "预读完说明此时正在读取的任务就增加了",
+      "line": 224
+    },
+    {
+      "file": "src/storage/aio/AioStatus.cc",
+      "description": "这里是获取sqe，然后去往sqe中准备读取的信息，要求就是 readFd、readLength、readOffset还有一些buf的内容",
+      "line": 228
+    },
+    {
+      "file": "src/storage/aio/AioStatus.cc",
+      "description": "配置job作为sqe的data",
+      "line": 239
+    },
+    {
+      "file": "src/storage/aio/AioStatus.cc",
+      "description": "增加一个增加执行中的job",
+      "line": 240
+    },
+    {
+      "file": "src/storage/aio/AioStatus.cc",
+      "description": "还有针对aio引擎的collect逻辑",
+      "line": 86
+    },
+    {
+      "file": "src/storage/aio/AioReadWorker.cc",
+      "description": "这里应该是提交给aio或io_uring",
+      "line": 84
+    },
+    {
+      "file": "src/storage/aio/AioStatus.cc",
+      "description": "提交io_uring任务",
+      "line": 247
+    },
+    {
+      "file": "src/storage/aio/AioStatus.cc",
+      "description": "这里返回的是实际提交上去的请求数量",
+      "line": 249
+    },
+    {
+      "file": "src/storage/aio/AioStatus.cc",
+      "description": "清空批次读的job",
+      "line": 259
+    },
+    {
+      "file": "src/storage/aio/AioReadWorker.cc",
+      "description": "很大的可能是读取的时候需要等待读，此时是设置了一个min_complete的值，然后到下一次再进行读\n\n最小完成值是min_complete = 128\n",
+      "line": 87
+    },
+    {
+      "file": "src/storage/aio/AioStatus.cc",
+      "description": "这里是支持等待一定数量的ceq完成后就返回",
+      "line": 265
+    },
+    {
+      "file": "src/storage/aio/AioStatus.cc",
+      "description": "遍历每个ceq，然后进行结果的设置",
+      "line": 272
+    },
+    {
+      "file": "src/storage/aio/AioStatus.cc",
+      "description": "读取的延时",
+      "line": 31
+    },
+    {
+      "file": "src/storage/aio/AioStatus.cc",
+      "description": "配置结果",
+      "line": 38
+    },
+    {
+      "file": "src/storage/aio/BatchReadJob.cc",
+      "description": "这里是整个chunk读取完之后进行校验",
+      "line": 31
+    },
+    {
+      "file": "src/storage/aio/BatchReadJob.cc",
+      "description": "完成结束read的操作",
+      "line": 38
+    },
+    {
+      "file": "src/storage/store/StorageTarget.cc",
+      "description": "使用rust的chunk engine应该走到的是这里把",
+      "line": 301
+    },
+    {
+      "file": "src/storage/aio/BatchReadJob.cc",
+      "description": "验证校验和的逻辑",
+      "line": 43
+    },
+    {
+      "file": "src/storage/aio/BatchReadJob.cc",
+      "description": "配置result",
+      "line": 60
+    },
+    {
+      "file": "src/storage/aio/BatchReadJob.cc",
+      "description": "reset chunkEngineJob",
+      "line": 61
+    },
+    {
+      "file": "src/storage/aio/BatchReadJob.h",
+      "description": "主要就是让rust去析构chunk_，同时把engine_置换为nullptr，避免内存泄漏",
+      "line": 34
+    },
+    {
+      "file": "src/storage/aio/BatchReadJob.cc",
+      "description": "batch_要进行finish",
+      "line": 62
+    },
+    {
+      "file": "src/storage/aio/BatchReadJob.cc",
+      "description": "这里会进行一些coroutine的唤醒，应该是可以让别的coroutine继续进行了",
+      "line": 119
+    },
+    {
+      "file": "src/storage/aio/AioStatus.cc",
+      "description": "如果io错误，也会设置相关的error",
+      "line": 52
+    },
+    {
+      "file": "src/storage/aio/AioStatus.cc",
+      "description": "正在进行的io数量就要减少",
+      "line": 275
+    },
+    {
+      "file": "src/storage/aio/AioReadWorker.cc",
+      "description": "直到没有batchreadjob就结束了",
+      "line": 90
+    },
+    {
+      "file": "src/storage/aio/AioReadWorker.cc",
+      "description": "这里很暴力，就是阻塞等所有的aio threads启动",
+      "line": 46
+    },
+    {
+      "file": "src/storage/service/Components.cc",
+      "description": "dumpWorker，似乎不是很重要",
+      "line": 55
+    },
+    {
+      "file": "src/storage/worker/DumpWorker.cc",
+      "description": "核心就是无尽循环",
+      "line": 29
+    },
+    {
+      "file": "src/storage/worker/DumpWorker.cc",
+      "description": "默认没有启动，暂时不看了 ",
+      "line": 47
+    },
+    {
+      "file": "src/storage/service/Components.cc",
+      "description": "allocateWorker的逻辑",
+      "line": 56
+    },
+    {
+      "file": "src/storage/worker/AllocateWorker.cc",
+      "description": "也是一个无限循环",
+      "line": 20
+    },
+    {
+      "file": "src/storage/worker/AllocateWorker.cc",
+      "description": "max_remain_groups = 8\nmax_remain_ultra_groups = 4\nmax_reserved_chunks = '1GB'\nmin_remain_groups = 4\nmin_remain_ultra_groups = 0",
+      "line": 43
+    },
+    {
+      "file": "src/storage/worker/AllocateWorker.cc",
+      "description": "对存储服务的每个engine，都要去配置几个服务：\n\n- allocate_groups\n- allocate_ultra_groups\n- compact_groups",
+      "line": 48
+    },
+    {
+      "file": "src/storage/worker/AllocateWorker.cc",
+      "description": "`allocated_groups`: Groups with allocated space but no chunks assigned.\n\n**`compact_thread`**: Periodically scans `active_groups`, migrates all chunks from selected groups, releases space, and returns groups to `allocated_groups`.\n\n因此，allocated_groups应该是全新的，或者被完全清空的group",
+      "line": 49
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "allocate_groups的逻辑",
+      "line": 81
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/allocators.rs",
+      "description": "由allocators进行",
+      "line": 74
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/allocators.rs",
+      "description": "allocate_ultra_groups也可以放到这里面进行",
+      "line": 79
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/allocators.rs",
+      "description": "遍历每个allocator",
+      "line": 82
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/allocators.rs",
+      "description": "当allocator的chunk_size超过4MB的时候，就必须采用is_ultra了",
+      "line": 83
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/allocators.rs",
+      "description": "默认的batch_size，针对普通的allocator是128，针对ultra allocator是32",
+      "line": 87
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/allocators.rs",
+      "description": "执行实际的allocate",
+      "line": 88
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/allocator.rs",
+      "description": "获取一个用于allocate的task",
+      "line": 69
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/allocator.rs",
+      "description": "核心就是从group_allocator中获取",
+      "line": 55
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/group_allocator.rs",
+      "description": "当前的allocated_groups小于最低要求的时候，需要allocate出来，因此返回这个enum加上group_id即可",
+      "line": 65
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/group_allocator.rs",
+      "description": "从unallocated_groups的迭代器中拿下一个如果可以拿到，就返回此。这个应该是被碎片整理后的",
+      "line": 53
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/group_allocator.rs",
+      "description": "全局获取下一个group_id",
+      "line": 58
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/group_allocator.rs",
+      "description": "当allocated_group太多了，就要销毁了",
+      "line": 69
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/allocator.rs",
+      "description": "任务是allocate的逻辑",
+      "line": 73
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/allocator.rs",
+      "description": "利用clusters去allocate。这个应该是文件级别的实际进行group的创建",
+      "line": 74
+    },
+    {
+      "file": "src/storage/chunk_engine/src/file/clusters.rs",
+      "description": "这里实际上就是获取每个group_id对应的cluster文件索引，然后让file调用fallocate函数",
+      "line": 42
+    },
+    {
+      "file": "src/storage/chunk_engine/src/file/cluster.rs",
+      "description": "这个就是fallocate函数，还会传递punch_hole参数",
+      "line": 43
+    },
+    {
+      "file": "src/storage/chunk_engine/src/file/cluster.rs",
+      "description": "实际上就是调用了libc里面的fallocate，对文件进行空间管理。\n\n根据 punch_hole 的值，选择以下两种模式之一：\n- 打洞（Punch Hole） ：释放文件指定范围的空间（创建稀疏文件）。释放文件 [offset, offset + size) 范围的物理空间，文件系统可能回收这部分空间（适用于稀疏文件）\n- 预分配（Allocate） ：为文件预留物理空间，但不初始化数据。为文件预留空间，但不写入数据（避免后续写入时的动态分配开销）。此时 mode = 0，可能对应 FALLOC_FL_KEEP_SIZE（保持文件逻辑大小不变）",
+      "line": 45
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/allocator.rs",
+      "description": "然后需要让meta_store也去进行group的allocate",
+      "line": 75
+    },
+    {
+      "file": "src/storage/chunk_engine/src/meta/meta_store.rs",
+      "description": "直接同步针对rocksdb进行处理",
+      "line": 323
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/allocator.rs",
+      "description": "如果是Deallocate的逻辑",
+      "line": 77
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/allocator.rs",
+      "description": "先针对meta_store进行处理，和allocate的逻辑是反过来的，目的是保证一致性",
+      "line": 79
+    },
+    {
+      "file": "src/storage/chunk_engine/src/meta/meta_store.rs",
+      "description": "也是直接针对rocksdb进行处理",
+      "line": 329
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/allocator.rs",
+      "description": "然后再针对cluster进行处理",
+      "line": 80
+    },
+    {
+      "file": "src/storage/chunk_engine/src/file/clusters.rs",
+      "description": "也是从files中获取对应的文件，然后这次调用的是fallocate，要求是设置为punch_hole模式",
+      "line": 46
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/allocator.rs",
+      "description": "完成allocate_task",
+      "line": 84
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/allocator.rs",
+      "description": "也是让group_allocator进行调用",
+      "line": 60
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/group_allocator.rs",
+      "description": "这里是实际的逻辑",
+      "line": 75
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/group_allocator.rs",
+      "description": "allocate的逻辑",
+      "line": 77
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/group_allocator.rs",
+      "description": "增加一些counter的逻辑",
+      "line": 78
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/allocator_counter.rs",
+      "description": "这里就是让allocated_chunks和reserved_chunks都增加一个group级别的大小，因为allocate都是一个全新的group",
+      "line": 68
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/group_allocator.rs",
+      "description": "插入新的group到allocated_groups",
+      "line": 79
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/group_allocator.rs",
+      "description": "针对deallocate的逻辑也很类似",
+      "line": 81
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/allocator_counter.rs",
+      "description": "也是减少allocated_chunks和reserved_chunks",
+      "line": 75
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/group_allocator.rs",
+      "description": "将group加入到unallocated_groups中。这个时候就能理解了，unallocated_groups是之前被group_allocator申请出来过的，但是在执行的过程中被deallocate的。\n\n这里会有两个额外的逻辑：\n\n`unallocated_groups`: Groups without allocated space.\n\nIf `allocated_groups` is empty, fetch a group from `unallocated_groups` and allocate disk space synchronously.",
+      "line": 83
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/group_allocator.rs",
+      "description": "allocate失败也是加入到unallocated_groups中",
+      "line": 85
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/group_allocator.rs",
+      "description": "同理，deallocate失败，就说明此时group还是allocated_groups的",
+      "line": 86
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/allocators.rs",
+      "description": "返回的是完成的总数，似乎整个操作也都是同步io",
+      "line": 98
+    },
+    {
+      "file": "src/storage/worker/AllocateWorker.cc",
+      "description": "allocate_ultra_groups，应该是针对那些chunk比较大的group的逻辑",
+      "line": 50
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "其实本质上也是走到这里，内部的逻辑一模一样",
+      "line": 105
+    },
+    {
+      "file": "src/storage/worker/AllocateWorker.cc",
+      "description": "这里也是一个很重要的逻辑，就是会将某些actvie_groups进行碎片整理，清空后的group就可以放到allocated_groups中",
+      "line": 51
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "compact_groups的逻辑",
+      "line": 117
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "获取allocate_tasks，返回group_ids？ 默认的max_reserved是1GB",
+      "line": 118
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/allocators.rs",
+      "description": "迭代所有的allocator，需要所有的allocator都共同执行get_compact_task的逻辑",
+      "line": 111
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/allocator.rs",
+      "description": "也是压栈到chunk_allocator中执行",
+      "line": 92
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk_allocator.rs",
+      "description": "获取reserved_chunks，当一个group被allocate出来的时候，会被设置为group的总的大小",
+      "line": 208
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk_allocator.rs",
+      "description": "剩余的也不多，不啥也不干",
+      "line": 209
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk_allocator.rs",
+      "description": "遍历每个active_level",
+      "line": 213
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk_allocator.rs",
+      "description": "这里是将group_id从set中删除",
+      "line": 215
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk_allocator.rs",
+      "description": "将group_id从active_groups删除",
+      "line": 216
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk_allocator.rs",
+      "description": "同时加入frozen_groups中",
+      "line": 217
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk_allocator.rs",
+      "description": "这里直接返回了，因此其实这个操作只会执行一次。\n\n本质上就是根据active_levels的顺序来选一个？",
+      "line": 218
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/allocators.rs",
+      "description": "函数式编程 collect()，应该就是用于返回结果了，就是每个allocator都会返回一个被碎片整理的groupid\n\n\n由上下文推断，通常是 Vec<T>，其中 T 是 get_compact_task 返回的 Some(task) 中的类型。",
+      "line": 112
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "遍历所有需要被碎片整理的groupid",
+      "line": 124
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "迭代式地move groupid上面的所有chunk",
+      "line": 128
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "获取old_chunk先",
+      "line": 221
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "先从meta cache中拿",
+      "line": 178
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "然后走到entry的逻辑，这里是要让引用计数增加的",
+      "line": 179
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "拷贝出一个新的chunk",
+      "line": 227
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk.rs",
+      "description": "这里是直接申请一个新的chunk",
+      "line": 67
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/allocator.rs",
+      "description": "利用allocator进行allocate",
+      "line": 24
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/allocator.rs",
+      "description": "将clusters传进来，进行实际的allocate",
+      "line": 28
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk_allocator.rs",
+      "description": "主要的allocate核心逻辑",
+      "line": 97
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk_allocator.rs",
+      "description": "如果active_groups不为空，就先从此处开始申请空间",
+      "line": 98
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk_allocator.rs",
+      "description": "先从满的level开始分配",
+      "line": 99
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk_allocator.rs",
+      "description": "从当前的level中获取group",
+      "line": 101
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk_allocator.rs",
+      "description": "进行实际的分配",
+      "line": 103
+    },
+    {
+      "file": "src/storage/chunk_engine/src/types/group_state.rs",
+      "description": "逐个遍历位图中的每个块",
+      "line": 57
+    },
+    {
+      "file": "src/storage/chunk_engine/src/types/group_state.rs",
+      "description": "通过 !*v 对块取反，将未分配位（0）变为 1。若结果非零，表示当前块存在可用。\n\nNonZeroU64 快速判断是否存在至少一个可用位，避免逐位检查。",
+      "line": 58
+    },
+    {
+      "file": "src/storage/chunk_engine/src/types/group_state.rs",
+      "description": "trailing_zeros() 返回最低位的 1 的位置（即原块中最低位的 0 的位置），例如：\n\nmark=0b110 =>  idx=1",
+      "line": 59
+    },
+    {
+      "file": "src/storage/chunk_engine/src/types/group_state.rs",
+      "description": "将找到的位设置为 1，标记为已分配。\n",
+      "line": 60
+    },
+    {
+      "file": "src/storage/chunk_engine/src/types/group_state.rs",
+      "description": "i 是块索引，每个块管理 Self::ITEM_BITS 位（如 64 位）。\n\n最后返回的是这个: 全局索引 = 块起始位置（i * ITEM_BITS） + 块内偏移（idx）",
+      "line": 62
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk_allocator.rs",
+      "description": "位图查到满了，group移动到full中",
+      "line": 105
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk_allocator.rs",
+      "description": "更新新的level级别",
+      "line": 109
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk_allocator.rs",
+      "description": "增加一次引用计数",
+      "line": 113
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk_allocator.rs",
+      "description": "引用计数里面对chunk进行更新",
+      "line": 114
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/allocator_counter.rs",
+      "description": "reserved_chunks会减1",
+      "line": 82
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk.rs",
+      "description": "用新创建meta设置给new_chunk",
+      "line": 70
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk.rs",
+      "description": "让AlignedBuffer执行",
+      "line": 77
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk.rs",
+      "description": "步骤解析 ：\n获取线程局部缓冲区 ：\nSelf::BUFFER.with(|v| ...) 访问当前线程的 BUFFER，通过 RefCell 获取可变引用 。\n\n调整缓冲区大小 ：\nnext_multiple_of(ALIGN_SIZE) 确保缓冲区长度是对齐的，避免内存访问越界 。\n\n数据读写 ：\nself.pread(buf, 0)：将当前块数据读取到对齐缓冲区。\nnew_chunk.pwrite(buf, 0)：将缓冲区数据写入新块，完成复制",
+      "line": 78
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk.rs",
+      "description": "这个就是实际的读取操作",
+      "line": 81
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk.rs",
+      "description": "让clusters处理读，内容放到buf中",
+      "line": 284
+    },
+    {
+      "file": "src/storage/chunk_engine/src/file/clusters.rs",
+      "description": "利用实际的文件进行读",
+      "line": 50
+    },
+    {
+      "file": "src/storage/chunk_engine/src/file/cluster.rs",
+      "description": "如果是对齐的read，直接DIO",
+      "line": 68
+    },
+    {
+      "file": "src/storage/chunk_engine/src/file/cluster.rs",
+      "description": "否则是normal IO",
+      "line": 70
+    },
+    {
+      "file": "src/storage/chunk_engine/src/file/cluster.rs",
+      "description": "直接就是一次同步读操作",
+      "line": 73
+    },
+    {
+      "file": "src/storage/chunk_engine/src/file/cluster.rs",
+      "description": "拷贝回buf",
+      "line": 76
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk.rs",
+      "description": "这里就是把buf中的数据写回去",
+      "line": 82
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk.rs",
+      "description": "也是让clusters进行写操作",
+      "line": 288
+    },
+    {
+      "file": "src/storage/chunk_engine/src/file/cluster.rs",
+      "description": "同样的，就是直接同步写",
+      "line": 95
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "实际的数据已经拷贝完毕，接下来就是meta_store的实际move",
+      "line": 234
+    },
+    {
+      "file": "src/storage/chunk_engine/src/meta/meta_store.rs",
+      "description": "压栈",
+      "line": 201
+    },
+    {
+      "file": "src/storage/chunk_engine/src/meta/meta_store.rs",
+      "description": "把新的meta序列化后，放入write_batch中",
+      "line": 218
+    },
+    {
+      "file": "src/storage/chunk_engine/src/meta/meta_store.rs",
+      "description": "删除老的pos到chunk的映射",
+      "line": 226
+    },
+    {
+      "file": "src/storage/chunk_engine/src/meta/meta_store.rs",
+      "description": "增加新的pos到chunk的映射",
+      "line": 239
+    },
+    {
+      "file": "src/storage/chunk_engine/src/meta/meta_store.rs",
+      "description": "更新used_size",
+      "line": 251
+    },
+    {
+      "file": "src/storage/chunk_engine/src/meta/meta_store.rs",
+      "description": "更新timestamp到chunk的映射",
+      "line": 259
+    },
+    {
+      "file": "src/storage/chunk_engine/src/meta/meta_store.rs",
+      "description": "删除writing chunk",
+      "line": 268
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "完成一次 move 就把finish + 1",
+      "line": 131
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "结束group_id的compact",
+      "line": 134
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/allocators.rs",
+      "description": "这里是获取group_id对应的allocator",
+      "line": 116
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/allocator.rs",
+      "description": "让实际的chunk allocator结束compact的task",
+      "line": 97
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk_allocator.rs",
+      "description": "frozen_groups可以清除group_id，重新将group_id加入到active_group中",
+      "line": 226
+    },
+    {
+      "file": "src/storage/service/Components.cc",
+      "description": "专门有一个处理punchHole的Worker",
+      "line": 57
+    },
+    {
+      "file": "src/storage/worker/PunchHoleWorker.cc",
+      "description": "也是一个loop",
+      "line": 20
+    },
+    {
+      "file": "src/storage/worker/PunchHoleWorker.cc",
+      "description": "每隔10s对所有的targets都进行一次punchHole",
+      "line": 50
+    },
+    {
+      "file": "src/storage/worker/PunchHoleWorker.cc",
+      "description": "如果target是无法恢复的offline（比如磁盘损坏或者用户手动offline），就不进行pouchhole",
+      "line": 55
+    },
+    {
+      "file": "src/storage/worker/PunchHoleWorker.cc",
+      "description": "只有当磁盘的本地状态不是offline，一般是online或者up-to-date时候进行",
+      "line": 58
+    },
+    {
+      "file": "src/storage/worker/PunchHoleWorker.cc",
+      "description": "一次进行128次pouch hole，直到有一次完成即可",
+      "line": 75
+    },
+    {
+      "file": "src/storage/worker/PunchHoleWorker.cc",
+      "description": "如果刚刚已经把所有的targets都完成pouch hole，就暂停1s",
+      "line": 42
+    },
+    {
+      "file": "src/storage/store/StorageTarget.h",
+      "description": "如果使用的是chunk engine，似乎里面自己写了punch hold的逻辑，不需要额外处理",
+      "line": 86
+    },
+    {
+      "file": "src/storage/service/Components.cc",
+      "description": "还有一个syncMetaKv的worker",
+      "line": 58
+    },
+    {
+      "file": "src/storage/worker/SyncMetaKvWorker.cc",
+      "description": "也是loop",
+      "line": 21
+    },
+    {
+      "file": "src/storage/worker/SyncMetaKvWorker.cc",
+      "description": "按要求是1分钟同步一次",
+      "line": 48
+    },
+    {
+      "file": "src/storage/worker/SyncMetaKvWorker.cc",
+      "description": "实际的同步逻辑",
+      "line": 50
+    },
+    {
+      "file": "src/storage/worker/SyncMetaKvWorker.cc",
+      "description": "offline的target不进行",
+      "line": 62
+    },
+    {
+      "file": "src/storage/worker/SyncMetaKvWorker.cc",
+      "description": "offline的disk不进行",
+      "line": 65
+    },
+    {
+      "file": "src/storage/worker/SyncMetaKvWorker.cc",
+      "description": "实际的sync",
+      "line": 69
+    },
+    {
+      "file": "src/storage/store/StorageTarget.h",
+      "description": "如果使用的是chunk engine，也是啥也不干",
+      "line": 95
+    },
+    {
+      "file": "src/storage/worker/SyncMetaKvWorker.cc",
+      "description": "如果检查到target offline了，需要这里处理一下",
+      "line": 72
+    },
+    {
+      "file": "src/storage/service/Components.cc",
+      "description": "进行waitRoutingInfo的操作，随机选一个bg thread进行即可",
+      "line": 60
+    },
+    {
+      "file": "src/storage/service/Components.cc",
+      "description": "循环检查所有目标节点状态，直到所有节点退出 SERVING、SYNCING 或 WAITING 状态。\n",
+      "line": 71
+    },
+    {
+      "file": "src/storage/service/Components.cc",
+      "description": "用于resync的Worker",
+      "line": 62
+    },
+    {
+      "file": "src/storage/sync/ResyncWorker.cc",
+      "description": "这里是启动了所有的coroutine pool，用于handleSync",
+      "line": 49
+    },
+    {
+      "file": "src/storage/sync/ResyncWorker.cc",
+      "description": "然后也是loop",
+      "line": 50
+    },
+    {
+      "file": "src/storage/sync/ResyncWorker.cc",
+      "description": "loop的流程，这个是涉及到CRAQ的内容，也是非常重要的逻辑",
+      "line": 66
+    },
+    {
+      "file": "src/storage/sync/ResyncWorker.cc",
+      "description": "这里就是获取syncing的所有chains",
+      "line": 73
+    },
+    {
+      "file": "src/storage/sync/ResyncWorker.cc",
+      "description": "这里要打散这些链",
+      "line": 75
+    },
+    {
+      "file": "src/storage/sync/ResyncWorker.cc",
+      "description": "遍历所有的chain",
+      "line": 76
+    },
+    {
+      "file": "src/storage/sync/ResyncWorker.cc",
+      "description": "当链未在同步且上次同步时间超过 30 秒时，标记为同步中",
+      "line": 84
+    },
+    {
+      "file": "src/storage/sync/ResyncWorker.cc",
+      "description": "若成功获取同步权限，将任务提交到线程池 pool_，触发 handleSync 协程",
+      "line": 93
+    },
+    {
+      "file": "src/storage/sync/ResyncWorker.cc",
+      "description": "默认的full_sync_level = 'NONE'\n",
+      "line": 102
+    },
+    {
+      "file": "src/storage/sync/ResyncWorker.cc",
+      "description": "获取target, 全局是会维护从vChainId到target的映射的",
+      "line": 121
+    },
+    {
+      "file": "src/storage/sync/ResyncWorker.cc",
+      "description": "10s有一次超时",
+      "line": 154
+    },
+    {
+      "file": "src/storage/sync/ResyncWorker.cc",
+      "description": "这里是获取了chain上的target的下一个target的addr",
+      "line": 157
+    },
+    {
+      "file": "src/storage/sync/ResyncWorker.cc",
+      "description": "启动同步coroutine",
+      "line": 166
+    },
+    {
+      "file": "src/client/storage/StorageMessenger.cc",
+      "description": "核心就是利用messenger发出serde rpc method。\n内部执行的是syncStart",
+      "line": 135
+    },
+    {
+      "file": "src/storage/sync/ResyncWorker.cc",
+      "description": "这里是获取所有的本地的meta data",
+      "line": 185
+    },
+    {
+      "file": "src/storage/store/StorageTarget.cc",
+      "description": "rust的逻辑",
+      "line": 423
+    },
+    {
+      "file": "src/storage/store/ChunkEngine.h",
+      "description": "这里应该是把chainid上面的所有chunks都拿出来了",
+      "line": 235
+    },
+    {
+      "file": "src/storage/store/ChunkEngine.h",
+      "description": "遍历所有的chunk",
+      "line": 242
+    },
+    {
+      "file": "src/storage/store/ChunkEngine.h",
+      "description": "chunk meta data拷贝到内存中",
+      "line": 246
+    },
+    {
+      "file": "src/storage/store/ChunkEngine.h",
+      "description": "判断chunk是否 uncommitted，如果是就要回退版本",
+      "line": 247
+    },
+    {
+      "file": "src/storage/sync/ResyncWorker.cc",
+      "description": "遍历所有获取到的remoteMetas",
+      "line": 203
+    },
+    {
+      "file": "src/storage/sync/ResyncWorker.cc",
+      "description": "localMetas中不存在，就删除之",
+      "line": 207
+    },
+    {
+      "file": "src/storage/sync/ResyncWorker.cc",
+      "description": "如果chunk已经处于recycle中，跳过",
+      "line": 215
+    },
+    {
+      "file": "src/storage/sync/ResyncWorker.cc",
+      "description": "远程版本低",
+      "line": 223
+    },
+    {
+      "file": "src/storage/sync/ResyncWorker.cc",
+      "description": "远程未提交状态",
+      "line": 225
+    },
+    {
+      "file": "src/storage/sync/ResyncWorker.cc",
+      "description": "远程版本高",
+      "line": 228
+    },
+    {
+      "file": "src/storage/sync/ResyncWorker.cc",
+      "description": "本地已提交，属于是不正确的清空",
+      "line": 229
+    },
+    {
+      "file": "src/storage/sync/ResyncWorker.cc",
+      "description": "如果被判断为需要向后传递同步，就写到writeList中",
+      "line": 271
+    },
+    {
+      "file": "src/storage/sync/ResyncWorker.cc",
+      "description": "错误处理就是offline target",
+      "line": 284
+    },
+    {
+      "file": "src/storage/sync/ResyncWorker.cc",
+      "description": "这里还有一步很关键的，要把chunk从localMetas中删除",
+      "line": 210
+    },
+    {
+      "file": "src/storage/sync/ResyncWorker.cc",
+      "description": "",
+      "line": 284
+    },
+    {
+      "file": "src/storage/sync/ResyncWorker.cc",
+      "description": "还有剩下的，也要发出去",
+      "line": 289
+    },
+    {
+      "file": "src/storage/sync/ResyncWorker.cc",
+      "description": "按一个batch size的大小进行同步",
+      "line": 308
+    },
+    {
+      "file": "src/storage/sync/ResyncWorker.cc",
+      "description": "提交删除的coroutine",
+      "line": 318
+    },
+    {
+      "file": "src/storage/sync/ResyncWorker.cc",
+      "description": "这里就是核心了，forward的时候会把chunk锁住",
+      "line": 398
+    },
+    {
+      "file": "src/storage/sync/ResyncWorker.cc",
+      "description": "获取target上的chunk metadata",
+      "line": 404
+    },
+    {
+      "file": "src/storage/sync/ResyncWorker.cc",
+      "description": "这里就是申请更新的channel",
+      "line": 427
+    },
+    {
+      "file": "src/client/storage/UpdateChannelAllocator.cc",
+      "description": "从客户端的可用channel中拿一个出来",
+      "line": 54
+    },
+    {
+      "file": "src/storage/sync/ResyncWorker.cc",
+      "description": "实际执行forward的逻辑，支持retry",
+      "line": 453
+    },
+    {
+      "file": "src/storage/service/ReliableForwarding.cc",
+      "description": "这里实际上走到了存储模块的ReliableForwarding中，说明这个就是用于在链上传输数据的",
+      "line": 33
+    },
+    {
+      "file": "src/storage/service/ReliableForwarding.cc",
+      "description": "这里就是实际进行forward的逻辑",
+      "line": 55
+    },
+    {
+      "file": "src/storage/service/ReliableForwarding.cc",
+      "description": "又是一次压栈调用",
+      "line": 119
+    },
+    {
+      "file": "src/storage/service/ReliableForwarding.cc",
+      "description": "拿一段rdma的buffer出来",
+      "line": 151
+    },
+    {
+      "file": "src/storage/service/ReliableForwarding.cc",
+      "description": "在buffer中申请一段空间",
+      "line": 165
+    },
+    {
+      "file": "src/storage/service/ReliableForwarding.cc",
+      "description": "入队到aio read中",
+      "line": 188
+    },
+    {
+      "file": "src/storage/service/ReliableForwarding.cc",
+      "description": "等着通知完成",
+      "line": 189
+    },
+    {
+      "file": "src/storage/service/ReliableForwarding.cc",
+      "description": "这里就是发一个rpc请求去进行update",
+      "line": 232
+    },
+    {
+      "file": "src/storage/service/ReliableForwarding.cc",
+      "description": "这里就是发一个rpc请求去进行update",
+      "line": 232
+    },
+    {
+      "file": "src/storage/service/ReliableForwarding.cc",
+      "description": "之后的逻辑就是处理结果了",
+      "line": 247
+    },
+    {
+      "file": "src/storage/service/ReliableForwarding.cc",
+      "description": "forward的失败逻辑处理",
+      "line": 261
+    },
+    {
+      "file": "src/storage/sync/ResyncWorker.cc",
+      "description": "阻塞等待所有的forward完成",
+      "line": 321
+    },
+    {
+      "file": "src/storage/sync/ResyncWorker.cc",
+      "description": "write操作也是同理",
+      "line": 342
+    },
+    {
+      "file": "src/storage/sync/ResyncWorker.cc",
+      "description": "链上执行 sync done的操作",
+      "line": 366
+    },
+    {
+      "file": "src/storage/service/Components.cc",
+      "description": "然后是check worker的流程",
+      "line": 65
+    },
+    {
+      "file": "src/storage/worker/CheckWorker.cc",
+      "description": "loop",
+      "line": 81
+    },
+    {
+      "file": "src/storage/worker/CheckWorker.cc",
+      "description": "如果target offline了，就重新reload起来",
+      "line": 124
+    },
+    {
+      "file": "src/storage/worker/CheckWorker.cc",
+      "description": "检查disk的状态，至少间隔3s",
+      "line": 147
+    },
+    {
+      "file": "src/storage/worker/CheckWorker.cc",
+      "description": "清除过期的client",
+      "line": 187
+    },
+    {
+      "file": "src/storage/worker/CheckWorker.cc",
+      "description": "更新target使用的size",
+      "line": 199
+    },
+    {
+      "file": "src/storage/worker/CheckWorker.cc",
+      "description": "心跳，至少间隔1s",
+      "line": 235
+    },
+    {
+      "file": "src/storage/worker/CheckWorker.cc",
+      "description": "报告chunk engine的metrics，至少间隔1s",
+      "line": 241
+    },
+    {
+      "file": "src/storage/service/Components.cc",
+      "description": "最后是storageOperator",
+      "line": 67
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "配置read的bytes和io数量",
+      "line": 61
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "启动updateWorker",
+      "line": 72
+    },
+    {
+      "file": "src/storage/update/UpdateWorker.cc",
+      "description": "有多少个disk，就启动多少个队列",
+      "line": 11
+    },
+    {
+      "file": "src/storage/update/UpdateWorker.cc",
+      "description": "将4096个队列分散到32个thread中",
+      "line": 17
+    },
+    {
+      "file": "src/storage/update/UpdateWorker.cc",
+      "description": "无尽循环",
+      "line": 35
+    },
+    {
+      "file": "src/storage/update/UpdateWorker.cc",
+      "description": "从job的target上，启动updateChunk，使用的还是bgExecutor（thread数默认只是8）",
+      "line": 42
+    },
+    {
+      "file": "src/storage/store/StorageTarget.cc",
+      "description": "针对commit类型的job",
+      "line": 308
+    },
+    {
+      "file": "src/storage/store/StorageTarget.cc",
+      "description": "利用哦那个chunk engine进行commit，默认都是在write的时候进行sync",
+      "line": 310
+    },
+    {
+      "file": "src/storage/store/ChunkEngine.cc",
+      "description": "从job中提取chunkId、chainId、meta等东西",
+      "line": 85
+    },
+    {
+      "file": "src/storage/store/ChunkEngine.cc",
+      "description": "让引擎进行commit_raw_chunk",
+      "line": 102
+    },
+    {
+      "file": "src/storage/chunk_engine/src/cxx.rs",
+      "description": "会走到commit_chunk中",
+      "line": 179
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "如果是remove的chunk，就需要从meta中删除",
+      "line": 476
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "更新chunk的逻辑",
+      "line": 487
+    },
+    {
+      "file": "src/storage/chunk_engine/src/meta/meta_store.rs",
+      "description": "最后会走到这里",
+      "line": 193
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "新增chunk的meta更新逻辑",
+      "line": 491
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "增加缓存",
+      "line": 494
+    },
+    {
+      "file": "src/storage/store/ChunkEngine.cc",
+      "description": "job上的chunkEngineJob会被释放",
+      "line": 103
+    },
+    {
+      "file": "src/storage/store/StorageTarget.cc",
+      "description": "这个是对job进行真正的update逻辑",
+      "line": 316
+    },
+    {
+      "file": "src/storage/store/ChunkEngine.cc",
+      "description": "这里也是提取chunkId、chainId等信息",
+      "line": 19
+    },
+    {
+      "file": "src/storage/store/ChunkEngine.cc",
+      "description": "文件截断io",
+      "line": 33
+    },
+    {
+      "file": "src/storage/store/ChunkEngine.cc",
+      "description": "删除io",
+      "line": 35
+    },
+    {
+      "file": "src/storage/store/ChunkEngine.cc",
+      "description": "对于写io需要设置length和offset",
+      "line": 47
+    },
+    {
+      "file": "src/storage/store/ChunkEngine.cc",
+      "description": "实际的数据？",
+      "line": 53
+    },
+    {
+      "file": "src/storage/store/ChunkEngine.cc",
+      "description": "让engine进行update_raw_chunk",
+      "line": 60
+    },
+    {
+      "file": "src/storage/chunk_engine/src/cxx.rs",
+      "description": "核心会走到这里",
+      "line": 149
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "把data拿出来",
+      "line": 299
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "获取老的chunk的信息，会回传",
+      "line": 315
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "COW的逻辑",
+      "line": 377
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk.rs",
+      "description": "计算新块长度（取原长度与写入范围的最大值），通过 allocators 分配对齐内存块 \n",
+      "line": 102
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk.rs",
+      "description": "跳过读取 ：若处于同步中（is_syncing）或覆盖全量数据（offset=0 且数据足够长），直接写入新数据，避免读取旧数据",
+      "line": 112
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk.rs",
+      "description": "跳过读直接就可以写了",
+      "line": 135
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk.rs",
+      "description": "先填充前面的0",
+      "line": 141
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk.rs",
+      "description": "实际写",
+      "line": 146
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "默认情况下，就是直接写，并返回新的chunk。COW就没有返回新的chunk了",
+      "line": 392
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "当没有old_chunk时，就是创建新的chunk并write",
+      "line": 414
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "更新writing_list",
+      "line": 431
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "持久化更新meta store",
+      "line": 458
+    },
+    {
+      "file": "src/storage/store/ChunkEngine.cc",
+      "description": "返回IO的大小",
+      "line": 76
+    },
+    {
+      "file": "src/storage/store/StorageTarget.cc",
+      "description": "更新一些IO的指标",
+      "line": 318
+    },
+    {
+      "file": "src/common/net/Server.cc",
+      "description": "启动storage里面的两个group：\n\n- StorageSerde\n- Core",
+      "line": 42
+    },
+    {
+      "file": "src/common/net/ServiceGroup.cc",
+      "description": "启动processor_",
+      "line": 32
+    },
+    {
+      "file": "src/common/net/Processor.h",
+      "description": "启动的时候啥也不干",
+      "line": 63
+    },
+    {
+      "file": "src/common/net/ServiceGroup.cc",
+      "description": "启动ioWorker_",
+      "line": 33
+    },
+    {
+      "file": "src/common/net/IOWorker.cc",
+      "description": "也是把其中所有的eventLoopPool_启动起来",
+      "line": 13
+    },
+    {
+      "file": "src/common/net/ServiceGroup.cc",
+      "description": "listener_也要启动起来",
+      "line": 37
+    },
+    {
+      "file": "src/common/net/Listener.cc",
+      "description": "核心就是启动coroutine进行listen",
+      "line": 137
+    },
+    {
+      "file": "src/common/net/Listener.cc",
+      "description": "接收socket",
+      "line": 179
+    },
+    {
+      "file": "src/common/net/Listener.cc",
+      "description": "让ioWorker_去获取结果",
+      "line": 186
+    },
+    {
+      "file": "src/common/net/Server.cc",
+      "description": "启动后的后处理",
+      "line": 44
+    },
+    {
+      "file": "src/storage/service/StorageServer.cc",
+      "description": "启动完就是一次stopAndJoin",
+      "line": 47
+    },
+    {
+      "file": "src/common/app/ApplicationBase.cc",
+      "description": "application要启动mainLoop",
+      "line": 68
+    },
+    {
+      "file": "src/common/app/ApplicationBase.cc",
+      "description": "没什么特别的",
+      "line": 76
+    },
+    {
+      "file": "src/common/app/ApplicationBase.cc",
+      "description": "",
+      "line": 76
     }
   ],
   "ref": "study"

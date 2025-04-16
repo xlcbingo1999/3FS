@@ -1,0 +1,632 @@
+{
+  "$schema": "https://aka.ms/codetour-schema",
+  "title": "cli_read",
+  "steps": [
+    {
+      "file": "src/client/bin/admin_cli.cc",
+      "description": "从client的main函数开始",
+      "line": 82
+    },
+    {
+      "file": "src/client/bin/admin_cli.cc",
+      "description": "注册相关的command",
+      "line": 215
+    },
+    {
+      "file": "src/client/cli/admin/registerAdminCommands.cc",
+      "description": "读一个文件的处理",
+      "line": 110
+    },
+    {
+      "file": "src/client/cli/admin/ReadFile.cc",
+      "description": "关键是handleReadFile",
+      "line": 132
+    },
+    {
+      "file": "src/client/cli/admin/ReadFile.cc",
+      "description": "核心的函数",
+      "line": 38
+    },
+    {
+      "file": "src/client/cli/admin/ReadFile.cc",
+      "description": "offset和length的关键参数",
+      "line": 54
+    },
+    {
+      "file": "src/client/cli/admin/ReadFile.cc",
+      "description": "读文件的时候会有一个targetSelectionMode，配置为Default。还包括RoundRobin等",
+      "line": 66
+    },
+    {
+      "file": "src/client/cli/admin/ReadFile.cc",
+      "description": "更新并获取最新的路由信息",
+      "line": 81
+    },
+    {
+      "file": "src/client/cli/admin/ReadFile.cc",
+      "description": "打开文件，传入路径",
+      "line": 88
+    },
+    {
+      "file": "src/client/cli/admin/FileWrapper.cc",
+      "description": "这个是查下文件的状态",
+      "line": 267
+    },
+    {
+      "file": "src/client/cli/admin/FileWrapper.cc",
+      "description": "文件不存在就要创建出来",
+      "line": 270
+    },
+    {
+      "file": "src/client/meta/MetaClient.cc",
+      "description": "创建逻辑会走到这个函数中",
+      "line": 613
+    },
+    {
+      "file": "src/client/meta/MetaClient.cc",
+      "description": "这里是创建了一个createReq",
+      "line": 623
+    },
+    {
+      "file": "src/client/meta/MetaClient.cc",
+      "description": "这里就是去开启openCreate",
+      "line": 630
+    },
+    {
+      "file": "src/client/meta/MetaClient.cc",
+      "description": "这里应该就是核心的dynamic stripe，用于小文件优化\n\n在fuse中，这个开关是启动的。\n在client中，这个开关是关闭的。",
+      "line": 579
+    },
+    {
+      "file": "src/client/meta/MetaClient.cc",
+      "description": "实际执行的流程",
+      "line": 588
+    },
+    {
+      "file": "src/client/meta/MetaClient.cc",
+      "description": "持续重试",
+      "line": 380
+    },
+    {
+      "file": "src/client/meta/MetaClient.cc",
+      "description": "获取server",
+      "line": 381
+    },
+    {
+      "file": "src/client/meta/MetaClient.cc",
+      "description": "获取serverNode\n",
+      "line": 360
+    },
+    {
+      "file": "src/client/meta/MetaClient.cc",
+      "description": "这里有一个节点选择策略，最后会选一个node来使用",
+      "line": 254
+    },
+    {
+      "file": "src/client/meta/MetaClient.cc",
+      "description": "创建一个stub来用",
+      "line": 256
+    },
+    {
+      "file": "src/stubs/common/StubFactory.h",
+      "description": "核心就是去创建一个stub",
+      "line": 55
+    },
+    {
+      "file": "src/client/meta/MetaClient.cc",
+      "description": "返回一个ServerNode结构体",
+      "line": 257
+    },
+    {
+      "file": "src/client/meta/MetaClient.cc",
+      "description": "没问题就把ServerNode传出去",
+      "line": 362
+    },
+    {
+      "file": "src/client/meta/MetaClient.cc",
+      "description": "实际执行",
+      "line": 398
+    },
+    {
+      "file": "src/client/meta/MetaClient.cc",
+      "description": "如果创建出来的文件需要trunc，就执行。如果使用了这个标志，调用 open 函数打开文件的时候会将文件原本的内容全部丢弃，文件大小变为 0。",
+      "line": 599
+    },
+    {
+      "file": "src/client/cli/admin/FileWrapper.cc",
+      "description": "正常情况就是返回statResult",
+      "line": 276
+    },
+    {
+      "file": "src/client/cli/admin/FileWrapper.cc",
+      "description": "配置文件，返回",
+      "line": 282
+    },
+    {
+      "file": "src/client/cli/admin/ReadFile.cc",
+      "description": "配置输出的流",
+      "line": 102
+    },
+    {
+      "file": "src/client/cli/admin/ReadFile.cc",
+      "description": "实际发起读取文件的请求",
+      "line": 117
+    },
+    {
+      "file": "src/client/cli/admin/FileWrapper.cc",
+      "description": "执行的是这个函数",
+      "line": 74
+    },
+    {
+      "file": "src/client/cli/admin/FileWrapper.cc",
+      "description": "获取路由信息",
+      "line": 84
+    },
+    {
+      "file": "src/client/cli/admin/FileWrapper.cc",
+      "description": "准备block",
+      "line": 88
+    },
+    {
+      "file": "src/client/cli/admin/FileWrapper.cc",
+      "description": "根据请求的情况遍历",
+      "line": 18
+    },
+    {
+      "file": "src/client/cli/admin/FileWrapper.cc",
+      "description": "获取chain",
+      "line": 19
+    },
+    {
+      "file": "src/fbs/meta/Schema.cc",
+      "description": "根据inode offset等获取chainRef，传进来的是offset/chunkSize(固定的)",
+      "line": 82
+    },
+    {
+      "file": "src/fbs/meta/Schema.cc",
+      "description": "首先要获取chain index list",
+      "line": 190
+    },
+    {
+      "file": "src/fbs/meta/Schema.cc",
+      "description": "如果是ChainRange类型，就需要一个函数进行处理。这里应该是根据stripeSize来选取一定数量的chains来用即可",
+      "line": 184
+    },
+    {
+      "file": "src/fbs/meta/Schema.cc",
+      "description": "取stripe size个chains，这些chains在逻辑上是连续的",
+      "line": 159
+    },
+    {
+      "file": "src/fbs/meta/Schema.cc",
+      "description": "为了做负载均衡，可以进行一些shuffle操作",
+      "line": 168
+    },
+    {
+      "file": "src/fbs/meta/Schema.cc",
+      "description": "最后就是返回一组chains用于存储文件",
+      "line": 177
+    },
+    {
+      "file": "src/fbs/meta/Schema.cc",
+      "description": "对于每一个chunk，都会对stripeSize进行一次求余",
+      "line": 192
+    },
+    {
+      "file": "src/fbs/meta/Schema.cc",
+      "description": "此时当前chunk就会存储在第 chunkIndex % stripeSize 上",
+      "line": 193
+    },
+    {
+      "file": "src/fbs/meta/Schema.cc",
+      "description": "获取chain在chainTable中的ID",
+      "line": 83
+    },
+    {
+      "file": "src/fbs/mgmtd/RoutingInfo.cc",
+      "description": "第一个tableid直接返回就行",
+      "line": 26
+    },
+    {
+      "file": "src/fbs/mgmtd/RoutingInfo.cc",
+      "description": "这里应该是因为chain table的index是从1开始的",
+      "line": 33
+    },
+    {
+      "file": "src/client/cli/admin/FileWrapper.cc",
+      "description": "获取chunkId",
+      "line": 21
+    },
+    {
+      "file": "src/fbs/meta/Schema.cc",
+      "description": "这里也是获取相对的chunkId",
+      "line": 66
+    },
+    {
+      "file": "src/client/cli/admin/FileWrapper.cc",
+      "description": "加入blocks，这里就是一个chunk的信息",
+      "line": 24
+    },
+    {
+      "file": "src/client/cli/admin/FileWrapper.cc",
+      "description": "返回blocks",
+      "line": 27
+    },
+    {
+      "file": "src/client/cli/admin/FileWrapper.cc",
+      "description": "执行文件的读取",
+      "line": 91
+    },
+    {
+      "file": "src/client/cli/admin/FileWrapper.cc",
+      "description": "压栈到这个函数",
+      "line": 94
+    },
+    {
+      "file": "src/client/cli/admin/FileWrapper.cc",
+      "description": "申请rdma的buffer",
+      "line": 105
+    },
+    {
+      "file": "src/client/cli/admin/FileWrapper.cc",
+      "description": "创建一个只读的string_view",
+      "line": 110
+    },
+    {
+      "file": "src/client/cli/admin/FileWrapper.cc",
+      "description": "成批读",
+      "line": 113
+    },
+    {
+      "file": "src/client/cli/admin/FileWrapper.cc",
+      "description": "让storage client创建readIO",
+      "line": 121
+    },
+    {
+      "file": "src/client/storage/StorageClient.cc",
+      "description": "这里只是创建了一个结构体",
+      "line": 55
+    },
+    {
+      "file": "src/client/cli/admin/FileWrapper.cc",
+      "description": "如果读到了最后一个block（chunk）",
+      "line": 129
+    },
+    {
+      "file": "src/client/cli/admin/FileWrapper.cc",
+      "description": "让客户端进行batchRead",
+      "line": 130
+    },
+    {
+      "file": "src/client/storage/StorageClientImpl.cc",
+      "description": "理论上应该是走到这个逻辑",
+      "line": 1563
+    },
+    {
+      "file": "src/client/storage/StorageClientImpl.cc",
+      "description": "创建requestCtx",
+      "line": 1567
+    },
+    {
+      "file": "src/client/storage/StorageClientImpl.cc",
+      "description": "启动batchRead",
+      "line": 1574
+    },
+    {
+      "file": "src/client/storage/StorageClientImpl.cc",
+      "description": "配置最大的IOBytes，默认不配",
+      "line": 1582
+    },
+    {
+      "file": "src/client/storage/StorageClientImpl.cc",
+      "description": "验证readIo的正确性",
+      "line": 1590
+    },
+    {
+      "file": "src/client/storage/StorageClientImpl.cc",
+      "description": "如果要checkOverlappingBuffers，则排序",
+      "line": 894
+    },
+    {
+      "file": "src/client/storage/StorageClientImpl.cc",
+      "description": "其实没有什么特别的，就是进行一些判断而已",
+      "line": 946
+    },
+    {
+      "file": "src/client/storage/StorageClientImpl.cc",
+      "description": "如果配置了max_read_io_bytes，就要进行切分。默认是不搞的",
+      "line": 1598
+    },
+    {
+      "file": "src/client/storage/StorageClientImpl.cc",
+      "description": "进行实际的read",
+      "line": 1601
+    },
+    {
+      "file": "src/client/storage/StorageClientImpl.cc",
+      "description": "这里是实际的启动逻辑",
+      "line": 1205
+    },
+    {
+      "file": "src/client/storage/StorageClientImpl.cc",
+      "description": "sendOps执行的是这个",
+      "line": 1587
+    },
+    {
+      "file": "src/client/storage/StorageClientImpl.cc",
+      "description": "配置target选择的模式，默认的是LoadBalance",
+      "line": 1649
+    },
+    {
+      "file": "src/client/storage/StorageClientImpl.cc",
+      "description": "为readIOs选择合适的routing target",
+      "line": 1653
+    },
+    {
+      "file": "src/client/storage/StorageClientImpl.cc",
+      "description": "主要是采用一些负载均衡的方式取选择合适的selectedTarget",
+      "line": 623
+    },
+    {
+      "file": "src/client/storage/StorageClientImpl.cc",
+      "description": "把op放回去",
+      "line": 627
+    },
+    {
+      "file": "src/client/storage/StorageClientImpl.cc",
+      "description": "还会根据nodeId进行io的合并",
+      "line": 1657
+    },
+    {
+      "file": "src/client/storage/StorageClientImpl.cc",
+      "description": "最后其实就是把相同nodeId的op合并起来",
+      "line": 1057
+    },
+    {
+      "file": "src/client/storage/StorageClientImpl.cc",
+      "description": "可能还可以进行shuffle",
+      "line": 1104
+    },
+    {
+      "file": "src/client/storage/StorageClientImpl.cc",
+      "description": "从config中查是否可以batch化读",
+      "line": 1742
+    },
+    {
+      "file": "src/client/storage/StorageClientImpl.cc",
+      "description": "启动processBatches",
+      "line": 1743
+    },
+    {
+      "file": "src/client/storage/StorageClientImpl.cc",
+      "description": "本质上就是执行这个函数",
+      "line": 1133
+    },
+    {
+      "file": "src/client/storage/StorageClientImpl.cc",
+      "description": "实际执行的IO逻辑",
+      "line": 1666
+    },
+    {
+      "file": "src/client/storage/StorageClientImpl.cc",
+      "description": "创建一个批量读的请求",
+      "line": 1681
+    },
+    {
+      "file": "src/client/storage/StorageClientImpl.cc",
+      "description": "构造真实的payload，同时会构造rdma的buf",
+      "line": 697
+    },
+    {
+      "file": "src/client/storage/StorageClientImpl.cc",
+      "description": "构造BatchReadReq",
+      "line": 714
+    },
+    {
+      "file": "src/client/storage/StorageClientImpl.cc",
+      "description": "发送batch请求",
+      "line": 1690
+    },
+    {
+      "file": "src/client/storage/StorageClientImpl.cc",
+      "description": "这里是调用messengerMethod",
+      "line": 1318
+    },
+    {
+      "file": "src/client/storage/StorageClientImpl.cc",
+      "description": "这里是实际的invoke Read逻辑",
+      "line": 850
+    },
+    {
+      "file": "src/client/storage/StorageClientImpl.cc",
+      "description": "从这里传进去的StorageMessenger::batchRead",
+      "line": 1690
+    },
+    {
+      "file": "src/client/storage/StorageMessenger.cc",
+      "description": "实际上就是调用serdeRpc",
+      "line": 42
+    },
+    {
+      "file": "src/client/storage/StorageMessenger.cc",
+      "description": "执行这个rpc调用",
+      "line": 22
+    },
+    {
+      "file": "src/client/storage/StorageMessenger.cc",
+      "description": "传进去的是这个：hf3fs::storage::StorageSerde<>::batchRead<serde::ClientContext>",
+      "line": 44
+    },
+    {
+      "file": "src/storage/service/StorageService.h",
+      "description": "实际上会走到这个函数batchRead",
+      "line": 14
+    },
+    {
+      "file": "src/storage/service/StorageService.h",
+      "description": "创建了一个serviceRequestContext",
+      "line": 17
+    },
+    {
+      "file": "src/storage/service/StorageService.h",
+      "description": "执行batchRead",
+      "line": 18
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "压栈到了StorageOperator::batchRead",
+      "line": 82
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "获取target的整个快照",
+      "line": 90
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "获取batchSize的数量",
+      "line": 91
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "创建一批的batch job",
+      "line": 94
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "迭代batch中的job",
+      "line": 101
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "对每个读请求获取targetResult",
+      "line": 103
+    },
+    {
+      "file": "src/storage/service/TargetMap.cc",
+      "description": "根据chainId拿target",
+      "line": 57
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "转换成实际的target",
+      "line": 112
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "配置job的 storageTarget",
+      "line": 118
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "计算头部需要填充的总数据",
+      "line": 120
+    },
+    {
+      "file": "src/storage/aio/BatchReadJob.cc",
+      "description": "- 作用 ：计算请求起始位置（offset）与最近的下边界对齐点 的距离。\n- 示例 ：\n1. 若kAIOAlignSize = 4096（4KB对齐），offset = 5000 => 5000 % 4096 = 904 → 需要从offset - 904 = 4096开始读取，头部填充904字节。\n2. 若offset = 4096 → headLength = 0，无需填充。",
+      "line": 20
+    },
+    {
+      "file": "src/storage/aio/BatchReadJob.cc",
+      "description": "- 作用 ：计算请求结束位置（offset + length）与最近的上边界对齐点 的距离。\n- 分步解释 ：\n1. offset + length：请求的总结束位置。\n2. (offset + length) % kAIOAlignSize：计算结束位置与对齐边界的偏移量。\n3. kAIOAlignSize - ...：得到需要填充的尾部长度。\n4. 再次取余kAIOAlignSize：处理边界条件（如结束位置已对齐时结果为0）。\n- 示例 ：若kAIOAlignSize = 4096，offset = 1000，length = 2000：结束位置：1000 + 2000 = 3000, 3000 % 4096 = 3000 → 4096 - 3000 = 1096 → tailLength = 1096。若结束位置为4096 → tailLength = 0。",
+      "line": 21
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "对整个batch的结果进行汇总",
+      "line": 131
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "获取rdma buffer",
+      "line": 140
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "再次遍历每个job",
+      "line": 141
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "这里是为buffer申请 前(<4096) 中 后(<4096) 三部分空间",
+      "line": 143
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "配置job上面的rdma localbuf",
+      "line": 152
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "标准应该是走这个，不太可能BYPASS_DISKIO",
+      "line": 163
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "按一个batch_read_job_split_size进行分割",
+      "line": 164
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "这里是将job入队到aioReadWorker，然后aioReadWorker才会从里面拿出来",
+      "line": 166
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "等待batch完成",
+      "line": 173
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "如果包含SEND_DATA_INLINE，就会将读取到的数据拷贝到rsp.inlinebuf.data中，这里应该是CPU拷贝",
+      "line": 177
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "这段代码的逻辑都是rdma read实际数据的情况",
+      "line": 178
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "准备发起一次write batch的rdma",
+      "line": 185
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "这里是将rdma buf加入到writeBatch中",
+      "line": 187
+    },
+    {
+      "file": "src/storage/aio/BatchReadJob.cc",
+      "description": "加入rdma buf",
+      "line": 81
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "RDMA限流操作",
+      "line": 190
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "应该也是rdma限流",
+      "line": 205
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "执行rdma操作",
+      "line": 218
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "返回结果",
+      "line": 230
+    },
+    {
+      "file": "src/client/cli/admin/ReadFile.cc",
+      "description": "检查后返回结果",
+      "line": 126
+    }
+  ],
+  "ref": "study"
+}

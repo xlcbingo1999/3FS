@@ -1,0 +1,477 @@
+{
+  "$schema": "https://aka.ms/codetour-schema",
+  "title": "cli_write",
+  "steps": [
+    {
+      "file": "src/client/cli/admin/registerAdminCommands.cc",
+      "description": "注册write逻辑",
+      "line": 111
+    },
+    {
+      "file": "src/client/cli/admin/WriteFile.cc",
+      "description": "handleWriteFile",
+      "line": 127
+    },
+    {
+      "file": "src/client/cli/admin/WriteFile.cc",
+      "description": "核心逻辑",
+      "line": 34
+    },
+    {
+      "file": "src/client/cli/admin/WriteFile.cc",
+      "description": "实际执行write",
+      "line": 114
+    },
+    {
+      "file": "src/client/cli/admin/FileWrapper.cc",
+      "description": "创建read IO",
+      "line": 223
+    },
+    {
+      "file": "src/client/cli/admin/FileWrapper.cc",
+      "description": "实际执行batchWrite",
+      "line": 233
+    },
+    {
+      "file": "src/client/storage/StorageClientImpl.cc",
+      "description": "这里也没有什么区别",
+      "line": 1768
+    },
+    {
+      "file": "src/client/storage/StorageClientImpl.cc",
+      "description": "验证writeIOs的逻辑是专门写的",
+      "line": 1780
+    },
+    {
+      "file": "src/client/storage/StorageClientImpl.cc",
+      "description": "执行sendOps",
+      "line": 1787
+    },
+    {
+      "file": "src/client/storage/StorageClientImpl.cc",
+      "description": "没有区别，也是公用的逻辑",
+      "line": 1205
+    },
+    {
+      "file": "src/client/storage/StorageClientImpl.cc",
+      "description": "走的是这个逻辑",
+      "line": 1777
+    },
+    {
+      "file": "src/client/storage/StorageClientImpl.cc",
+      "description": "读写的区别在这里，write必须找到HeadTarget",
+      "line": 1807
+    },
+    {
+      "file": "src/client/storage/StorageClientImpl.cc",
+      "description": "选择操作的target也有区别",
+      "line": 1811
+    },
+    {
+      "file": "src/client/storage/StorageClientImpl.cc",
+      "description": "这里就会创建出HeadTarget的策略",
+      "line": 516
+    },
+    {
+      "file": "src/client/storage/StorageClientImpl.cc",
+      "description": "选择target的逻辑",
+      "line": 608
+    },
+    {
+      "file": "src/client/storage/TargetSelection.cc",
+      "description": "获取的就是chain的第一个target",
+      "line": 105
+    },
+    {
+      "file": "src/client/storage/StorageClientImpl.cc",
+      "description": "执行batches读写",
+      "line": 1855
+    },
+    {
+      "file": "src/client/storage/StorageClientImpl.cc",
+      "description": "执行函数",
+      "line": 1133
+    },
+    {
+      "file": "src/client/storage/StorageClientImpl.cc",
+      "description": "执行的是这个实际函数",
+      "line": 1823
+    },
+    {
+      "file": "src/client/storage/StorageClientImpl.cc",
+      "description": "这里就有区别了，每个batch内部是串行的",
+      "line": 1849
+    },
+    {
+      "file": "src/client/storage/StorageClientImpl.cc",
+      "description": "串行执行sendWrite",
+      "line": 1948
+    },
+    {
+      "file": "src/client/storage/StorageClientImpl.cc",
+      "description": "最终走到rpc这里",
+      "line": 1906
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "实际执行这个逻辑",
+      "line": 233
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "执行update逻辑，走的组件是reliableUpdate。似乎是会进行craq的传递的",
+      "line": 260
+    },
+    {
+      "file": "src/storage/service/ReliableUpdate.cc",
+      "description": "这里是写的逻辑",
+      "line": 16
+    },
+    {
+      "file": "src/storage/service/ReliableUpdate.cc",
+      "description": "这里是去获取一个client，目的应该还是为了缓存",
+      "line": 42
+    },
+    {
+      "file": "src/storage/service/ReliableUpdate.cc",
+      "description": "根据chainId和channel_id获取一个 channel",
+      "line": 47
+    },
+    {
+      "file": "src/storage/service/ReliableUpdate.cc",
+      "description": "搞了一个ReqResult出来",
+      "line": 49
+    },
+    {
+      "file": "src/storage/service/ReliableUpdate.cc",
+      "description": "这里需要加锁一个channel",
+      "line": 56
+    },
+    {
+      "file": "src/storage/service/ReliableUpdate.cc",
+      "description": "这里是直接从cache中获得结果就可以了",
+      "line": 97
+    },
+    {
+      "file": "src/storage/service/ReliableUpdate.cc",
+      "description": "实际执行一次update",
+      "line": 114
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "写的target必须是head",
+      "line": 338
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "之后就是开始CRAQ复制的逻辑",
+      "line": 353
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "这里就是核心的CRAQ逻辑：先锁住chunk",
+      "line": 366
+    },
+    {
+      "file": "src/common/utils/CoLockManager.h",
+      "description": "这个是lock chunk的逻辑",
+      "line": 68
+    },
+    {
+      "file": "src/common/utils/CoLockManager.h",
+      "description": "计算key的存储位置",
+      "line": 69
+    },
+    {
+      "file": "src/common/utils/CoLockManager.h",
+      "description": "这里是拿第pos个锁，然后执行lambda函数",
+      "line": 70
+    },
+    {
+      "file": "src/common/utils/CoLockManager.h",
+      "description": "从shards_中拿第pos个Map，然后把当前的key加进去，并初始化一个queue",
+      "line": 72
+    },
+    {
+      "file": "src/common/utils/CoLockManager.h",
+      "description": "传点tag进去，还有baton",
+      "line": 73
+    },
+    {
+      "file": "src/common/utils/CoLockManager.h",
+      "description": "如果插入成功，说明此时获得了锁，baton.post()会执行，锁住的coroutine可以被执行",
+      "line": 78
+    },
+    {
+      "file": "src/common/utils/CoLockManager.h",
+      "description": "返回一个Guard之后返回",
+      "line": 80
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "判断有无拿到锁",
+      "line": 367
+    },
+    {
+      "file": "src/common/utils/CoLockManager.h",
+      "description": "实际上就是确认baton是否ready",
+      "line": 52
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "接着等，直到拿到了锁",
+      "line": 373
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "重新获取target，不能拿不到",
+      "line": 378
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "创建了一个新的ChunkEngineUpdateJob，这个很重要",
+      "line": 384
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "获取一个rdma的buffer",
+      "line": 387
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "执行更新的逻辑",
+      "line": 389
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "创建一个UpdateJob",
+      "line": 527
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "SEND_DATA_INLINE，这里应该就是直接做一次CPU驱动的拷贝",
+      "line": 538
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "对于写的逻辑，就是从rdma buffer中申请一段写的内容的buffer",
+      "line": 546
+    },
+    {
+      "file": "src/storage/service/BufferPool.cc",
+      "description": "这里从pool中allocate",
+      "line": 108
+    },
+    {
+      "file": "src/storage/service/BufferPool.cc",
+      "description": "从freeIndex_中取最后一个",
+      "line": 160
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "拿不到就发coroutine去拿，搞定了再通知",
+      "line": 548
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "把job的data设置为rdma缓存区的指针",
+      "line": 558
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "转化为remote的buf",
+      "line": 559
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "这段是核心逻辑，RDMA的写操作",
+      "line": 560
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "是从client中rdma read数据过来",
+      "line": 561
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "实际进行rdma read操作",
+      "line": 584
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "正常的情况，是需要把job放到updateWorker_中",
+      "line": 597
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "然后要等待 job 完成",
+      "line": 598
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "返回IO结果",
+      "line": 608
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "当写入操作是正常的逻辑",
+      "line": 403
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "用最新的updateVer（pendingVer进行赋值）",
+      "line": 405
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "这些都是版本控制的代码",
+      "line": 411
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "这是一次commitIO，需要配置commitVer为最新的updateVer",
+      "line": 441
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "接下来也是很重要的逻辑，CRAQ向后传递",
+      "line": 444
+    },
+    {
+      "file": "src/storage/service/ReliableForwarding.cc",
+      "description": "会有一个重试的逻辑，理论上是不断重试的",
+      "line": 48
+    },
+    {
+      "file": "src/storage/service/ReliableForwarding.cc",
+      "description": "拿到target，应该是chain上的首个target",
+      "line": 53
+    },
+    {
+      "file": "src/storage/service/ReliableForwarding.cc",
+      "description": "执行一次forward",
+      "line": 55
+    },
+    {
+      "file": "src/storage/service/ReliableForwarding.cc",
+      "description": "执行一次实际的forward",
+      "line": 119
+    },
+    {
+      "file": "src/storage/service/ReliableForwarding.cc",
+      "description": "这里是新建了一个updateReq",
+      "line": 145
+    },
+    {
+      "file": "src/storage/service/ReliableForwarding.cc",
+      "description": "这里就是如果后继者的公共状态是SYNCING，就需要转化成full-chunks-replace",
+      "line": 152
+    },
+    {
+      "file": "src/storage/service/ReliableForwarding.cc",
+      "description": "此时会做一些变化",
+      "line": 155,
+      "selection": {
+        "start": {
+          "line": 142,
+          "character": 62
+        },
+        "end": {
+          "line": 142,
+          "character": 68
+        }
+      }
+    },
+    {
+      "file": "src/storage/service/ReliableForwarding.cc",
+      "description": "此时会做一些变化",
+      "line": 155
+    },
+    {
+      "file": "src/storage/service/ReliableForwarding.cc",
+      "description": "这里是执行一次update的逻辑",
+      "line": 232
+    },
+    {
+      "file": "src/storage/service/Components.h",
+      "description": "这里又转发到客户端了",
+      "line": 107
+    },
+    {
+      "file": "src/client/storage/StorageMessenger.cc",
+      "description": "又走到这个rpc调用了，但是它走的是update的逻辑",
+      "line": 70
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "这里走到了update的逻辑",
+      "line": 284
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "再利用vChianId去搜当前节点的target",
+      "line": 303
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "这里就是第二个节点的target",
+      "line": 308
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "这里不是remove，所以走这个逻辑",
+      "line": 313
+    },
+    {
+      "file": "src/storage/service/ReliableUpdate.cc",
+      "description": "执行这个逻辑",
+      "line": 16
+    },
+    {
+      "file": "src/storage/service/ReliableUpdate.cc",
+      "description": "又启动一次handleUpdate",
+      "line": 114
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "第二次走进来的时候 req.options.fromClient是false",
+      "line": 338
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "再锁了一次chunk",
+      "line": 366
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "再执行一次doUpdate",
+      "line": 389
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "再执行一次forwardWithRetry",
+      "line": 444
+    },
+    {
+      "file": "src/storage/service/ReliableForwarding.cc",
+      "description": "再走一次forward",
+      "line": 55
+    },
+    {
+      "file": "src/storage/service/ReliableForwarding.cc",
+      "description": "如果没有successor，直接就返回了，同时commitIO的commitChainVer会被设置",
+      "line": 113
+    },
+    {
+      "file": "src/storage/service/ReliableForwarding.cc",
+      "description": "当没有后继，走这个逻辑返回",
+      "line": 60
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "此时没有后继，返回这个",
+      "line": 484
+    }
+  ],
+  "ref": "study"
+}

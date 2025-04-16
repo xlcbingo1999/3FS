@@ -1,0 +1,22 @@
+{
+  "$schema": "https://aka.ms/codetour-schema",
+  "title": "rpc",
+  "steps": [
+    {
+      "file": "src/fbs/storage/Service.h",
+      "description": "尝试展开这个代码，得到的是：\n\n```cpp\ntemplate <typename T>\nclass StorageSerde: public ::hf3fs::serde::ServiceBase<StorageSerde, 3> {\npublic:\n  // 展开 SERDE_SERVICE_METHOD_SENDER(batchRead, 1, BatchReadReq, BatchReadRsp)\n  static constexpr auto batchReadMethodId = 1;\n\n  template <class Context>\n  static CoTryTask<BatchReadRsp> batchRead(\n      Context &ctx,\n      const BatchReadReq &req,\n      const ::hf3fs::net::UserRequestOptions *options = nullptr,\n      ::hf3fs::serde::Timestamp *timestamp = nullptr) {\n    co_return co_await ctx.template call<\n        kServiceNameWrapper, \"batchRead\", BatchReadReq, BatchReadRsp, 3, 1>(\n        req, options, timestamp);\n  }\n\n  template <class Context>\n  static Result<BatchReadRsp> batchReadSync(\n      Context &ctx,\n      const BatchReadReq &req,\n      const ::hf3fs::net::UserRequestOptions *options = nullptr,\n      ::hf3fs::serde::Timestamp *timestamp = nullptr) {\n    return ctx.template callSync<\n        kServiceNameWrapper, \"batchReadSync\", BatchReadReq, BatchReadRsp, 3, 1>(\n        req, options, timestamp);\n  }\n\nprivate:\n  // 展开 SERDE_SERVICE_METHOD_REFL(batchRead, 1, BatchReadReq, BatchReadRsp)\n  struct MethodId1 : std::type_identity<REFL_NOW> {};\n\n  static auto CollectField(\n      ::hf3fs::refl::Rank<std::tuple_size_v<typename MethodId1::type> + 1>) {\n    if constexpr (std::is_void_v<T>) {\n      return ::hf3fs::refl::Append_t<\n          typename MethodId1::type,\n          ::hf3fs::serde::MethodInfo<\"batchRead\", T, BatchReadReq, BatchReadRsp, 1, nullptr>>{};\n    } else {\n      return ::hf3fs::refl::Append_t<\n          typename MethodId1::type,\n          ::hf3fs::serde::MethodInfo<\"batchRead\", T, BatchReadReq, BatchReadRsp, 1, &T::batchRead>>{};\n    }\n  }\n\n  friend struct ::hf3fs::refl::Helper;\n};\n```",
+      "line": 8
+    },
+    {
+      "file": "src/storage/service/StorageService.h",
+      "description": "中间不管了，反正最后就是rpc调用这个函数",
+      "line": 14
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "storageOperator的操作会走到这里",
+      "line": 82
+    }
+  ],
+  "ref": "study"
+}

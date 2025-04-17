@@ -303,6 +303,301 @@
       "line": 597
     },
     {
+      "file": "src/storage/update/UpdateWorker.cc",
+      "description": "从队列拿出来后执行",
+      "line": 42
+    },
+    {
+      "file": "src/storage/store/StorageTarget.cc",
+      "description": "这里走的是chunk engine的update逻辑",
+      "line": 316
+    },
+    {
+      "file": "src/storage/store/ChunkEngine.cc",
+      "description": "最重要的是拿length和offset",
+      "line": 47
+    },
+    {
+      "file": "src/storage/store/ChunkEngine.cc",
+      "description": "这是实际要写的数据",
+      "line": 53
+    },
+    {
+      "file": "src/storage/store/ChunkEngine.cc",
+      "description": "执行实际的update_raw_chunk",
+      "line": 60
+    },
+    {
+      "file": "src/storage/chunk_engine/src/cxx.rs",
+      "description": "走到这个逻辑",
+      "line": 149
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "把实际要写的数据拿出来",
+      "line": 297
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "拿出old_chunk，并做一些处理",
+      "line": 315
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "这里是最关键的逻辑，实际执行update",
+      "line": 375
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "当存在老的chunk，且请求是remove时，就返回old_chunk就行了",
+      "line": 376,
+      "selection": {
+        "start": {
+          "line": 375,
+          "character": 35
+        },
+        "end": {
+          "line": 375,
+          "character": 44
+        }
+      }
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "当存在老的chunk，且请求是remove时，就返回old_chunk就行了",
+      "line": 376
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "",
+      "line": 376
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "如果有老的chunk，且满足三个条件之一：\n\n- req是syncing的\n- req写的长度大于0，且是从老的chunk的中间开始写\n- req的结束位置大于老的chunk size（追加写 或 覆盖写多了， 一个chunk装不下）",
+      "line": 377
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "这里走的是COW逻辑",
+      "line": 382
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk.rs",
+      "description": "这里是用老的chunk的长度 和 新的数据的长度 取最大值\n\n- 老的chunk比较大 => 说明此时老的chunk也能满足，但还是走了cow\n- 新的数据比较大 => offset前面的部分可以用老的chunk，offset后面要是新的数据 => 这里好像直接就是全部重新分配了",
+      "line": 100
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk.rs",
+      "description": "按new_len的需求申请chunk",
+      "line": 102
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk.rs",
+      "description": "按new_len的需求申请chunk",
+      "line": 102
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/allocators.rs",
+      "description": "选择合适的allocator",
+      "line": 70
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/allocators.rs",
+      "description": "这里很标准，就是选择刚刚合适的size给他用",
+      "line": 61
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/allocators.rs",
+      "description": "实际分配",
+      "line": 71
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/allocator.rs",
+      "description": "压栈调用",
+      "line": 28
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk_allocator.rs",
+      "description": "从最满的group开始分配chunk",
+      "line": 99
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk_allocator.rs",
+      "description": "返回的是一个position对象",
+      "line": 115
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk.rs",
+      "description": "这里是 syncing 或者 完全覆盖写,且覆盖写的数据大小大于老chunk的大小， 此时连读都不需要了，直接写就完事了",
+      "line": 112
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk.rs",
+      "description": "当需要读的时候（一般就是从中间开始写的场景）\n\n此时要把老的chunk的数据读出来",
+      "line": 119
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk.rs",
+      "description": "记录一下读的惩罚",
+      "line": 121
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk.rs",
+      "description": "如果都是对齐写",
+      "line": 133
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk.rs",
+      "description": "如果都是对齐写",
+      "line": 133
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk.rs",
+      "description": "直接开始用new_chunk写就完事了",
+      "line": 135
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk.rs",
+      "description": "这里是  不跳过读 || 不对齐写 都要走的逻辑",
+      "line": 139
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk.rs",
+      "description": "[老的chunk的大小, offset) 这段位置是需要填充0的 ",
+      "line": 141
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk.rs",
+      "description": "将数据写入 [offset, offset+data长度] 中",
+      "line": 143
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk.rs",
+      "description": "把整个数据写道新的chunk中。老的chunk不管",
+      "line": 146
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk.rs",
+      "description": "直接复用传进来的checksum",
+      "line": 154
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk.rs",
+      "description": "直接复用传进来的checksum",
+      "line": 154
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk.rs",
+      "description": "存在任何的RMW，都是需要重新计算checksum的",
+      "line": 157
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk.rs",
+      "description": "更新new_chunk的meta data",
+      "line": 166
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk.rs",
+      "description": "返回申请的new_chunk",
+      "line": 173
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "不满足cow的条件时，就使用safe_write",
+      "line": 394
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "不满足cow的条件时，就使用safe_write，首先也是拷贝了一波old_chunk[注意应该不是allocate一个新的new_chunk出来]",
+      "line": 394
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk.rs",
+      "description": "如果是写的时候需要删除所有内容（truncate），且写的位置是在中间",
+      "line": 184
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk.rs",
+      "description": "先读取从0开始直到offset的这段数据",
+      "line": 193
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk.rs",
+      "description": "对齐写的逻辑",
+      "line": 200
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk.rs",
+      "description": "从中间开始写",
+      "line": 205
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk.rs",
+      "description": "填充0",
+      "line": 208
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk.rs",
+      "description": "再写数据",
+      "line": 223
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk.rs",
+      "description": "不是对齐写，且老的chunk放不下",
+      "line": 235
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk.rs",
+      "description": "读",
+      "line": 248
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk.rs",
+      "description": "拷贝",
+      "line": 256
+    },
+    {
+      "file": "src/storage/chunk_engine/src/alloc/chunk.rs",
+      "description": "写",
+      "line": 259
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "没有老的chunk，直接申请就行了",
+      "line": 405
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "更新meta data",
+      "line": 428
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "持久化新的chunk的meta data",
+      "line": 458,
+      "selection": {
+        "start": {
+          "line": 460,
+          "character": 12
+        },
+        "end": {
+          "line": 460,
+          "character": 24
+        }
+      }
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "",
+      "line": 458
+    },
+    {
+      "file": "src/storage/store/ChunkEngine.cc",
+      "description": "写完需要配置chunkEngineJob，给commit的时候用",
+      "line": 73
+    },
+    {
       "file": "src/storage/service/StorageOperator.cc",
       "description": "然后要等待 job 完成",
       "line": 598
@@ -471,6 +766,166 @@
       "file": "src/storage/service/StorageOperator.cc",
       "description": "此时没有后继，返回这个",
       "line": 484
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "发送给chunk engine进行commit操作",
+      "line": 489
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "还是入队update worker中",
+      "line": 624
+    },
+    {
+      "file": "src/storage/store/StorageTarget.cc",
+      "description": "最终commit会走到这里",
+      "line": 310
+    },
+    {
+      "file": "src/storage/store/ChunkEngine.cc",
+      "description": "这里就是在外面被设置的chunkEngineJob",
+      "line": 95
+    },
+    {
+      "file": "src/storage/store/ChunkEngine.cc",
+      "description": "核心是走这里，默认sync为true",
+      "line": 102
+    },
+    {
+      "file": "src/storage/chunk_engine/src/cxx.rs",
+      "description": "会走到这里面",
+      "line": 179
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "这里首先把uncommitted状态清除",
+      "line": 471
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "然后从meta_cache中获取到老的entry",
+      "line": 483
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "这里面去做一些处理：",
+      "line": 484
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "覆盖写的场景，是可以拿老的chunk的",
+      "line": 188
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "缓存里面没有当前的chunk的场景",
+      "line": 189
+    },
+    {
+      "file": "src/storage/chunk_engine/src/meta/meta_store.rs",
+      "description": "直接查一次rocksdb",
+      "line": 38
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "查到了meta data，此时还是需要去allocator申请一个新的chunk【不知道为什么？】",
+      "line": 191
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "查不到任何meta的情况返回None",
+      "line": 198
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "获得了old_chunk",
+      "line": 485
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "核心就是move_chunk",
+      "line": 487
+    },
+    {
+      "file": "src/storage/chunk_engine/src/meta/meta_store.rs",
+      "description": "压栈",
+      "line": 201
+    },
+    {
+      "file": "src/storage/chunk_engine/src/meta/meta_store.rs",
+      "description": "这里是写入新的meta data",
+      "line": 218
+    },
+    {
+      "file": "src/storage/chunk_engine/src/meta/meta_store.rs",
+      "description": "删除掉 old_pos 到 old_meta 的映射",
+      "line": 226
+    },
+    {
+      "file": "src/storage/chunk_engine/src/meta/meta_store.rs",
+      "description": "这里是释放掉老的group_bits_key",
+      "line": 233
+    },
+    {
+      "file": "src/storage/chunk_engine/src/meta/meta_store.rs",
+      "description": "这里很直观，就是新的pos -> chunk的映射要建立",
+      "line": 239
+    },
+    {
+      "file": "src/storage/chunk_engine/src/meta/meta_store.rs",
+      "description": "这里是要搞一个新的group_bits_key",
+      "line": 246
+    },
+    {
+      "file": "src/storage/chunk_engine/src/meta/meta_store.rs",
+      "description": "更新使用的大小，传进去的diff是新的meta的大小减去老的meta的大小",
+      "line": 251
+    },
+    {
+      "file": "src/storage/chunk_engine/src/meta/meta_store.rs",
+      "description": "主要要是更新used_size_key，不知道为什么写的是diff",
+      "line": 344
+    },
+    {
+      "file": "src/storage/chunk_engine/src/meta/meta_store.rs",
+      "description": "更新新的时间戳",
+      "line": 262
+    },
+    {
+      "file": "src/storage/chunk_engine/src/meta/meta_store.rs",
+      "description": "删除老的时间戳",
+      "line": 265
+    },
+    {
+      "file": "src/storage/chunk_engine/src/meta/meta_store.rs",
+      "description": "删除writing_chunk的变量",
+      "line": 268
+    },
+    {
+      "file": "src/storage/chunk_engine/src/meta/meta_store.rs",
+      "description": "也是没什么特别的",
+      "line": 359
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "增加缓存",
+      "line": 494
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "配置commit_succ为true",
+      "line": 497
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "完成commit之后，返回的是commitResult",
+      "line": 513
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "等待完成",
+      "line": 625
     }
   ],
   "ref": "study"

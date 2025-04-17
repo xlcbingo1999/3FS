@@ -573,6 +573,106 @@
       "line": 166
     },
     {
+      "file": "src/storage/aio/AioReadWorker.cc",
+      "description": "从队列里面拿出来一个aio read job",
+      "line": 67
+    },
+    {
+      "file": "src/storage/aio/AioReadWorker.cc",
+      "description": "配置io uring或者aio",
+      "line": 77
+    },
+    {
+      "file": "src/storage/aio/AioReadWorker.cc",
+      "description": "收集一批次的jonb",
+      "line": 81
+    },
+    {
+      "file": "src/storage/aio/AioStatus.cc",
+      "description": "得收集到一批次的job才会结束循环",
+      "line": 216
+    },
+    {
+      "file": "src/storage/aio/AioStatus.cc",
+      "description": "这是一个非常有意思的操作，同步去预读元数据",
+      "line": 218
+    },
+    {
+      "file": "src/storage/store/StorageTarget.cc",
+      "description": "走chunk engine",
+      "line": 293
+    },
+    {
+      "file": "src/storage/store/ChunkEngine.h",
+      "description": "这里是调用engine的get_raw_chunk进行元数据的读取",
+      "line": 47
+    },
+    {
+      "file": "src/storage/store/ChunkEngine.h",
+      "description": "这里是调用engine的get_raw_chunk进行元数据的读取",
+      "line": 47
+    },
+    {
+      "file": "src/storage/chunk_engine/src/cxx.rs",
+      "description": "实际走到这里",
+      "line": 93
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "走到这里，应该是从cache中读entry",
+      "line": 178
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "再进行一次判断",
+      "line": 179
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "如果缓存中有，就直接返回了",
+      "line": 188
+    },
+    {
+      "file": "src/storage/chunk_engine/src/core/engine.rs",
+      "description": "如果缓存中没有，就需要去获取rocksdb中获取meta data",
+      "line": 189
+    },
+    {
+      "file": "src/storage/store/ChunkEngine.h",
+      "description": "配置预读的chunk",
+      "line": 56
+    },
+    {
+      "file": "src/storage/aio/AioStatus.cc",
+      "description": "准备一些io_uring的读取逻辑",
+      "line": 227
+    },
+    {
+      "file": "src/storage/aio/AioReadWorker.cc",
+      "description": "当可以提交一批次的job时候，提交",
+      "line": 84
+    },
+    {
+      "file": "src/storage/aio/AioStatus.cc",
+      "description": "实际提交，获得提交的个数",
+      "line": 247
+    },
+    {
+      "file": "src/storage/aio/AioStatus.cc",
+      "description": "等待结果",
+      "line": 265
+    },
+    {
+      "file": "src/storage/aio/AioStatus.cc",
+      "description": "设置job的结果",
+      "line": 272
+    },
+    {
+      "file": "src/storage/chunk_engine/src/cxx.rs",
+      "description": "走get函数",
+      "line": 94
+    },
+    {
       "file": "src/storage/service/StorageOperator.cc",
       "description": "等待batch完成",
       "line": 173

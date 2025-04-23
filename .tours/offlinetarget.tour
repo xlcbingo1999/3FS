@@ -1,0 +1,52 @@
+{
+  "$schema": "https://aka.ms/codetour-schema",
+  "title": "offlineTarget",
+  "steps": [
+    {
+      "file": "src/client/cli/admin/OfflineTarget.cc",
+      "description": "这个函数很重要",
+      "line": 22
+    },
+    {
+      "file": "src/client/cli/admin/OfflineTarget.cc",
+      "description": "核心是走到这个",
+      "line": 52
+    },
+    {
+      "file": "src/client/storage/StorageClientImpl.cc",
+      "description": "真实实现",
+      "line": 2418
+    },
+    {
+      "file": "src/client/storage/StorageClientImpl.cc",
+      "description": "又是rpc",
+      "line": 2436
+    },
+    {
+      "file": "src/client/storage/StorageMessenger.cc",
+      "description": "rpc调用",
+      "line": 176
+    },
+    {
+      "file": "src/storage/service/StorageService.h",
+      "description": "应该是执行这个",
+      "line": 84
+    },
+    {
+      "file": "src/storage/service/StorageOperator.cc",
+      "description": "这个逻辑",
+      "line": 1094
+    },
+    {
+      "file": "src/storage/service/TargetMap.cc",
+      "description": "这个逻辑",
+      "line": 401
+    },
+    {
+      "file": "src/storage/service/TargetMap.cc",
+      "description": "只会设置一个OFFLINE？？？",
+      "line": 301
+    }
+  ],
+  "ref": "study"
+}

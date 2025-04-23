@@ -1,0 +1,122 @@
+{
+  "$schema": "https://aka.ms/codetour-schema",
+  "title": "MgmtdServer",
+  "steps": [
+    {
+      "file": "src/mgmtd/mgmtd.cpp",
+      "description": "这个就是启动，也是一个TwoPhaseApplication",
+      "line": 7
+    },
+    {
+      "file": "src/mgmtd/MgmtdServer.cc",
+      "description": "和storageServer差不多",
+      "line": 16
+    },
+    {
+      "file": "src/mgmtd/MgmtdServer.cc",
+      "description": "这个很重要！",
+      "line": 32
+    },
+    {
+      "file": "src/mgmtd/service/MgmtdOperator.cc",
+      "description": "就是把后台的backgroundRunner_启动",
+      "line": 20
+    },
+    {
+      "file": "src/mgmtd/background/MgmtdBackgroundRunner.cc",
+      "description": "这个就是本文关心的chainsUpdater后台逻辑",
+      "line": 24
+    },
+    {
+      "file": "src/mgmtd/background/MgmtdBackgroundRunner.cc",
+      "description": "这里要启动",
+      "line": 61
+    },
+    {
+      "file": "src/mgmtd/background/MgmtdChainsUpdater.cc",
+      "description": "这里初始化的是UpdateChains的操作",
+      "line": 63
+    },
+    {
+      "file": "src/mgmtd/background/MgmtdChainsUpdater.cc",
+      "description": "这里进去其实就是执行handler()",
+      "line": 69
+    },
+    {
+      "file": "src/mgmtd/background/MgmtdChainsUpdater.cc",
+      "description": "这里走到了这里, 内部最重要的是 op.handle(state_, lastUpdateTs, lastAdjustTargetOrderFlag)",
+      "line": 66
+    },
+    {
+      "file": "src/mgmtd/background/MgmtdChainsUpdater.cc",
+      "description": "传进来的lastUpdateTs和lastAdjustTargetOrderFlag是会随着handle执行发生变化的",
+      "line": 13
+    },
+    {
+      "file": "src/mgmtd/background/MgmtdChainsUpdater.cc",
+      "description": "要执行更新的chains",
+      "line": 16
+    },
+    {
+      "file": "src/mgmtd/background/MgmtdChainsUpdater.cc",
+      "description": "最终changedChains",
+      "line": 17
+    },
+    {
+      "file": "src/mgmtd/background/MgmtdChainsUpdater.cc",
+      "description": "应该是当target中的单调时钟超过了lastUpdateTs，就要更新了",
+      "line": 26
+    },
+    {
+      "file": "src/mgmtd/background/MgmtdChainsUpdater.cc",
+      "description": "将target对应的chain进行更新",
+      "line": 27
+    },
+    {
+      "file": "src/mgmtd/background/MgmtdChainsUpdater.cc",
+      "description": "这个默认是关闭的",
+      "line": 28
+    },
+    {
+      "file": "src/mgmtd/background/MgmtdChainsUpdater.cc",
+      "description": "当 target的importantInfoChangedTime 大于 lastUpdateTs，做一些处理",
+      "line": 31
+    },
+    {
+      "file": "src/mgmtd/background/MgmtdChainsUpdater.cc",
+      "description": "遍历所有需要判断更新的chain",
+      "line": 35
+    },
+    {
+      "file": "src/mgmtd/service/MgmtdData.cc",
+      "description": "把old Chain拿出来",
+      "line": 121
+    },
+    {
+      "file": "src/mgmtd/service/MgmtdData.cc",
+      "description": "存进去的是 chainTarget",
+      "line": 125
+    },
+    {
+      "file": "src/mgmtd/service/MgmtdData.cc",
+      "description": "这里是用于生成新的chan",
+      "line": 128
+    },
+    {
+      "file": "src/mgmtd/service/updateChain.cc",
+      "description": "遍历所有的处于serving状态的老target",
+      "line": 31
+    },
+    {
+      "file": "src/mgmtd/service/updateChain.cc",
+      "description": "这里是状态转移矩阵",
+      "line": 33
+    },
+    {
+      "file": "src/mgmtd/service/updateChain.cc",
+      "description": "放到新的targetsByPs中",
+      "line": 21
+    }
+  ],
+  "ref": "study"
+}

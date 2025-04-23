@@ -1,0 +1,92 @@
+{
+  "$schema": "https://aka.ms/codetour-schema",
+  "title": "updateChainOpeartion",
+  "steps": [
+    {
+      "file": "src/mgmtd/ops/UpdateChainOperation.cc",
+      "description": "这个函数非常重要，但是要检查谁会调用",
+      "line": 8
+    },
+    {
+      "file": "src/client/cli/admin/UpdateChain.cc",
+      "description": "这里会传一个mode，标志是add还是remove",
+      "line": 31
+    },
+    {
+      "file": "src/client/cli/admin/UpdateChain.cc",
+      "description": "这里是去让mgmtdclient执行updateChain",
+      "line": 39
+    },
+    {
+      "file": "src/client/mgmtd/MgmtdClient.cc",
+      "description": "这里是创建成了UpdateChainOp",
+      "line": 993
+    },
+    {
+      "file": "src/fbs/mgmtd/MgmtdServiceDef.h",
+      "description": "这里是一个宏",
+      "line": 26
+    },
+    {
+      "file": "src/fbs/macros/SerdeDef.h",
+      "description": "注意拷贝规则，就是增加了Req和Rsp而已",
+      "line": 7
+    },
+    {
+      "file": "src/client/mgmtd/MgmtdClient.cc",
+      "description": "编译器构造 UpdateChainOp: core::ServiceOperationWithMetric<\"MgmtdClient\", \"UpdateChainOp\", \"op\"> 的结构体来使用",
+      "line": 775
+    },
+    {
+      "file": "src/client/mgmtd/MgmtdClient.cc",
+      "description": "然后就开始调用op",
+      "line": 994
+    },
+    {
+      "file": "src/client/mgmtd/MgmtdClient.cc",
+      "description": "实际上执行的是这个，应该是一个rpc？",
+      "line": 788
+    },
+    {
+      "file": "src/stubs/mgmtd/IMgmtdServiceStub.h",
+      "description": "name是这个",
+      "line": 14
+    },
+    {
+      "file": "src/client/mgmtd/MgmtdClient.cc",
+      "description": "生成一堆代码",
+      "line": 203
+    },
+    {
+      "file": "src/client/mgmtd/MgmtdClient.cc",
+      "description": "核心是执行这个，methodName()是UpdateChain",
+      "line": 206
+    },
+    {
+      "file": "src/client/mgmtd/MgmtdClient.cc",
+      "description": "把可执行的闭包入队",
+      "line": 212
+    },
+    {
+      "file": "src/client/mgmtd/MgmtdClient.cc",
+      "description": "加入到workItems_中",
+      "line": 447
+    },
+    {
+      "file": "src/client/mgmtd/MgmtdClient.cc",
+      "description": "等待出队",
+      "line": 414
+    },
+    {
+      "file": "src/client/mgmtd/MgmtdClient.cc",
+      "description": "出队执行的是这个",
+      "line": 405
+    },
+    {
+      "file": "src/client/mgmtd/MgmtdClient.cc",
+      "description": "执行内部的callable",
+      "line": 407
+    }
+  ],
+  "ref": "study"
+}

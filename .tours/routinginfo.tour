@@ -1,0 +1,152 @@
+{
+  "$schema": "https://aka.ms/codetour-schema",
+  "title": "routingInfo",
+  "steps": [
+    {
+      "file": "src/client/mgmtd/RoutingInfo.h",
+      "description": "路由信息存储的数据结构",
+      "line": 10
+    },
+    {
+      "file": "src/client/mgmtd/RoutingInfo.h",
+      "description": "实际的存储",
+      "line": 61
+    },
+    {
+      "file": "src/fbs/mgmtd/RoutingInfo.h",
+      "description": "存储的是各种chains、targets、nodes、chainTables",
+      "line": 42
+    },
+    {
+      "file": "src/client/cli/admin/ListChains.cc",
+      "description": "从这个代码入手看，这里可以打印整个chains的信息",
+      "line": 79
+    },
+    {
+      "file": "src/client/cli/admin/ListChains.cc",
+      "description": "先获取最新的routingInfo",
+      "line": 89
+    },
+    {
+      "file": "src/client/mgmtd/MgmtdClient.cc",
+      "description": "走到这个函数",
+      "line": 813
+    },
+    {
+      "file": "src/client/mgmtd/MgmtdClient.cc",
+      "description": "走到这个函数",
+      "line": 453
+    },
+    {
+      "file": "src/client/mgmtd/MgmtdClient.cc",
+      "description": "把更新丢到队列里面",
+      "line": 455
+    },
+    {
+      "file": "src/client/mgmtd/MgmtdClient.cc",
+      "description": "检查workItems_",
+      "line": 447
+    },
+    {
+      "file": "src/client/mgmtd/MgmtdClient.cc",
+      "description": "后台会有一个actor在执行",
+      "line": 221
+    },
+    {
+      "file": "src/client/mgmtd/MgmtdClient.cc",
+      "description": "本质上就是拿item",
+      "line": 414
+    },
+    {
+      "file": "src/client/mgmtd/MgmtdClient.cc",
+      "description": "关心这个",
+      "line": 387
+    },
+    {
+      "file": "src/client/mgmtd/MgmtdClient.cc",
+      "description": "执行这个",
+      "line": 389
+    },
+    {
+      "file": "src/client/mgmtd/MgmtdClient.cc",
+      "description": "宏中调用",
+      "line": 390
+    },
+    {
+      "file": "src/core/utils/runOp.h",
+      "description": "核心是这个",
+      "line": 8
+    },
+    {
+      "file": "src/client/mgmtd/MgmtdClient.cc",
+      "description": "执行这个",
+      "line": 683
+    },
+    {
+      "file": "src/client/mgmtd/MgmtdClient.cc",
+      "description": "首先获取当前的routingInfo",
+      "line": 602
+    },
+    {
+      "file": "src/client/mgmtd/MgmtdClient.cc",
+      "description": "就是拿变量而已",
+      "line": 440
+    },
+    {
+      "file": "src/client/mgmtd/MgmtdClient.cc",
+      "description": "拿得到就拿，拿不到就设置空",
+      "line": 603
+    },
+    {
+      "file": "src/client/mgmtd/MgmtdClient.cc",
+      "description": "执行这个逻辑",
+      "line": 606
+    },
+    {
+      "file": "src/client/mgmtd/MgmtdClient.cc",
+      "description": "核心就是执行传进来的函数",
+      "line": 182
+    },
+    {
+      "file": "src/client/mgmtd/MgmtdClient.cc",
+      "description": "首先创建了一个GetRoutingInfoReq的请求",
+      "line": 608
+    },
+    {
+      "file": "src/client/mgmtd/MgmtdClient.cc",
+      "description": "执行",
+      "line": 607
+    },
+    {
+      "file": "src/fbs/mgmtd/MgmtdServiceDef.h",
+      "description": "走到这里就是 RPC 服务了",
+      "line": 7
+    },
+    {
+      "file": "src/mgmtd/ops/GetRoutingInfoOperation.cc",
+      "description": "应该是这个处理函数",
+      "line": 9
+    },
+    {
+      "file": "src/mgmtd/ops/GetRoutingInfoOperation.cc",
+      "description": "这个是核心",
+      "line": 12
+    },
+    {
+      "file": "src/mgmtd/service/MgmtdData.cc",
+      "description": "获取node的信息",
+      "line": 98
+    },
+    {
+      "file": "src/client/mgmtd/MgmtdClient.cc",
+      "description": "如果没错，就更新全新的routingInfo",
+      "line": 616
+    },
+    {
+      "file": "src/client/mgmtd/MgmtdClient.cc",
+      "description": "好像没什么特别的，要把新的赋值上去",
+      "line": 650
+    }
+  ],
+  "ref": "study"
+}
